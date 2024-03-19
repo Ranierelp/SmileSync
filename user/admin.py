@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import CustomUser, Clinic, Company, Dentist
 
-# Register your models here.
+admin.site.register(CustomUser)
+admin.site.register(Clinic)
+admin.site.register(Company)
+admin.site.register(Dentist)
+
+
+

@@ -3,8 +3,6 @@
 
 {% block content %}
 </head>
-
-
     <div id="canva-group">
         <canvas id="camada1Odontograma"></canvas>
         <canvas id="camada2Odontograma"></canvas>
@@ -25,13 +23,12 @@
                         <input type="hidden" id="procedimentosRemovidos" th:field="*{procedimentosRemovidos}">
                         <div id="procedimentosDiv"></div>
                         <div class="form-group col-md-12">
-                            <label for="nomeProcedimento">Nome</label>
+                            <label for="nomeProcedimento">Procedimento</label>
                             <i data-type="info" class="fas fa-info-circle fa-1x text-info"
                                 onclick="toast_message('.','info')" style="margin-left: 5px; cursor: pointer;"></i>
                             <select class="form-control" id="nomeProcedimento">
                                 <option selected value="">-- Selecione uma opção --</option>
-                                <!-- <option th:value="${null}" th:text="${'NÃO INFORMADO'}"></option> -->
-                                <!-- <option th:each="model : ${modelEnums}" th:value="${model}" th:text="${model.denominacao}"></option> -->
+                               
                             </select>
                         </div>
                         <div class="form-group col-12" id="colOutroProcedimento">

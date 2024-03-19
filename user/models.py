@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager, AbstractBaseUser, PermissionsMixin
 from address.models import Address
 
 class UserManager(BaseUserManager):
@@ -43,6 +43,8 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'phone', 'type_user']
     
+    objects = UserManager()
+    
 
 class Dentist(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -54,8 +56,7 @@ class Dentist(models.Model):
 class Clinic(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     cnpj = models.CharField(primary_key=True, max_length=15)
-    dentista = models.ForeignKey(Dentist, on_delete=models.CASCADE)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE)   
+    dentista = models.ForeignKey(Dentist, on_delete=models.CASCADE)  
     
     class Meta:
         verbose_name = 'Clinic'
