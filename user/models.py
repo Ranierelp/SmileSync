@@ -45,18 +45,14 @@ class CustomUser(AbstractUser):
     
     objects = UserManager()
     
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = self.email
+        super().save(*args, **kwargs)
 
-class Dentist(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    cro = models.CharField(primary_key=True, max_length=15)
-
-    def __str__(self):
-        return f'{self.user.first_name} | {self.cro}'
-    
 class Clinic(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    cnpj = models.CharField(primary_key=True, max_length=15)
-    dentista = models.ForeignKey(Dentist, on_delete=models.CASCADE)  
+    cnpj = models.CharField(primary_key=True, max_length=15) 
     
     class Meta:
         verbose_name = 'Clinic'
@@ -65,6 +61,14 @@ class Clinic(models.Model):
         
     def __str__(self):
         return self.user.first_name
+class Dentist(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    cro = models.CharField(primary_key=True, max_length=15)
+    Clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.first_name} | {self.cro}'
+    
     
 
 class Company(models.Model):

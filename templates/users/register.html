@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-
 <body>
     <div class="container-fluid">
         <div class="row min-vh-100">
@@ -10,7 +9,8 @@
                 <div class="card overflow-hidden z-1 shadow mb-5 bg-body-tertiary rounded">
                     <div class="card-body p-0">
                         <div class="row g-0 h-100">
-                            <div class="col-md-6 text-center bg-card-gradient">
+                            <!-- Coluna com imagem e descrição -->
+                            <div class="col-md-6 text-center bg-card-gradient left-column">
                                 <div class="position-relative p-4 pt-md-5 pb-md-7" data-bs-theme="light">
                                     <div class="z-1 position-relative">
                                         <h2 class="title">SmileSync</h2>
@@ -18,40 +18,53 @@
                                     </div>
                                 </div>
                                 <div class="mt-3" style="height: 150px;"></div> 
-                                <div class=" mt-3 mb-5 mt-md-4 mb-md-5" data-bs-theme="light">
-                                    <p class="text-white" >Ja tem uma conta?<br>
-                                        <a class="text-decoration-underline link-light text-white" href="login.html">Log in</a></p>
+                                <div class="mt-3 mb-5 mt-md-4 mb-md-5" data-bs-theme="light">
+                                    <p class="text-white">Já tem uma conta?<br>
+                                        <a class="text-decoration-underline link-light text-white" href="/user/login">Login</a>
+                                    </p>
                                 </div>
                             </div>
+                            <!-- Coluna com formulário de registro -->
                             <div class="col-md-6 d-flex flex-center">
-                                <div class="p-4 p-md-5 flex-grow-1 ">
-                                 <h3>Register</h3>
-                                 <br>
-                                 <form action="">
-                                    {% csrf_token %}
-                                    <div class="mb-3">
-                                        <input class="form-control" type="text" autocomplete="on" id="card-name-clinica" placeholder="Clinica">
-                                    </div>
-                                    <div class="mb-3">
-                                        <input class="form-control" type="cnpj" autocomplete="on" id="card-cnpj" placeholder="CNPJ">
-                                    </div>
-                                    <div class="mb-3">
-                                        <input class="form-control" type="email" autocomplete="on" id="card-email" placeholder="Email">
-                                    </div>
-                                    <div class="mb-3">
-                                        <input class="form-control" type="telefone" autocomplete="on" id="card-telefone" placeholder="telefone">
-                                    </div>
-                                    <div class="row gx-2">
-                                        <div class="mb-3 col-sm-6"><input class="form-control" type="password" autocomplete="on" id="card-password" placeholder="senha"></div>
-                                        <div class="mb-3 col-sm-6"><input class="form-control" type="password" autocomplete="on" id="card-confirm-password" placeholder="confirmar senha"></div>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="card-register-checkbox"><label class="form-label" for="card-register-checkbox">Eu aceito o <a href="#!">termo de uso  </a>e <a class="white-space-nowrap" href="#!">política de Privacidade</a></label>
-                                    </div>
-                                      <div class="mb-3">
-                                        <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Register</button>
-                                    </div>
-                                 </form>
+                                <div class="p-4 p-md-5 flex-grow-1">
+                                    <h3>Register</h3>
+                                    <form  method="post" action="{% url "clinic_register" %}">
+                                        {% csrf_token %}
+                                        <div class="form-floating mb-3">
+                                            {{ form.name_clinic }}
+                                            <label for="{{ form.name_clinic.id_for_label }}">Nome da Clínica</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            {{ form.cnpj }}
+                                            <label for="{{ form.cnpj.id_for_label }}">CNPJ</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            {{ form.email }}
+                                            <label for="{{ form.email.id_for_label }}">Email</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            {{ form.phone }}
+                                            <label for="{{ form.phone.id_for_label }}">Telefone</label>
+                                        </div>
+                                        <div class="row gx-2">
+                                            <div class="form-floating mb-3 col-sm-6">
+                                              {{form.password}}
+                                              <label for="{{ form.password.id_for_label }}">Senha</label>
+                                            </div>
+                                            <div class="form-floating mb-3 col-sm-6">
+                                                {{form.confirm_password}}
+                                                <label for="{{ form.confirm_password.id_for_label }}">Confirmar Senha</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="register-checkbox" required>
+                                            <label class="form-check-label" for="register-checkbox">Eu aceito o <a href="#!">termo de uso</a> e <a href="#!">política de Privacidade</a></label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Registrar</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -60,7 +73,30 @@
         </div>
     </div>
 </body>
+{% if success %}
+<script>
+    Swal.fire({
+        title: 'Sucesso!',
+        text: 'Usuário cadastrado com sucesso!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    });
+</script>
+{% endif %}
 
+<script>
+    {% if form.errors %}
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ error }}',
+          });
+        {% endfor %}
+      {% endfor %}
+    {% endif %}
+  </script>
 
 {% endblock content %}
 </html>
