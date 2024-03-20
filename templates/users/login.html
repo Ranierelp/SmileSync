@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<html>
+    <body>
+        <div class="container-fluid">
+            <div class="row min-vh-100">
+                <!-- Coluna com imagem e descrição -->
+                <div class="col-lg-8 col-xxl-5 py-3 position-relative">
+                    <div class="card overflow-hidden bg-body-tertiary rounded">
+                        <div class="card-body p-0">
+                            <div class="row g-0 h-100">
+                                <div class="col-md-6 text-center bg-card-gradient left-column">
+                                    <div class="position-relative p-4 pb-md-7">
+                                        <div class="z-1 position-relative">
+                                            <img src="{% static 'img/SmileSync_name_logo.svg ' %}" alt="Logo" class="img-fluid">
+                                            <p class="description">Simplificando consultórios e potencializando sorrisos. O seu parceiro digital para um consultório mais eficiente e sorrisos mais saudáveis</p>
+                                        </div>
+                                    </div>
+                                    <div style="height: 80px;"></div> 
+                                    <div class="mb-5">
+                                        <p class="text-white">Não tem uma conta?<br>
+                                            <a class="text-decoration-underline text-white" href="/user/register">Criar conta</a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- Coluna com formulário de login -->
+                                <div class="col-md-6 d-flex flex-column justify-content-center">
+                                    <div class="p-4 p-md-5">
+                                        <h3 class="mb-4">Login</h3>
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                                            </div>
+                                            <div class="mb-3 form-check">
+                                                <input class="form-check-input" type="checkbox" id="remember-me" name="remember">
+                                                <label class="form-check-label" for="remember-me">Remember me</label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary w-100" type="submit" name="submit">Log in</button>
+                                            </div>
+                                        </form>
+                                        <hr>
+                                        <div class="text-center">
+                                            <a href="" class="text-decoration-none">Esqueceu sua senha?</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+{% endblock content %}  
+</html>
