@@ -2,6 +2,7 @@ from django import forms
 from .models import CustomUser, Clinic, Dentist
 from django.core.validators import MinLengthValidator
 from . import validations
+from django.contrib.auth.forms import AuthenticationForm
 
 class ClinicRegistrationForm(forms.Form):
     name_clinic = forms.CharField(
@@ -14,6 +15,7 @@ class ClinicRegistrationForm(forms.Form):
     )
     cnpj = forms.CharField(
         label='CNPJ',
+        validators=[validations.cnpj_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'CNPJ'
@@ -62,6 +64,8 @@ class ClinicRegistrationForm(forms.Form):
     def save(self, commit=True):
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
+            first_name = self.cleaned_data['name_clinic'],
+            phone=self.cleaned_data['phone'],
             password=self.cleaned_data['password'],
         )
         user.type_user = 'C'
@@ -74,6 +78,36 @@ class ClinicRegistrationForm(forms.Form):
 
         return user
 
+class LoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        del self.fields['username']
+        
+    email = forms.EmailField(
+        label='Email', 
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'placeholder': 'Email'
+        })
+    )
+    
+    password = forms.CharField(
+        label='Senha', 
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control', 
+            'placeholder': 'Senha'
+        })
+    )
+
+    def clean(self):
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password']
+        user = CustomUser.objects.filter(email=email).first()
+        if user is None:
+            raise forms.ValidationError('Usuário não encontrado.')
+
+        return self.cleaned_data
+    
         
         
         
