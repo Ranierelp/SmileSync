@@ -8,50 +8,57 @@
         <div class="container-fluid">
             <div class="row min-vh-100">
                 <!-- Coluna com imagem e descrição -->
-                <div class="col-lg-8 col-xxl-5 py-3 position-relative">
+                <div class="col-lg-8 col-xxl-6 py-3 position-relative">
                     <div class="card overflow-hidden bg-body-tertiary rounded">
                         <div class="card-body p-0">
-                            <div class="row g-0 h-100">
-                                <div class="col-md-6 text-center bg-card-gradient left-column">
-                                    <div class="position-relative p-4 pb-md-7">
+                            <div class="row gx-8 h-100">
+                                <div class="col-md-5 text-center bg-card-gradient left-column" style="padding-bottom: 120px;">
+                                    <div class="position-relative p-4 pb-md-7 ">
                                         <div class="z-1 position-relative">
                                             <img src="{% static 'img/SmileSync_name_logo.svg ' %}" alt="Logo" class="img-fluid">
-                                            <p class="description">Simplificando consultórios e potencializando sorrisos. O seu parceiro digital para um consultório mais eficiente e sorrisos mais saudáveis</p>
+                                            <p class="text-white">Simplificando consultórios e potencializando sorrisos. O seu parceiro digital para um consultório mais eficiente e sorrisos mais saudáveis</p>
+                                        </div>
+                                        <div class="mb-5" style="height: 80px;"></div> 
+                                        <div class="mb-5">
+                                            <p class="text-white">
+                                                Não tem uma conta?<br>
+                                                <a class="text-decoration-underline text-white" href="/user/register">Criar conta</a>
+                                            </p>
                                         </div>
                                     </div>
-                                    <div style="height: 80px;"></div> 
-                                    <div class="mb-5">
-                                        <p class="text-white">Não tem uma conta?<br>
-                                            <a class="text-decoration-underline text-white" href="/user/register">Criar conta</a>
-                                        </p>
-                                    </div>
+
                                 </div>
                                 <!-- Coluna com formulário de login -->
-                                <div class="col-md-6 d-flex flex-column justify-content-center">
+                                <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
                                     <div class="p-4 p-md-5">
-                                        <h3 class="mb-4">Login</h3>
+                                        <div class="row flex-between-center d-flex justify-content-center align-items-center">
+                                            <div class="col-auto text-center">
+                                                <img src="{% static 'img/logo_dente.svg ' %}" alt="" class="img-fluid" style="max-width: 80px; margin-bottom: 10px; margin-left: -8px;">
+                                                <h3 class="mb-0">Login</h3>
+                                            </div>
                                         <form action="" method="post">
                                             {% csrf_token %}
                                             <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
+                                                <label for="email" class="form-label"></label>
                                                 <input type="email" class="form-control" id="email" placeholder="Email" name="email">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="password" class="form-label">Password</label>
+                                                <label for="password" class="form-label"></label>
                                                 <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                                             </div>
-                                            <div class="mb-3 form-check">
-                                                <input class="form-check-input" type="checkbox" id="remember-me" name="remember">
-                                                <label class="form-check-label" for="remember-me">Remember me</label>
+                                            <div class="mb-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="form-check mb-0"><input class="form-check-input" type="checkbox" id="card-checkbox" checked="checked"><label class="form-check-label mb-0" for="card-checkbox">Remember me</label></div>
+                                                    </div>
+                                                    <div class="col-auto"><a class="fs-10" href="">Esqueceu sua senha?</a></div>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
-                                                <button class="btn btn-primary w-100" type="submit" name="submit">Log in</button>
+                                                <button class="btn btn-primary w-100" type="submit" name="submit">Log in</button>   
+                                                <hr>
                                             </div>
                                         </form>
-                                        <hr>
-                                        <div class="text-center">
-                                            <a href="" class="text-decoration-none">Esqueceu sua senha?</a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
