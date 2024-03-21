@@ -17,9 +17,10 @@ body, html {
     padding: 15px;
 }
 .bg-card-gradient {
-    padding: 2rem;
+    padding: 5rem;
     height: 100%;
 }
+
 .left-column {
     background-image: url(/static/img/plano_de_fundo.svg);
     background-size: cover;
