@@ -43,3 +43,8 @@ def login_view(request):
     return render(request, 'users/login.html', context)
 
 
+def home_view(request):
+    return render(request, 'users/home.html')
+
+
+
