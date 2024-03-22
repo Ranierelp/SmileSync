@@ -17,10 +17,9 @@ body, html {
     padding: 15px;
 }
 .bg-card-gradient {
-    padding: 5rem;
+    padding: 2rem;
     height: 100%;
 }
-
 .left-column {
     background-image: url(/static/img/plano_de_fundo.svg);
     background-size: cover;
@@ -29,3 +28,8 @@ body, html {
 .form-check-label {
     font-size: 0.875rem;
 }
+.card.overflow-hidden {
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+    
