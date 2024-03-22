@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+
 <body>
     <div class="container-fluid">
         <div class="row min-vh-100">
@@ -28,7 +32,7 @@
                             <div class="col-md-6 d-flex flex-center">
                                 <div class="p-4 p-md-5 flex-grow-1">
                                     <h3>Register</h3>
-                                    <form  method="post" action="{% url "clinic_register" %}">
+                                    <form  method="post" action="{% url "clinic_register_view" %}">
                                         {% csrf_token %}
                                         <div class="form-floating mb-3">
                                             {{ form.name_clinic }}
