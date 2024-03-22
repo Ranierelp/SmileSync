@@ -1,0 +1,40 @@
+
+main{
+    background-color: #EDF2F9;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar-toggler {
+    padding: 0.25rem 0.75rem;
+    font-size: 2.0rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    transition: box-shadow .15s ease-in-out;
+    position: absolute;
+    left: 0;
+}
+
+.nav_header{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+}
+
+.logo_header{
+    left: 70px;
+    position: absolute;
+}
+
+.navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: none;
+}
