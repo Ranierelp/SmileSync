@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from .models import CustomUser
+from .models import CustomUser, Clinic
 from django import forms      
 from django.db import IntegrityError
 
@@ -13,3 +13,7 @@ def email_unique(value):
 def validate_password_match(password1, password2):
     if password1 and password2 and password1 != password2:
         raise forms.ValidationError('Senhas Diferentes')
+    
+def cnpj_unique(value):
+    if Clinic.objects.filter(cnpj=value).exists():
+        raise ValidationError('Este CNPJ já está em uso. Por favor, escolha outro.')

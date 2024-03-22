@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block content %}
-
+<head>
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+</head>
 <html>
     <body>
         <div class="container-fluid">
@@ -12,7 +14,7 @@
                     <div class="card overflow-hidden bg-body-tertiary rounded">
                         <div class="card-body p-0">
                             <div class="row gx-8 h-100">
-                                <div class="col-md-5 text-center bg-card-gradient left-column" style="padding-bottom: 120px;">
+                                <div class="col-md-6 text-center bg-card-gradient left-column" style="padding-bottom: 120px;">
                                     <div class="position-relative p-4 pb-md-7 ">
                                         <div class="z-1 position-relative">
                                             <img src="{% static 'img/SmileSync_name_logo.svg ' %}" alt="Logo" class="img-fluid">
@@ -35,15 +37,15 @@
                                                 <img src="{% static 'img/logo_dente.svg ' %}" alt="" class="img-fluid" style="max-width: 80px; margin-bottom: 10px; margin-left: -8px;">
                                                 <h3 class="mb-0">Login</h3>
                                             </div>
-                                        <form action="" method="post">
+                                        <form action="{% url "login_view" %}" method="post">
                                             {% csrf_token %}
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label"></label>
-                                                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                                            <div class="form-floating mb-3">
+                                                {{form.email}}
+                                                <label for="{{ form.email.id_for_label }}">Email</label>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="password" class="form-label"></label>
-                                                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                                            <div class="form-floating mb-3">
+                                                {{form.password}}
+                                                <label for="{{ form.password.id_for_label }}">Senha</label>
                                             </div>
                                             <div class="mb-3">
                                                 <div class="row align-items-center">
@@ -54,10 +56,12 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <button class="btn btn-primary w-100" type="submit" name="submit">Log in</button>   
+                                                <button class="btn btn-primary w-100" type="submit" name="submit">Login</button>   
                                                 <hr>
-                                            </div>
+                                                </div>
                                         </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -66,8 +70,20 @@
                 </div>
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
+    <script>
+        {% if form.errors %}
+          {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ error }}',
+              });
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+      </script>
+    
 {% endblock content %}  
 </html>
