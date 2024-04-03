@@ -1,66 +1,64 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
 <head>
     <link rel="stylesheet" href="{% static 'css/login.css'%}">
 </head>
-<html>
-    <body>
-        <div class="container-fluid">
-            <div class="row min-vh-100">
-                <!-- Coluna com imagem e descrição -->
-                <div class="col-lg-8 col-xxl-6 py-3 position-relative">
-                    <div class="card overflow-hidden bg-body-tertiary rounded">
-                        <div class="card-body p-0">
-                            <div class="row gx-8 h-100">
-                                <div class="col-md-6 text-center bg-card-gradient left-column" style="padding-bottom: 120px;">
-                                    <div class="position-relative p-4 pb-md-7 ">
-                                        <div class="z-1 position-relative">
-                                            <img src="{% static 'img/SmileSync_name_logo.svg' %}" alt="Logo" class="img-fluid">
-                                            <p class="text-white">Simplificando consultórios e potencializando sorrisos. O seu parceiro digital para um consultório mais eficiente e sorrisos mais saudáveis</p>
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Coluna com imagem e descrição -->
+            <div class="col-lg-8 col-xxl-6 py-3 position-relative">
+                <div class="card overflow-hidden bg-body-tertiary rounded">
+                    <div class="card-body p-0">
+                        <div class="row gx-8 h-100">
+                            <div class="col-md-6 text-center bg-card-gradient left-column" style="padding-bottom: 120px;">
+                                <div class="position-relative p-4 pb-md-7 ">
+                                    <div class="z-1 position-relative">
+                                        <img src="{% static 'img/SmileSync_name_logo.svg' %}" alt="Logo" class="img-fluid">
+                                        <p class="text-white">Simplificando consultórios e potencializando sorrisos. O seu parceiro digital para um consultório mais eficiente e sorrisos mais saudáveis</p>
+                                    </div>
+                                    <div class="mb-5" style="height: 80px;"></div> 
+                                    <div class="mb-5">
+                                        <p class="text-white">
+                                            Não tem uma conta?<br>
+                                            <a class="text-decoration-underline text-white" href="/user/register">Criar conta</a>
+                                        </p>
+                                    </div>
+                                </div>                         
+                            </div>
+                            <!-- Coluna com formulário de login -->
+                            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                                <div class="p-4 p-md-5">
+                                    <div class="row flex-between-center d-flex justify-content-center align-items-center">
+                                        <div class="col-auto text-center">
+                                            <img src="{% static 'img/logo_dente.svg ' %}" alt="" class="img-fluid" style="max-width: 80px; margin-bottom: 10px; margin-left: -8px;">
+                                            <h3 class="mb-0">Login</h3>
                                         </div>
-                                        <div class="mb-5" style="height: 80px;"></div> 
-                                        <div class="mb-5">
-                                            <p class="text-white">
-                                                Não tem uma conta?<br>
-                                                <a class="text-decoration-underline text-white" href="/user/register">Criar conta</a>
-                                            </p>
+                                    <form action="{% url "login_view" %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-floating mb-3">
+                                            {{form.email}}
+                                            <label for="{{ form.email.id_for_label }}">Email</label>
                                         </div>
-                                    </div>                         
-                                </div>
-                                <!-- Coluna com formulário de login -->
-                                <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
-                                    <div class="p-4 p-md-5">
-                                        <div class="row flex-between-center d-flex justify-content-center align-items-center">
-                                            <div class="col-auto text-center">
-                                                <img src="{% static 'img/logo_dente.svg ' %}" alt="" class="img-fluid" style="max-width: 80px; margin-bottom: 10px; margin-left: -8px;">
-                                                <h3 class="mb-0">Login</h3>
-                                            </div>
-                                        <form action="{% url "login_view" %}" method="post">
-                                            {% csrf_token %}
-                                            <div class="form-floating mb-3">
-                                                {{form.email}}
-                                                <label for="{{ form.email.id_for_label }}">Email</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                {{form.password}}
-                                                <label for="{{ form.password.id_for_label }}">Senha</label>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto">
-                                                        <div class="form-check mb-0"><input class="form-check-input" type="checkbox" id="card-checkbox" checked="checked"><label class="form-check-label mb-0" for="card-checkbox">Remember me</label></div>
-                                                    </div>
-                                                    <div class="col-auto"><a class="fs-10" href="">Esqueceu sua senha?</a></div>
+                                        <div class="form-floating mb-3">
+                                            {{form.password}}
+                                            <label for="{{ form.password.id_for_label }}">Senha</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="form-check mb-0"><input class="form-check-input" type="checkbox" id="card-checkbox" checked="checked"><label class="form-check-label mb-0" for="card-checkbox">Remember me</label></div>
                                                 </div>
+                                                <div class="col-auto"><a class="fs-10" href="">Esqueceu sua senha?</a></div>
                                             </div>
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary w-100" type="submit" name="submit">Login</button>   
-                                                <hr>
-                                                </div>
-                                        </form>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary w-100" type="submit" name="submit">Login</button>   
+                                            <hr>
                                             </div>
+                                    </form>
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +68,7 @@
                 </div>
             </div>
         </div>
-    </body>
+    </div>
     <script>
         {% if form.errors %}
           {% for field, errors in form.errors.items %}
@@ -83,7 +81,6 @@
             {% endfor %}
           {% endfor %}
         {% endif %}
-      </script>
+    </script>
     
 {% endblock content %}  
-</html>

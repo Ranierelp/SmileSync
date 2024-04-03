@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
 <head>
     <link rel="stylesheet" href="{% static 'css/register.css' %}">
 </head>
-
-<body>
+{% block content %}
     <div class="container-fluid">
         <div class="row min-vh-100">
             <div class="col-lg-8 col-xxl-6 py-3 position-relative">
@@ -52,8 +50,8 @@
                                         </div>
                                         <div class="row gx-2">
                                             <div class="form-floating mb-3 col-sm-6">
-                                              {{form.password}}
-                                              <label for="{{ form.password.id_for_label }}">Senha</label>
+                                                {{form.password}}
+                                                <label for="{{ form.password.id_for_label }}">Senha</label>
                                             </div>
                                             <div class="form-floating mb-3 col-sm-6">
                                                 {{form.confirm_password}}
@@ -76,34 +74,33 @@
             </div>
         </div>
     </div>
-</body>
-{% if success %}
-<script>
-    Swal.fire({
-        title: 'Sucesso!',
-        text: 'Usuário cadastrado com sucesso!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-    });
-</script>
-{% endif %}
-
-<script>
-    {% if form.errors %}
-      {% for field, errors in form.errors.items %}
-        {% for error in errors %}
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '{{ error }}',
-          });
-        {% endfor %}
-      {% endfor %}
+    {% if success %}
+    <script>
+        Swal.fire({
+            title: 'Sucesso!',
+            text: 'Usuário cadastrado com sucesso!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    </script>
     {% endif %}
-  </script>
+
+    <script>
+        {% if form.errors %}
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ error }}',
+            });
+            {% endfor %}
+        {% endfor %}
+        {% endif %}
+    </script>
 
 {% endblock content %}
-</html>
+
 
 
 

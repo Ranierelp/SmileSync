@@ -1,12 +1,59 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Home{% endblock %}
+
 {% block content  %}
-<body>
+    
     {%include 'partials/_header.html'%}
 
-</body>
-
+    <main>
+        <div class="container text-start">
+            <div class="row g-2">
+              <div class="col-6">
+                <div class="container mt-5">
+                    <div class="card custom-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Empresa</h5>
+                            <div class="text-end"><button type="button" class="btn btn-primary">Acessar</button></div>
+                        </div>
+                    </div>
+                </div>                
+              </div>
+              <div class="col-6">
+                <div class="container mt-5">
+                    <div class="card custom-card">
+                        <div class="card-body d-flex align-items-center justify-content-between">
+                            <h5 class="card-title">Pacientes</h5>
+                            <button type="button" class="btn btn-primary">Acessar</button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="container mt-5">
+                    <div class="card custom-card">
+                        <div class="card-body d-flex align-items-center justify-content-between">
+                            <h5 class="card-title">Relatórios</h5>
+                            <button type="button" class="btn btn-primary">Acessar</button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="container mt-5">
+                    <div class="card custom-card">
+                        <div class="card-body d-flex align-items-center justify-content-between">
+                            <h5 class="card-title">Planos</h5>
+                            <button type="button" class="btn btn-primary">Acessar</button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </main>
+    
 
 {% endblock content  %}
 

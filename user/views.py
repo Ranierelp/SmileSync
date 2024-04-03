@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 from .forms import ClinicRegistrationForm, LoginForm
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+
 
 def clinic_register_view(request):
     if request.method == 'POST':
@@ -27,7 +29,7 @@ def login_view(request):
                 user = authenticate(email=email, password=password)
                 if user is not None:
                     login(request, user)
-                    return HttpResponse('Usuário autenticado')
+                    return redirect('/user/home')
                 
                 else:
                     form.add_error(None, 'Email ou senha inválidos')

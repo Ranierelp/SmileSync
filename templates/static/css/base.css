@@ -1,8 +1,17 @@
 
-main{
-    background-color: #EDF2F9;
+:root {
+    --cor-body: #EDF2F9;
+    --cor-texto: #000000;
+  }
+  
+  body {
+    background-color: var(--cor-body);
+    color: var(--cor-texto);
+  }
+  
+  .navbar{
+    background-color:white;
 }
-
 *{
     margin: 0;
     padding: 0;
@@ -37,4 +46,39 @@ main{
     text-decoration: none;
     outline: 0;
     box-shadow: none;
+}
+
+main {
+    margin-top: 150px;
+  }
+  
+
+
+
+
+
+
+
+.custom-card {
+    width: 100%;
+    max-width: 600px;
+    height: 130px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-card .card-body {
+    padding: 20px;
+}
+
+.custom-card .btn-primary {
+    border-radius: 5px;
+}
+
+.custom-card {
+    background-image: url('/static/img/barckground_card.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
