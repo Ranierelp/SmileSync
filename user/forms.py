@@ -4,7 +4,7 @@ from .models import CustomUser, Clinic, Dentist
 from django.core.validators import MinLengthValidator
 from . import validations
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.db import transaction
 class ClinicRegistrationForm(forms.Form):
     name_clinic = forms.CharField(
         label='Nome da Clínica',
@@ -61,7 +61,8 @@ class ClinicRegistrationForm(forms.Form):
         validations.validate_password_match(password1, password2)
 
         return cleaned_data
-
+    
+    @transaction.atomic
     def save(self, commit=True):
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
@@ -75,8 +76,9 @@ class ClinicRegistrationForm(forms.Form):
             user=user,
             cnpj=self.cleaned_data['cnpj'],
         )
+        clinic.save()
         
-        return user
+        return user, clinic
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -165,7 +167,8 @@ class DentistRegistrationForm(forms.Form):
         validations.validate_password_match(password1, password2)
 
         return cleaned_data
-
+    
+    @transaction.atomic
     def save(self, commit=True):
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
@@ -181,4 +184,5 @@ class DentistRegistrationForm(forms.Form):
         )
         dentist.save()
         
+        return user, dentist
         

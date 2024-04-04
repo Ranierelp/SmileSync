@@ -52,17 +52,14 @@ main {
     margin-top: 150px;
   }
   
-
-
-
-
-
-
-
-.custom-card {
+  .custom-card {
     width: 100%;
     max-width: 600px;
     height: 130px;
+    background-image: url('/static/img/barckground_card.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: right; 
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
@@ -74,11 +71,4 @@ main {
 
 .custom-card .btn-primary {
     border-radius: 5px;
-}
-
-.custom-card {
-    background-image: url('/static/img/barckground_card.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
-
 }

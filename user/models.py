@@ -62,14 +62,13 @@ class UserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin, BaseModel):
     name = models.CharField('Nome', max_length=100)
-    email = models.EmailField('E-mail')
+    email = models.EmailField('E-mail',unique=True )
     phone = models.CharField('Telefone', max_length=15)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'phone']
     
     objects = UserManager()
-
 
 class Clinic(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
