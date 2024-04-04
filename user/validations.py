@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from .models import CustomUser, Clinic
+from .models import CustomUser, Clinic, Dentist
 from django import forms      
 from django.db import IntegrityError
 
@@ -17,3 +17,10 @@ def validate_password_match(password1, password2):
 def cnpj_unique(value):
     if Clinic.objects.filter(cnpj=value).exists():
         raise ValidationError('Este CNPJ já está em uso. Por favor, escolha outro.')
+    
+def cro_unique(value):
+    if Dentist.objects.filter(cro=value).exists():
+        raise ValidationError('Este CRO já está em uso. Por favor, escolha outro.')    
+    
+    
+    

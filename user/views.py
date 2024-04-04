@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
-from .forms import ClinicRegistrationForm, LoginForm
+from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
@@ -17,7 +17,6 @@ def clinic_register_view(request):
 
     context = {'form': form}
     return render(request, 'users/register.html', context)
-
 
 def login_view(request):
     if request.method == 'POST':
@@ -44,9 +43,27 @@ def login_view(request):
     
     return render(request, 'users/login.html', context)
 
-
 def home_view(request):
     return render(request, 'users/home.html')
 
+def create_dentist_view(request):
+    if request.method == 'POST':
+        form = DentistRegistrationForm(request.post)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Dentista criado com sucesso')
+    else:
+        form = DentistRegistrationForm()
+    
+    context = {'form': form}
+    return render(request, 'users/register_dentist.html', context)
+    
 
+def list_dentist_view(request):
+    return HttpResponse('Lista de dentistas')
 
+def update_dentist_view(request):
+    return HttpResponse('Dentista atualizado com sucesso')
+
+def delete_dentist_view(request):
+    return HttpResponse('Dentista deletado com sucesso')

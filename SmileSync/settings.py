@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user',
     'odontograma',
     'person',
+    'rolepermissions',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +148,6 @@ LOGOUT_REDIRECT_URL = '/user/login'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.CustomUser'
+
+ROLEPERMISSIONS_MODULE = 'user.roles'
+
