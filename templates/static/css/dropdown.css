@@ -1,0 +1,91 @@
+/* .dropdown {
+    max-width: 13em;
+    margin: 80px auto 0;
+    position: relative;
+    width: 100%;
+} */
+
+
+.offcanvas-body, .offcanvas-header{
+    background: #EDF2F9;
+}
+
+.dropdown-btn {
+    background: #ffffff;
+    font-size: 18px;
+    width: 100%;
+    border: none;
+    color: #1B7BF7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7em 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    border: 1px dashed #1B7BF7;
+}
+  
+.arrow {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #1B7BF7;
+    transition: transform ease-in-out 0.3s;
+}
+  
+.dropdown-content {
+    list-style: none;
+    position: absolute;
+    top: 3.2em;
+    width: 100%;
+    visibility: hidden;
+
+    transform: translateY(-1em);
+    transition: transform ease 0.3s;
+}
+  
+input[type="checkbox"]:checked ~ .dropdown-content {
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-content li {
+    background: #2f3238;
+    border-radius: 0.5em;
+}
+
+input[type="checkbox"]:checked + label > .arrow {
+    transform: rotate(180deg);
+}
+  
+input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+}
+  
+input[type="checkbox"]:focus + label {
+    box-shadow: 0 0 20px #86C3FD;
+}
+  
+.dropdown-content li:hover {
+    background: #1d1f24;
+}
+  
+.dropdown-content li a {
+    display: block;
+    padding: 0.7em 0.5em;
+    color: #fff;
+    margin: 0.1em 0;
+    text-decoration: none;
+}
+  
+  /* base styles */
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+body {
+    font-family: "Segoe UI", sans-serif;
+    color: #333;
+/*   background: #cecece; */
+}

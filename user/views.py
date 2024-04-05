@@ -5,13 +5,13 @@ from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-
 def clinic_register_view(request):
     if request.method == 'POST':
         form = ClinicRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'users/register.html', {'form': ClinicRegistrationForm(), 'success': True})
+            alert_sucess = 'Clinica cadastrada com sucesso!'
+            return render(request, 'users/register.html', {'form': ClinicRegistrationForm(), 'success': True, 'alert_sucess': alert_sucess})
     else:
         form = ClinicRegistrationForm()
 
@@ -22,9 +22,9 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
             try:
+                email = form.cleaned_data['email']
+                password = form.cleaned_data['password']
                 user = authenticate(email=email, password=password)
                 if user is not None:
                     login(request, user)
@@ -42,14 +42,16 @@ def login_view(request):
     
     return render(request, 'users/login.html', context)
 
+@login_required
 def home_view(request):
     return render(request, 'users/home.html')
 
 def create_dentist_view(request):
     if request.method == 'POST':
-        form = DentistRegistrationForm(request.post)
+        form = DentistRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            clinica = request.user.clinic.id
+            form.save(clinica)
             alert_sucess = 'Dentista cadastrado com sucesso!'
             return render('users/register_dentist.html', {'form': DentistRegistrationForm(), 'alert_sucess': alert_sucess})
     else:
@@ -58,7 +60,6 @@ def create_dentist_view(request):
     context = {'form': form}
     return render(request, 'users/register_dentist.html', context)
     
-
 def list_dentist_view(request):
     return HttpResponse('Lista de dentistas')
 

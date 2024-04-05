@@ -16,11 +16,14 @@ def validate_password_match(password1, password2):
     
 def cnpj_unique(value):
     if Clinic.objects.filter(cnpj=value).exists():
-        raise ValidationError('Este CNPJ já está em uso. Por favor, escolha outro.')
+        raise ValidationError('Este CNPJ já está em uso. Por favor, insira outro válido.')
     
 def cro_unique(value):
     if Dentist.objects.filter(cro=value).exists():
-        raise ValidationError('Este CRO já está em uso. Por favor, escolha outro.')    
+        raise ValidationError('Este CRO já está em uso. Por favor, insira outro válido.')    
     
-    
-    
+def user_exists(email):
+    user = CustomUser.objects.filter(email=email).first()
+    if user is None:
+        raise forms.ValidationError('Usuário não encontrado, verifique se as credenciais estão corretas.')
+    return user

@@ -79,14 +79,14 @@ class ClinicRegistrationForm(forms.Form):
         clinic.save()
         
         return user, clinic
-
-class LoginForm(AuthenticationForm):
+class LoginForm(AuthenticationForm):        
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
         del self.fields['username']
         
     email = forms.EmailField(
         label='Email', 
+        validators=[validations.user_exists],
         widget=forms.TextInput(attrs={
             'class': 'form-control', 
             'placeholder': 'Email'
@@ -100,17 +100,6 @@ class LoginForm(AuthenticationForm):
             'placeholder': 'Senha'
         })
     )
-
-    def clean(self):
-        email = self.cleaned_data['email']
-        password = self.cleaned_data['password']
-        user = CustomUser.objects.filter(email=email).first()
-        if user is None:
-            raise forms.ValidationError('Usuário não encontrado.')
-
-        return self.cleaned_data
-    
-
 class DentistRegistrationForm(forms.Form):
     name_dentis = forms.CharField(
         label='Nome do Dentista' ,
@@ -169,7 +158,7 @@ class DentistRegistrationForm(forms.Form):
         return cleaned_data
     
     @transaction.atomic
-    def save(self, commit=True):
+    def save(self, clinica_logada,commit=True):
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
             name = self.cleaned_data['name_dentis'],
@@ -181,6 +170,7 @@ class DentistRegistrationForm(forms.Form):
         dentist = Dentist.objects.create(
             user=user,
             cro=self.cleaned_data['cro'],
+            clinica=clinica_logada
         )
         dentist.save()
         
