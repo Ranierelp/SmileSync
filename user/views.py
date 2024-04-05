@@ -29,7 +29,6 @@ def login_view(request):
                 if user is not None:
                     login(request, user)
                     return redirect('/user/home')
-                
                 else:
                     form.add_error(None, 'Email ou senha inválidos')
                     
@@ -51,7 +50,8 @@ def create_dentist_view(request):
         form = DentistRegistrationForm(request.post)
         if form.is_valid():
             form.save()
-            return HttpResponse('Dentista criado com sucesso')
+            alert_sucess = 'Dentista cadastrado com sucesso!'
+            return render('users/register_dentist.html', {'form': DentistRegistrationForm(), 'alert_sucess': alert_sucess})
     else:
         form = DentistRegistrationForm()
     

@@ -1,0 +1,10 @@
+{% if success %}
+<script>
+    Swal.fire({
+        title: 'Sucesso!',
+        text: '{{ alert_sucess }}',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    });
+</script>
+{% endif %}

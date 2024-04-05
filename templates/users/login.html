@@ -68,19 +68,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        {% if form.errors %}
-          {% for field, errors in form.errors.items %}
-            {% for error in errors %}
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '{{ error }}',
-              });
-            {% endfor %}
-          {% endfor %}
-        {% endif %}
-    </script>
-    
+    </div>    
 {% endblock content %}  
