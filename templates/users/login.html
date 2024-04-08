@@ -33,7 +33,7 @@
                                             <img src="{% static 'img/logo_dente.svg ' %}" alt="" class="img-fluid" style="max-width: 80px; margin-bottom: 10px; margin-left: -8px;">
                                             <h3 class="mb-4">Login</h3>
                                         </div>
-                                    <form action="{% url "login_view" %}" method="post">
+                                    <form action="{% url "login_view" %}" method="post" autocomplete="off">
                                         {% csrf_token %}
                                         <div class="form-floating mb-3">
                                             {{form.email}}

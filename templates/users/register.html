@@ -28,7 +28,7 @@
                         <div class="col-md-6 d-flex flex-center">
                             <div class="p-4 p-md-5 flex-grow-1">
                                 <h3>Register</h3>
-                                <form method="post" action="{% url "clinic_register_view" %}">
+                                <form method="post" action="{% url "clinic_register_view" %}" autocomplete="off" >
                                     {% csrf_token %}
                                     <div class="form-floating mb-3">
                                         {{ form.name_clinic }}

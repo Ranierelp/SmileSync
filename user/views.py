@@ -11,7 +11,12 @@ def clinic_register_view(request):
         if form.is_valid():
             form.save()
             alert_sucess = 'Clinica cadastrada com sucesso!'
-            return render(request, 'users/register.html', {'form': ClinicRegistrationForm(), 'success': True, 'alert_sucess': alert_sucess})
+            context = {
+                'form': form,
+                'success': True,
+                'alert_sucess': alert_sucess
+            }
+            return render(request, 'users/register.html', context)
     else:
         form = ClinicRegistrationForm()
 
@@ -46,17 +51,23 @@ def login_view(request):
 def home_view(request):
     return render(request, 'users/home.html')
 
+@login_required
 def create_dentist_view(request):
     if request.method == 'POST':
         form = DentistRegistrationForm(request.POST)
         if form.is_valid():
-            clinica = request.user.clinic.id
+            clinica = request.user.clinic.cnpj
             form.save(clinica)
             alert_sucess = 'Dentista cadastrado com sucesso!'
-            return render('users/register_dentist.html', {'form': DentistRegistrationForm(), 'alert_sucess': alert_sucess})
+            context = {
+                'form': form,
+                'success': True,
+                'alert_sucess': alert_sucess
+            }
+            return render('users/register_dentist.html', {'form': form, 'alert_sucess': alert_sucess})
     else:
-        form = DentistRegistrationForm()
-    
+        form = DentistRegistrationForm(request.POST)
+    #ERRO AQUI, AJEITAR 
     context = {'form': form}
     return render(request, 'users/register_dentist.html', context)
     

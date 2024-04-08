@@ -5,6 +5,8 @@ from django.core.validators import MinLengthValidator
 from . import validations
 from django.contrib.auth.forms import AuthenticationForm
 from django.db import transaction
+from django.shortcuts import get_object_or_404
+
 class ClinicRegistrationForm(forms.Form):
     name_clinic = forms.CharField(
         label='Nome da Clínica',
@@ -166,11 +168,13 @@ class DentistRegistrationForm(forms.Form):
             password=self.cleaned_data['password'],
         )
         user.save()
+        clinica = get_object_or_404(Clinic, cnpj=clinica_logada)
+        print(clinica)
         
         dentist = Dentist.objects.create(
             user=user,
             cro=self.cleaned_data['cro'],
-            clinica=clinica_logada
+            clinic=clinica
         )
         dentist.save()
         
