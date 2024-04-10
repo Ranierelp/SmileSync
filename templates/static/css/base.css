@@ -1,0 +1,74 @@
+
+:root {
+    --cor-body: #EDF2F9;
+    --cor-texto: #000000;
+  }
+  
+  body {
+    background-color: var(--cor-body);
+    color: var(--cor-texto);
+  }
+  
+  .navbar{
+    background-color:white;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar-toggler {
+    padding: 0.25rem 0.75rem;
+    font-size: 2.0rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    transition: box-shadow .15s ease-in-out;
+    position: absolute;
+    left: 0;
+}
+
+.nav_header{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+}
+
+.logo_header{
+    left: 70px;
+    position: absolute;
+}
+
+.navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: none;
+}
+
+.margin-navbar {
+    margin-top: 150px;
+  }
+  
+  .custom-card {
+    width: 100%;
+    max-width: 600px;
+    height: 130px;
+    background-image: url('/static/img/barckground_card.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: right; 
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-card .card-body {
+    padding: 20px;
+}
+
+.custom-card .btn-primary {
+    border-radius: 5px;
+}
