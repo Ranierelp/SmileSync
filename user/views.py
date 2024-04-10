@@ -78,3 +78,6 @@ def update_dentist_view(request):
 
 def delete_dentist_view(request):
     return HttpResponse('Dentista deletado com sucesso')
+
+def create_company_view(request):
+    return render(request, 'users/register_company.html')
