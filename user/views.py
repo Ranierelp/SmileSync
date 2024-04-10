@@ -25,7 +25,7 @@ def clinic_register_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(data=request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
             try:
                 email = form.cleaned_data['email']
@@ -39,7 +39,6 @@ def login_view(request):
                     
             except ValidationError as e:
                 form.add_error(None, str(e))
-                
     else:
         form = LoginForm()
     
@@ -64,10 +63,10 @@ def create_dentist_view(request):
                 'success': True,
                 'alert_sucess': alert_sucess
             }
-            return render('users/register_dentist.html', {'form': form, 'alert_sucess': alert_sucess})
+            return render('users/register_dentist.html', context)
     else:
-        form = DentistRegistrationForm(request.POST)
-    #ERRO AQUI, AJEITAR 
+        form = DentistRegistrationForm()
+
     context = {'form': form}
     return render(request, 'users/register_dentist.html', context)
     
