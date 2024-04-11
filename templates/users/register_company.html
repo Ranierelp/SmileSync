@@ -7,16 +7,116 @@
     
     {%include 'partials/_header.html'%}
 
-
+    <link rel="stylesheet" href="{% static 'css/company.css' %}">
     <main>
+
+        <!-- Primeiro container de informacao -->
+       
+        <div class="container">    
+            <div class="row justify-content-center">
+
+                <div class="col-12 col-md-10 mb-3" style="margin-top: 160px;">
+                    <legend class="tituloform">INFORMAÇÕES DA EMPRESA</legend>
+                    <div class="container-fluid bg-white border rounded shadow-lg p-3 custom-rounded">
+
+                        <fieldset>
+                            
+                            <div class="row">
+                                <div class="col">
+                                    <label for="nomeEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="nomeEmpresa" placeholder="Nome da empresa">
+                                </div>
+                                <div class="col">
+                                    <label for="emailEmpresa" class="form-label"></label>
+                                    <input type="email" class="form-control border border-primary" id="emailEmpresa" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="descricaoEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="descricaoEmpresa" placeholder="Descrição da empresa">
+                                </div>
+                                <div class="col">
+                                    <label for="cnpjEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="cnpjEmpresa" placeholder="CNPJ">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="telefoneEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="telefoneEmpresa" placeholder="Telefone">
+                                </div>
+                                <div class="col">
+                                    <label for="segmentoEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="segmentoEmpresa" placeholder="Segmento de atuação">
+                                </div>
+                            </div>  
+                        </fieldset>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- segundo container de informacao -->
+
+        <div class="container">    
+            <div class="row justify-content-center">
+
+                <div class="col-12 col-md-10 mb-3" style="margin-top: 40px;">
+                    <legend class="tituloform">ENDEREÇO</legend>
+                    <div class="container-fluid bg-white border rounded shadow-lg p-3 custom-rounded">
+                    
+                        <fieldset>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="cepEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="cepEmpresa" placeholder="CEP">
+                                </div>
+                                <div class="col">
+                                    <label for="ruaEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="ruaEmpresa" placeholder="Rua">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="numeroEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="numeroEmpresa" placeholder="Número">
+                                </div>
+                                <div class="col">
+                                    <label for="bairroEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="bairroEmpresa" placeholder="Bairro">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="cidadeEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="cidadeEmpresa" placeholder="Cidade">
+                                </div>
+                                <div class="col">
+                                    <label for="ufEmpresa" class="form-label"></label>
+                                    <input type="text" class="form-control border border-primary" id="ufEmpresa" placeholder="UF">
+                                </div>
+                            </div>
+                        </fieldset>
+                    
+                    </div>
+                    </div>
+            </div>
+        </div>
         
+        <!-- botao salvar --> 
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-6 text-center" style="margin-top: 40px;">
+                    <button type="button" class="btn btn-success">SALVAR</button>
+                </div>
+            </div>
+        </div>
+
     </main>
-
-
-
-
-
-
 
 
 

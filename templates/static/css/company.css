@@ -1,0 +1,9 @@
+body, html {
+    background: #EDF2F9;
+    height: 100%;  
+}
+
+.tituloform{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: gray;
+}
