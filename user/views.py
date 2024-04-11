@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
-def clinic_register_view(request):
+def clinic_register_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         form = ClinicRegistrationForm(request.POST)
         if form.is_valid():
@@ -24,11 +24,10 @@ def clinic_register_view(request):
     context = {'form': form}
     return render(request, 'users/register.html', context)
 
-def login_view(request):
+def login_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        print(form.is_valid())
-        if form.is_valid() == False:
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
             try:
                 email = form.cleaned_data['email']
                 password = form.cleaned_data['password']
@@ -49,11 +48,11 @@ def login_view(request):
     return render(request, 'users/login.html', context)
 
 @login_required
-def home_view(request):
+def home_view(request:HttpRequest) -> HttpResponse:
     return render(request, 'users/home.html')
 
 @login_required
-def create_dentist_view(request):
+def create_dentist_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         form = DentistRegistrationForm(request.POST)
         if form.is_valid():
@@ -65,25 +64,25 @@ def create_dentist_view(request):
                 'success': True,
                 'alert_sucess': alert_sucess
             }
-            return render('users/register_dentist.html', context)
+            return render(request,'users/register_dentist.html', context)
     else:
         form = DentistRegistrationForm()
 
     context = {'form': form}
     return render(request, 'users/register_dentist.html', context)
     
-def logout_view(request):
+def logout_view(request:HttpRequest) -> HttpResponse:
     logout(request)
     return redirect('/user/login/')  
     
-def list_dentist_view(request):
-    return HttpResponse('Lista de dentistas')
+def list_dentists_view(request:HttpRequest) -> HttpResponse:
+    return render(request, 'users/list_dentist.html')
 
-def update_dentist_view(request):
+def update_dentist_view(request:HttpRequest) -> HttpResponse:
     return HttpResponse('Dentista atualizado com sucesso')
 
-def delete_dentist_view(request):
+def delete_dentist_view(request:HttpRequest) -> HttpResponse:
     return HttpResponse('Dentista deletado com sucesso')
 
-def create_company_view(request):
+def create_company_view(request:HttpRequest) -> HttpResponse:
     return render(request, 'users/register_company.html')

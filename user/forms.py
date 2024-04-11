@@ -21,7 +21,8 @@ class ClinicRegistrationForm(forms.Form):
         validators=[validations.cnpj_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'CNPJ'
+            'placeholder': 'CNPJ',
+            'id': 'id_cnpj'
         })
     )
     email = forms.EmailField(
@@ -36,7 +37,8 @@ class ClinicRegistrationForm(forms.Form):
         label='Telefone',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Telefone'
+            'placeholder': 'Telefone',
+            'id': 'id_telefone'
         })
     )
     password = forms.CharField(
@@ -66,17 +68,21 @@ class ClinicRegistrationForm(forms.Form):
     
     @transaction.atomic
     def save(self, commit=True):
+        
+        phone_formatting = validations.remove_phone_number_formatting(self.cleaned_data['phone'])
+        cnpj_formatting = validations.remove_cnpj_formatting(self.cleaned_data['cnpj'])
+        
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
             name = self.cleaned_data['name_clinic'],
-            phone=self.cleaned_data['phone'],
+            phone=phone_formatting,
             password=self.cleaned_data['password'],
         )
         user.save()
 
         clinic = Clinic.objects.create(
             user=user,
-            cnpj=self.cleaned_data['cnpj'],
+            cnpj=cnpj_formatting,
         )
         clinic.save()
         
@@ -130,9 +136,11 @@ class DentistRegistrationForm(forms.Form):
     )
     phone = forms.CharField(
         label='Telefone',
+        validators=[validations.phone_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Telefone'
+            'placeholder': 'Telefone',
+            'id': 'id_telefone'
         })
     )
     password = forms.CharField(
@@ -162,15 +170,17 @@ class DentistRegistrationForm(forms.Form):
     
     @transaction.atomic
     def save(self, clinica_logada,commit=True):
+    
+        phone_formatting = validations.remove_phone_number_formatting(self.cleaned_data['phone'])
+        
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
-            name = self.cleaned_data['name_dentis'],
-            phone=self.cleaned_data['phone'],
+            name=self.cleaned_data['name_dentis'],
+            phone=phone_formatting,
             password=self.cleaned_data['password'],
         )
         user.save()
         clinica = get_object_or_404(Clinic, cnpj=clinica_logada)
-        print(clinica)
         
         dentist = Dentist.objects.create(
             user=user,

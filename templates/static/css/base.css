@@ -72,3 +72,8 @@
 .custom-card .btn-primary {
     border-radius: 5px;
 }
+
+main{
+    padding-top: 100px;
+    overflow:hidden;
+}
