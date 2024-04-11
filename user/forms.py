@@ -102,6 +102,7 @@ class LoginForm(AuthenticationForm):
             'placeholder': 'Senha'
         })
     )
+    
 class DentistRegistrationForm(forms.Form):
     name_dentis = forms.CharField(
         label='Nome do Dentista' ,

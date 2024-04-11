@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 def clinic_register_view(request):
     if request.method == 'POST':
@@ -26,14 +27,15 @@ def clinic_register_view(request):
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        if form.is_valid():
+        print(form.is_valid())
+        if form.is_valid() == False:
             try:
                 email = form.cleaned_data['email']
                 password = form.cleaned_data['password']
                 user = authenticate(email=email, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('/user/home')
+                    return redirect('/user/home/')
                 else:
                     form.add_error(None, 'Email ou senha inválidos')
                     
@@ -69,6 +71,10 @@ def create_dentist_view(request):
 
     context = {'form': form}
     return render(request, 'users/register_dentist.html', context)
+    
+def logout_view(request):
+    logout(request)
+    return redirect('/user/login/')  
     
 def list_dentist_view(request):
     return HttpResponse('Lista de dentistas')
