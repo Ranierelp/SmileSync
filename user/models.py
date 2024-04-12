@@ -86,7 +86,7 @@ class Dentist(models.Model):
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.user.name} | {self.cro}'
+        return f'{self.user.name}'
     
     
 class Company(models.Model):
@@ -100,6 +100,6 @@ class Company(models.Model):
         verbose_name_plural = 'Companies'
     
     def __str__(self):
-        return f'{self.user.name} | {self.cnpj}'
+        return f'{self.user.name}'
 
     

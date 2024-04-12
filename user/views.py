@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
-from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm
+from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm, CompanyRegistrationForm
 from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from .models import CustomUser, Dentist, Company
 
 def clinic_register_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':
@@ -70,19 +71,51 @@ def create_dentist_view(request:HttpRequest) -> HttpResponse:
 
     context = {'form': form}
     return render(request, 'users/register_dentist.html', context)
-    
+
+@login_required
 def logout_view(request:HttpRequest) -> HttpResponse:
     logout(request)
     return redirect('/user/login/')  
-    
-def list_dentists_view(request:HttpRequest) -> HttpResponse:
-    return render(request, 'users/list_dentist.html')
 
+@login_required
+def list_dentists_view(request:HttpRequest) -> HttpResponse:
+    dentista = Dentist.objects.filter(clinic=request.user.clinic)
+    context = {
+        'dentista': dentista
+    }	
+    return render(request, 'users/list_dentist.html', context)
+
+@login_required
 def update_dentist_view(request:HttpRequest) -> HttpResponse:
     return HttpResponse('Dentista atualizado com sucesso')
 
+@login_required
 def delete_dentist_view(request:HttpRequest) -> HttpResponse:
     return HttpResponse('Dentista deletado com sucesso')
 
+@login_required
 def create_company_view(request:HttpRequest) -> HttpResponse:
-    return render(request, 'users/register_company.html')
+    if request.method == 'POST':
+        form = CompanyRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            alert_sucess = 'Empresa cadastrada com sucesso!'
+            context = {
+                'form': form,
+                'success': True,
+                'alert_sucess': alert_sucess
+            }
+            return render(request, 'users/register_company.html', context)
+    else:
+        form = CompanyRegistrationForm()
+    
+    context = {'form': form}
+    return render(request, 'users/register_company.html', context)
+
+@login_required
+def list_companies_view(request:HttpRequest) -> HttpResponse:
+    empresas = Company.objects.filter(clinic=request.user.clinic)
+    context = {
+        'empresas': empresas
+    }
+    return render(request, 'users/list_companies.html', context)

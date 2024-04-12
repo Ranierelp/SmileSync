@@ -3,23 +3,112 @@
 
 {% block title %}Cadastro Empresa{% endblock title%}
 
-{% block content  %}
-    
+{% block content %}
+
+<main>
     {%include 'partials/_header.html'%}
 
-
-    <main>
-        
-    </main>
-
-
-
-
-
-
+    <div class="container-fluid ">
+        <form method="post" action="{% url 'create_company_view' %}" autocomplete="off">
+            {% csrf_token %}
+            <div>
+                <h2>INFORMAÇÕES DA EMPRESA</h2>
+            </div>
+            <div class="container-fluid bg-box">
+                <div class="row g-3 row-md-reverse">
+                    <div class="col-md-10">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    {{form.name_company}}
+                                    <label for="{{ form.name_company.id_for_label }}">Nome da Empresa</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    {{ form.cnpj }}
+                                    <label for="{{ form.cnpj.id_for_label }}">CNPJ</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    {{ form.email }}
+                                    <label for="{{ form.email.id_for_label }}">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    {{ form.description }}
+                                    <label for="{{ form.description.id_for_label }}">Descrição da Empresa</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    {{ form.company_segment }}
+                                    <label for="{{ form.company_segment.id_for_label }}">Segmento de Atuação</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2>ENDEREÇO</h2>
+            </div>
+                <div class="container-fluid bg-box">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="row g-3">
+                                <div class="col-md-2">
+                                    <div class="form-floating mb-3">
+                                        {{ form.zip_code }}
+                                        <label for="{{ form.zip_code.id_for_label }}">CEP</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        {{ form.street }}
+                                        <label for="{{ form.street.id_for_label }}">Rua</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-floating mb-3">
+                                        {{ form.number }}
+                                        <label for="{{ form.number.id_for_label }}">Número</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        {{ form.neighborhood }}
+                                        <label for="{{ form.neighborhood.id_for_label }}">Bairro</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                        {{ form.city }}
+                                        <label for="{{ form.city.id_for_label }}">Cidade</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                        {{ form.state }}
+                                        <label for="{{ form.state.id_for_label }}">UF</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg">Enviar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
 
 
 
 {% include "partials/_modal_sucess.html" %}
 {% include "partials/_modal_erro.html" %}
-{% endblock content  %}
+{% endblock content %}

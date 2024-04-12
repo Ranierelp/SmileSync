@@ -30,8 +30,8 @@
                 <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
                     <ul class="dropdown-content">
-                      <li><a href="/user/cadastro_dentista">Cadastrar Dentista</a></li>
-                      <li><a href="#">Lista de Dentistas</a></li>
+                      <li><a href="{% url "create_dentist_view" %}">Cadastrar Dentista</a></li>
+                      <li><a href="{% url "list_dentists_view" %}">Lista de Dentistas</a></li>
                     </ul>
                   </div>
                 </div>
@@ -46,8 +46,8 @@
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
                     <ul class="dropdown-content">
-                      <li><a href="#">Cadastrar Empresa</a></li>
-                      <li><a href="#">Lista de Empresas</a></li>
+                      <li><a href="{% url "create_company_view" %}">Cadastrar Empresa</a></li>
+                      <li><a href="{% url "list_companies_view" %}">Lista de Empresas</a></li>
                     </ul>
                   </div>
                 </div>
