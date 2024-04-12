@@ -4,10 +4,9 @@
 {% block title %}Home{% endblock title%}
 
 {% block content  %}
-    
     {%include 'partials/_header.html'%}
 
-    <main class="margin-navbar">
+    <main>
         <div class="container text-start">
             <div class="row g-2">
               <div class="col-6">
@@ -54,8 +53,10 @@
           </div>
     </main>
     
-
+{% comment %} 
+    {%include 'partials/_footer.html'%} {% endcomment %}
 {% endblock content  %}
+
 
 
 

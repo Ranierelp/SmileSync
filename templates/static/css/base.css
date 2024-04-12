@@ -76,7 +76,6 @@
 }
 
 main{
-    margin-top: 150px;
     padding: 0.5% 1.5%;
     overflow: hidden;
     min-height: calc(100vh - 76px);

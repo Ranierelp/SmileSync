@@ -272,10 +272,11 @@ class CompanyRegistrationForm(forms.Form):
     
     description = forms.CharField(
         label='Descrição',
+        required=False,
         widget=forms.Textarea(attrs={
             'class': 'form-control',
             'placeholder': 'Descrição',
-            'rows': 4
+            'rows': 4,
         })
     )
     
