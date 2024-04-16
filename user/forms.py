@@ -288,22 +288,6 @@ class CompanyRegistrationForm(forms.Form):
         })
     )
     
-    password = forms.CharField(
-        label='Senha',
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Senha'
-        }),
-        validators=[MinLengthValidator(6, message='Senha deve ter no mínimo 6 caracteres')]
-    )
-    confirm_password = forms.CharField(
-        label='Confirmar Senha',
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Confirmar Senha'
-        })
-    )
-
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get('password')

@@ -4,7 +4,7 @@ from address.models import Address
 from django.utils import timezone
     
 class BaseModelQuerySet(models.QuerySet):
-    
+
     def delete(self):
         self.update(deleted_at=timezone.now(), is_active=False)
 
@@ -32,8 +32,6 @@ class BaseModel(models.Model):
         
     def hard_delete(self, **kwargs):
         super(BaseModel, self).delete(**kwargs)
-
-
 class UserManager(BaseUserManager):
     use_in_migrations = True
     
@@ -69,6 +67,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin, BaseModel):
     REQUIRED_FIELDS = ['name', 'phone']
     
     objects = UserManager()
+    
+    def soft_delete(self):
+        self.delete()
 
 class Clinic(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

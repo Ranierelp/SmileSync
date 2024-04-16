@@ -26,19 +26,23 @@
                         <th class="text-end" scope="col">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="dentist-table-body">
                     {% for dentista in dentista  %}
                     <tr>
                         <td>{{dentista.user.name}}</td>
                         <td>{{dentista.user.email}}</td>
                         <td>{{dentista.cro}}</td>
                         <td class="text-end">
-                            <div><button class="btn btn-link p-0" type="button" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Edit"><span
-                                class="text-500 fas fa-edit"></span></button><button
-                                class="btn btn-link p-0 ms-2" type="button" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Delete"><span
-                                class="text-500 fas fa-trash-alt"></span></button></div>
+                            <div>
+                                <button class="btn btn-link p-0" type="button" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Edit">
+                                <span class="text-500 fas fa-edit"></span>
+                                </button>
+                                <button class="btn btn-link p-0 ms-2 delete-dentist-button" type="button" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="Delete" data-dentist-id="{{ dentista.pk }}">
+                                <span class="text-500 fas fa-trash-alt"></span>
+                            </button>
+                        </div>
                             </td>
                         </tr>
                     {% endfor %}
@@ -47,5 +51,8 @@
         </div>
     </div>
 </main>
+    
+    {% include 'partials/_modal_delete.html' %}
+    
 
 {% endblock content %}

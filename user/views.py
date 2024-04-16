@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm, CompanyRegistrationForm
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import CustomUser, Dentist, Company
+import json
 
 def clinic_register_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':
@@ -79,7 +80,7 @@ def logout_view(request:HttpRequest) -> HttpResponse:
 
 @login_required
 def list_dentists_view(request:HttpRequest) -> HttpResponse:
-    dentista = Dentist.objects.filter(clinic=request.user.clinic)
+    dentista = Dentist.objects.filter(clinic=request.user.clinic, user__is_active=True )
     context = {
         'dentista': dentista
     }	
@@ -90,8 +91,18 @@ def update_dentist_view(request:HttpRequest) -> HttpResponse:
     return HttpResponse('Dentista atualizado com sucesso')
 
 @login_required
-def delete_dentist_view(request:HttpRequest) -> HttpResponse:
-    return HttpResponse('Dentista deletado com sucesso')
+def delete_dentist_view(request, pk) -> HttpResponse:
+    dentist = get_object_or_404(Dentist, pk=pk)
+    
+    if request.method == 'POST':
+        try:
+            dentist.user.delete()
+            response_data = {'status': 'success', 'message': 'Dentista deletado com sucesso.'}
+        except Exception as e:
+            response_data = {'status': 'error', 'message': str(e)}
+        return JsonResponse(response_data, status=200)
+
+    return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=405)
 
 @login_required
 def create_company_view(request:HttpRequest) -> HttpResponse:

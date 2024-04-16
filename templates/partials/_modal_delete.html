@@ -1,0 +1,62 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteDentistButtons = document.querySelectorAll('.delete-dentist-button');
+        deleteDentistButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const dentistId = button.dataset.dentistId;
+                deleteDentist(dentistId);
+            });
+        });
+
+        function deleteDentist(dentistId) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success btn-margin",
+                    cancelButton: "btn btn-danger btn-margin"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: "Você tem certeza?",
+                text: "Você não poderá reverter isso!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sim, deletar!",
+                cancelButtonText: "Não, cancelar!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/user/deletar_dentista/${dentistId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                swalWithBootstrapButtons.fire("Sucesso", data.message, "success").then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                swalWithBootstrapButtons.fire("Erro", data.message, "error");
+                            }
+                        })
+
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Cancelado",
+                        text: "A ação foi cancelada :)",
+                        icon: "error"
+                    });
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    .btn-margin {
+        margin-right: 10px;
+    }
+</style>
