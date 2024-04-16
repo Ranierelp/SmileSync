@@ -4,10 +4,10 @@ from .models import CustomUser, Clinic, Dentist, Company
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('email', 'first_name', 'last_name', 'phone', 'type_user', 'is_staff', 'is_active')
+    list_display = ('email', 'name', 'phone', 'is_staff', 'is_active', 'deleted_at', 'updated_at', 'created_at')    
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Informações Pessoais', {'fields': ('first_name', 'last_name', 'phone', 'type_user')}),
+        ('Informações Pessoais', {'fields': ('name', 'phone', )}),
         ('Permissões', {'fields': ('is_staff', 'is_active')}),
     )
     add_fieldsets = (
