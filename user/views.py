@@ -96,7 +96,7 @@ def delete_dentist_view(request, pk) -> HttpResponse:
     
     if request.method == 'POST':
         try:
-            dentist.user.delete()
+            dentist.user.soft_delete()
             response_data = {'status': 'success', 'message': 'Dentista deletado com sucesso.'}
         except Exception as e:
             response_data = {'status': 'error', 'message': str(e)}
@@ -109,7 +109,8 @@ def create_company_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         form = CompanyRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            clinica = request.user.clinic.cnpj
+            form.save(clinica)
             alert_sucess = 'Empresa cadastrada com sucesso!'
             context = {
                 'form': form,
@@ -125,8 +126,22 @@ def create_company_view(request:HttpRequest) -> HttpResponse:
 
 @login_required
 def list_companies_view(request:HttpRequest) -> HttpResponse:
-    empresas = Company.objects.filter(clinic=request.user.clinic)
+    empresas = Company.objects.filter(clinic=request.user.clinic, user__is_active=True)
     context = {
         'empresas': empresas
     }
     return render(request, 'users/list_companies.html', context)
+
+@login_required
+def delete_company_view(request, pk) -> HttpResponse:
+    company = get_object_or_404(Company, pk=pk)
+    
+    if request.method == 'POST':
+        try:
+            company.user.soft_delete()
+            response_data = {'status': 'success', 'message': 'Empresa deletada com sucesso.'}
+        except Exception as e:
+            response_data = {'status': 'error', 'message': str(e)}
+        return JsonResponse(response_data, status=200)
+
+    return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=405)

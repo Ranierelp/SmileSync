@@ -1,14 +1,16 @@
+{% load static %}
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const deleteDentistButtons = document.querySelectorAll('.delete-dentist-button');
-        deleteDentistButtons.forEach(button => {
+        const deleteCompanyButtons = document.querySelectorAll('.delete-company-button');
+        deleteCompanyButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const dentistId = button.dataset.dentistId;
-                deleteDentist(dentistId);
+                const companyId = button.dataset.companyId;
+                deleteCompany(companyId);
             });
         });
 
-        function deleteDentist(dentistId) {
+        function deleteCompany(companyId) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: "btn btn-success btn-margin",
@@ -26,7 +28,7 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch(`/user/deletar_dentista/${dentistId}/`, {
+                    fetch(`/user/deletar_empresa/${companyId}/`, {
                         method: 'POST',
                         headers: {
                             'X-CSRFToken': '{{ csrf_token }}'

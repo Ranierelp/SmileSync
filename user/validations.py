@@ -40,3 +40,6 @@ def remove_phone_number_formatting(phone_number:str):
     phone_number_unformatted = phone_number.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")
     return phone_number_unformatted
 
+def remove_zip_code_formatting(zip_code:str):
+    zip_code_unformatted = zip_code.replace("-", "")
+    return zip_code_unformatted

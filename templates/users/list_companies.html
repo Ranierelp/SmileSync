@@ -23,21 +23,23 @@
                         <th scope="col">Empresa</th>
                         <th scope="col">Email</th>
                         <th scope="col">CNPJ</th>
+                        <th scope="col">pk</th>
                         <th class="text-end" scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for dentista in dentista  %}
+                    {% for empresas in empresas  %}
                     <tr>
-                        <td>{{dentista.user.name}}</td>
-                        <td>{{dentista.user.email}}</td>
-                        <td>{{dentista.cro}}</td>
+                        <td>{{empresas.user.name}}</td>
+                        <td>{{empresas.user.email}}</td>
+                        <td>{{empresas.cnpj}}</td>
+                        <td>{{empresas.pk}}</td>
                         <td class="text-end">
                             <div><button class="btn btn-link p-0" type="button" data-bs-toggle="tooltip"
                                 data-bs-placement="top" title="Edit"><span
                                 class="text-500 fas fa-edit"></span></button><button
-                                class="btn btn-link p-0 ms-2" type="button" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Delete"><span
+                                class="btn btn-link p-0 ms-2 delete-company-button" type="button" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Delete" data-company-id="{{ empresas.pk }}"><span
                                 class="text-500 fas fa-trash-alt"></span></button></div>
                             </td>
                         </tr>
@@ -47,5 +49,7 @@
         </div>
     </div>
 </main>
+
+    {% include 'partials/_modal_company.html' %}
 
 {% endblock content %}

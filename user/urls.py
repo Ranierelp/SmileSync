@@ -12,6 +12,7 @@ urlpatterns = [
     path('lista_empresas/', views.list_companies_view, name='list_companies_view'),
     path('logout/', views.logout_view, name='logout'),
     path('deletar_dentista/<str:pk>/', views.delete_dentist_view, name='delete_dentist_view'),
+    path('deletar_empresa/<str:pk>/', views.delete_company_view, name='delete_company_view'),
 ]
 
 

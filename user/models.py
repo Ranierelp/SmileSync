@@ -94,6 +94,8 @@ class Company(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     cnpj = models.CharField(primary_key=True, max_length=15)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
+    description = models.TextField('Descrição', max_length=500, blank=True, null=True)
+    company_segment = models.CharField('Segmento da Empresa', max_length=100)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
     
     class Meta:

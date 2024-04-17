@@ -37,14 +37,20 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    {{ form.description }}
-                                    <label for="{{ form.description.id_for_label }}">Descrição da Empresa</label>
+                                    {{ form.phone }}
+                                    <label for="{{ form.phone.id_for_label }}">Telefone</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     {{ form.company_segment }}
                                     <label for="{{ form.company_segment.id_for_label }}">Segmento de Atuação</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    {{ form.description }}
+                                    <label for="{{ form.description.id_for_label }}">Descrição da Empresa</label>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +112,7 @@
     </div>
 </main>
 
-
+<script src={% static "js/cep.js" %}></script>
 {% include "partials/_modal_sucess.html" %}
 {% include "partials/_modal_erro.html" %}
 {% endblock content %}
