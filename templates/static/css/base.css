@@ -106,3 +106,27 @@ aside{
     margin: 8px auto;
     padding: 8px 8px;
 }
+
+
+/* css botao perfil */
+
+.fixed-circle-button {
+   
+    bottom: 20px; 
+    right: 20px; 
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    background-color: gray; 
+    border: none; 
+    color: white; 
+    font-size: 20px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: transform 0.3s; 
+}
+
+.fixed-circle-button:hover {
+    transform: scale(1.1); 
+}

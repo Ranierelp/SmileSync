@@ -10,9 +10,30 @@
           aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <img src="{% static 'img/icon_menu.svg' %}" alt="icon" class="navbar-toggler-icon">
         </button>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <!-- mexer dps daqui -->
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-2">
         </ul>
-        <a href="{% url 'logout' %}">Logout</a>
+
+        <div style="margin-right: 10px;">{{request.user.name|upper}}</div>
+
+        <!-- Atualizar para uma bola cinza -->
+          
+        <div class="dropdown">
+          <button class="fixed-circle-button" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user"></i> <!-- icone de perfil biblioteca awesome-->
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"> 
+            <li><a class="dropdown-item" href="#">Seus Dados</a></li>
+            <li><a class="dropdown-item" href="#">Alterar Dados</a></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+          </ul>
+        </div>
+
+        <!-- nao mexer dps -->
+
+
       </div>
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
