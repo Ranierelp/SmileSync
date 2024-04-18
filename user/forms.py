@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from .utils import generate_password
+from rolepermissions.roles import assign_role
 
 #CRIAR FUNÇÃO PARA ENVIAR EMAIL COM A SENHA
 
@@ -86,7 +87,9 @@ class ClinicRegistrationForm(forms.Form):
             user=user,
             cnpj=cnpj_formatting,
         )
-        clinic.save()  
+        clinic.save()
+        assign_role(user, 'clinica')
+          
 class LoginForm(AuthenticationForm):        
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)

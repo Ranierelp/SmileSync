@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
@@ -6,7 +7,8 @@ from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import CustomUser, Dentist, Company
-import json
+from rolepermissions.decorators import has_role_decorator, has_permission_decorator
+from rolepermissions.checkers import has_role
 
 def clinic_register_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':
@@ -55,23 +57,28 @@ def home_view(request:HttpRequest) -> HttpResponse:
 
 @login_required
 def create_dentist_view(request:HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = DentistRegistrationForm(request.POST)
-        if form.is_valid():
-            clinica = request.user.clinic.cnpj
-            form.save(clinica)
-            alert_sucess = 'Dentista cadastrado com sucesso!'
-            context = {
-                'form': form,
-                'success': True,
-                'alert_sucess': alert_sucess
-            }
-            return render(request,'users/register_dentist.html', context)
+    if has_role(request.user, 'clinica'):   
+        if request.method == 'POST':
+            form = DentistRegistrationForm(request.POST)
+            if form.is_valid():
+                clinica = request.user.clinic.cnpj
+                form.save(clinica)
+                alert_sucess = 'Dentista cadastrado com sucesso!'
+                context = {
+                    'form': form,
+                    'success': True,
+                    'alert_sucess': alert_sucess
+                }
+                return render(request,'users/register_dentist.html', context)
+        else:
+            form = DentistRegistrationForm()
+            
+        context = {'form': form}
+        return render(request, 'users/register_dentist.html', context)
+    
     else:
-        form = DentistRegistrationForm()
-
-    context = {'form': form}
-    return render(request, 'users/register_dentist.html', context)
+        logout(request)
+        return render(request, '403.html')
 
 @login_required
 def logout_view(request:HttpRequest) -> HttpResponse:
@@ -106,42 +113,55 @@ def delete_dentist_view(request, pk) -> HttpResponse:
 
 @login_required
 def create_company_view(request:HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = CompanyRegistrationForm(request.POST)
-        if form.is_valid():
-            clinica = request.user.clinic.cnpj
-            form.save(clinica)
-            alert_sucess = 'Empresa cadastrada com sucesso!'
-            context = {
-                'form': form,
-                'success': True,
-                'alert_sucess': alert_sucess
-            }
-            return render(request, 'users/register_company.html', context)
-    else:
-        form = CompanyRegistrationForm()
+    if has_role(request.user, 'clinica'): 
+        if request.method == 'POST':
+            form = CompanyRegistrationForm(request.POST)
+            if form.is_valid():
+                clinica = request.user.clinic.cnpj
+                form.save(clinica)
+                alert_sucess = 'Empresa cadastrada com sucesso!'
+                context = {
+                    'form': form,
+                    'success': True,
+                    'alert_sucess': alert_sucess
+                }
+                return render(request, 'users/register_company.html', context)
+        else:
+            form = CompanyRegistrationForm()
+        
+        context = {'form': form}
+        return render(request, 'users/register_company.html', context)
     
-    context = {'form': form}
-    return render(request, 'users/register_company.html', context)
+    else:
+        logout(request)
+        return render(request, '403.html', status=403)
 
 @login_required
 def list_companies_view(request:HttpRequest) -> HttpResponse:
-    empresas = Company.objects.filter(clinic=request.user.clinic, user__is_active=True)
-    context = {
-        'empresas': empresas
-    }
-    return render(request, 'users/list_companies.html', context)
+    if has_role(request.user, 'clinica'):
+        empresas = Company.objects.filter(clinic=request.user.clinic, user__is_active=True)
+        context = {
+            'empresas': empresas
+        }
+        return render(request, 'users/list_companies.html', context)
+    else:
+        logout(request)
+        return render(request, '403.html')
 
 @login_required
 def delete_company_view(request, pk) -> HttpResponse:
-    company = get_object_or_404(Company, pk=pk)
-    
-    if request.method == 'POST':
-        try:
-            company.user.soft_delete()
-            response_data = {'status': 'success', 'message': 'Empresa deletada com sucesso.'}
-        except Exception as e:
-            response_data = {'status': 'error', 'message': str(e)}
-        return JsonResponse(response_data, status=200)
+    if has_role(request.user, 'clinica'): 
+        company = get_object_or_404(Company, pk=pk)
+        
+        if request.method == 'POST':
+            try:
+                company.user.soft_delete()
+                response_data = {'status': 'success', 'message': 'Empresa deletada com sucesso.'}
+            except Exception as e:
+                response_data = {'status': 'error', 'message': str(e)}
+            return JsonResponse(response_data, status=200)
 
-    return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=405)
+        return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=405)
+    else:
+        logout(request)
+        return render(request, '403.html', status=403)

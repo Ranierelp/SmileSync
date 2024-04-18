@@ -151,3 +151,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.CustomUser'
 
 ROLEPERMISSIONS_MODULE = 'SmileSync.roles'
+ROLEPERMISSIONS_REDIRECT_TO_LOGIN = True
