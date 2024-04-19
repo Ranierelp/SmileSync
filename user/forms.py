@@ -21,7 +21,6 @@ class ClinicRegistrationForm(forms.Form):
     )
     cnpj = forms.CharField(
         label='CNPJ',
-        validators=[validations.cnpj_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'CNPJ',
@@ -74,6 +73,7 @@ class ClinicRegistrationForm(forms.Form):
         
         phone_formatting = validations.remove_phone_number_formatting(self.cleaned_data['phone'])
         cnpj_formatting = validations.remove_cnpj_formatting(self.cleaned_data['cnpj'])
+        cnpj_unic = validations.cnpj_unique(Clinic, cnpj_formatting)
         
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
@@ -165,7 +165,9 @@ class DentistRegistrationForm(forms.Form):
             cro=self.cleaned_data['cro'],
             clinic=clinica
         )
-        dentist.save()     
+        dentist.save()    
+        assign_role(user, 'dentista')
+         
 class CompanyRegistrationForm(forms.Form):
     name_company = forms.CharField(
         label='Nome da Empresa',
@@ -177,7 +179,6 @@ class CompanyRegistrationForm(forms.Form):
     )
     cnpj = forms.CharField(
         label='CNPJ',
-        validators=[validations.cnpj_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'CNPJ',
@@ -194,6 +195,7 @@ class CompanyRegistrationForm(forms.Form):
     )
     phone = forms.CharField(
         label='Telefone',
+        validators=[validations.phone_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Telefone',
@@ -261,6 +263,14 @@ class CompanyRegistrationForm(forms.Form):
         })
     )
     
+    def clen(self):
+        cleaned_data = super().clean()
+        cnpj = cleaned_data.get('cnpj')
+        
+        validations.cnpj_unique(Company, cnpj)
+        
+        return cleaned_data
+    
     @transaction.atomic
     def save(self, clinica_logada,commit=True):
         
@@ -298,4 +308,5 @@ class CompanyRegistrationForm(forms.Form):
             company_segment=self.cleaned_data['company_segment']
         )
         company.save()
+        assign_role(user, 'empresa')
     

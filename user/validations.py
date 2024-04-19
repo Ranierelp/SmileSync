@@ -1,7 +1,8 @@
 from django.core.exceptions import ValidationError
-from .models import CustomUser, Clinic, Dentist
+from .models import CustomUser, Clinic, Dentist, Company
 from django import forms      
 from django.db import IntegrityError
+from django.db.models import Model
 
 def email_unique(value:str) :
     try:
@@ -16,11 +17,11 @@ def validate_password_match(password1, password2:str):
     
 def phone_unique(value:str):
     if CustomUser.objects.filter(phone=value).exists():
-        raise ValidationError('Este telefone já está em uso. Por favor, insira outro válido.')   
-    
-def cnpj_unique(value:str):
-    if Clinic.objects.filter(cnpj=value).exists():
-        raise ValidationError('Este CNPJ já está em uso. Por favor, insira outro válido.')
+        raise forms.ValidationError('Este telefone já está em uso. Por favor, insira outro válido.')   
+
+def cnpj_unique(model:Model, value:str):
+    if model.objects.filter(cnpj=value).exists():
+        raise forms.ValidationError('Este CNPJ já está em uso. Por favor, insira outro válido.')
     
 def cro_unique(value:str):
     if Dentist.objects.filter(cro=value).exists():
@@ -43,3 +44,6 @@ def remove_phone_number_formatting(phone_number:str):
 def remove_zip_code_formatting(zip_code:str):
     zip_code_unformatted = zip_code.replace("-", "")
     return zip_code_unformatted
+
+
+# VERIFICAR AS VALIDAÇÕES DOS FORMS !!!!!!!!!!

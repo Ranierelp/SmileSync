@@ -87,11 +87,15 @@ def logout_view(request:HttpRequest) -> HttpResponse:
 
 @login_required
 def list_dentists_view(request:HttpRequest) -> HttpResponse:
-    dentista = Dentist.objects.filter(clinic=request.user.clinic, user__is_active=True )
-    context = {
-        'dentista': dentista
-    }	
-    return render(request, 'users/list_dentist.html', context)
+    if has_role(request.user, 'clinica'):
+        dentista = Dentist.objects.filter(clinic=request.user.clinic, user__is_active=True )
+        context = {
+            'dentista': dentista
+        }	
+        return render(request, 'users/list_dentist.html', context)
+    else:
+        logout(request)
+        return render(request, '403.html')
 
 @login_required
 def update_dentist_view(request:HttpRequest) -> HttpResponse:
@@ -99,17 +103,21 @@ def update_dentist_view(request:HttpRequest) -> HttpResponse:
 
 @login_required
 def delete_dentist_view(request, pk) -> HttpResponse:
-    dentist = get_object_or_404(Dentist, pk=pk)
-    
-    if request.method == 'POST':
-        try:
-            dentist.user.soft_delete()
-            response_data = {'status': 'success', 'message': 'Dentista deletado com sucesso.'}
-        except Exception as e:
-            response_data = {'status': 'error', 'message': str(e)}
-        return JsonResponse(response_data, status=200)
+    if has_role(request.user, 'clinica'):    
+        dentist = get_object_or_404(Dentist, pk=pk)
+        
+        if request.method == 'POST':
+            try:
+                dentist.user.soft_delete()
+                response_data = {'status': 'success', 'message': 'Dentista deletado com sucesso.'}
+            except Exception as e:
+                response_data = {'status': 'error', 'message': str(e)}
+            return JsonResponse(response_data, status=200)
 
-    return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=405)
+        return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=405)
+    else:
+        logout(request)
+        return render(request, '403.html', status=403)
 
 @login_required
 def create_company_view(request:HttpRequest) -> HttpResponse:
