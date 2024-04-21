@@ -174,3 +174,7 @@ def delete_company_view(request, pk) -> HttpResponse:
     else:
         logout(request)
         return render(request, '403.html', status=403)
+
+def planos_view(request):
+    return render(request,'users/plano.html')
+    
