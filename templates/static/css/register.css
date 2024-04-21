@@ -1,0 +1,56 @@
+body, html {
+    background: #EDF2F9;
+    height: 100%;
+}
+.min-vh-100 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.col-lg-8 {
+    margin-top: 50px; 
+}
+.bg-card-gradient {
+    padding: 2rem;
+    height: 100%;
+}
+.left-column {
+    background-image: url(/static/img/plano_de_fundo.svg);
+    background-size: cover;
+    background-position: center;
+}
+.form-check-label {
+    font-size: 0.875rem;
+}
+
+.card.overflow-hidden {
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.form-check-label {
+    font-size: 0.875rem;
+}
+
+.form-floating>.form-control, .form-floating>.form-control-plaintext, .form-floating>.form-select {
+    height: calc(2.4rem + calc(var(--bs-border-width) * 2));
+    min-height: calc(2.4rem + calc(var(--bs-border-width) * 2));
+    line-height: 1.25;
+}
+
+.form-floating>.form-control-plaintext~label::after, .form-floating>.form-control:focus~label::after, .form-floating>.form-control:not(:placeholder-shown)~label::after, .form-floating>.form-select~label::after {
+    position: absolute;
+    inset: 1rem 0.375rem;
+    z-index: -1;
+    height: 1.5em;
+    content: "";
+    background-color: transparent;
+    border-radius: var(--bs-border-radius);
+}
+
+.form-floating label {
+    font-size: 13.5px;
+}
+
+.input-default {
+    font-size: small;
+}

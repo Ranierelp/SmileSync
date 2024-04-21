@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Cadastrar Denstista {% endblock title %}
+
+{% block content %}
+
+{%include 'partials/_header.html'%}
+
+<main>
+    <div class="container-fluid">
+        <div class="row min-vh-100 justify-content-center align-items-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card overflow-hidden z-1 shadow mb-5 bg-body-tertiary rounded">
+                    <div class="p-4 p-md-5">
+                        <h3>Cadastro de Dentista</h3>
+                        <form method="post" action="{% url 'create_dentist_view' %}" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-floating mb-3">
+                                {{ form.name_dentis }}
+                                <label for="{{ form.name_dentis.id_for_label }}">Dentista</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                {{ form.cro }}
+                                <label for="{{ form.cro.id_for_label }}">CRO</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                {{ form.email }}
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                {{ form.phone }}
+                                <label for="{{ form.phone.id_for_label }}">Telefone</label>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-block w-100 mt-3" type="submit"
+                                    name="submit">Registrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include "partials/_modal_sucess.html" %}
+{% include "partials/_modal_erro.html" %}
+{% endblock content %}

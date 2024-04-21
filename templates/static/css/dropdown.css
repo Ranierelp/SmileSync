@@ -1,0 +1,28 @@
+.dropdown-content {
+    list-style: none;
+    width: 100%;
+}
+  
+.dropdown-content li {
+    border-radius: 0.5em;
+}
+
+.dropdown-content li:hover {
+    background: #A9DBFF;
+}
+  
+.dropdown-content li a {
+    display: block;
+    padding: 0.7em 0.5em;
+    color: #000000;
+    margin: 0.1em 0;
+    text-decoration: none;
+}
+  
+ol, ul {
+    padding-left: 0;
+}
+
+.accordion-body{
+    background-color: #EDF2F9;
+}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title%}
+
+{% block content %}
+
+{%include 'partials/_header.html'%}
+
+<main>
+    <div class="container text-start">
+        <div class="row row-cols-1">
+            <div>
+                <h2>LISTA DE EMPRESA</h2>
+            </div>
+        </div>
+      </div>
+    <div class="container bg-box">
+        <div class="table-responsive scrollbar">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">CNPJ</th>
+                        <th class="text-end" scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empresas in empresas  %}
+                    <tr>
+                        <td>{{empresas.user.name}}</td>
+                        <td>{{empresas.user.email}}</td>
+                        <td>{{empresas.cnpj}}</td>
+                        <td class="text-end">
+                            <div><button class="btn btn-link p-0" type="button" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Edit"><span
+                                class="text-500 fas fa-edit"></span></button><button
+                                class="btn btn-link p-0 ms-2 delete-company-button" type="button" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Delete" data-company-id="{{ empresas.pk }}"><span
+                                class="text-500 fas fa-trash-alt"></span></button></div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+    {% include 'partials/_modal_company.html' %}
+
+{% endblock content %}
