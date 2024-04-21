@@ -13,15 +13,17 @@ def email_unique(value:str) :
 
 def validate_password_match(password1, password2:str):
     if password1 and password2 and password1 != password2:
-        raise forms.ValidationError('Senhas Diferentes')
+        raise ValidationError('Senhas Diferentes')
     
 def phone_unique(value:str):
     if CustomUser.objects.filter(phone=value).exists():
-        raise forms.ValidationError('Este telefone já está em uso. Por favor, insira outro válido.')   
+        raise ValidationError('Este telefone já está em uso. Por favor, insira outro válido.')   
 
-def cnpj_unique(model:Model, value:str):
-    if model.objects.filter(cnpj=value).exists():
-        raise forms.ValidationError('Este CNPJ já está em uso. Por favor, insira outro válido.')
+def cnpj_unique(value:str):
+    if Clinic.objects.filter(cnpj=value).exists():
+        raise ValidationError('Este CNPJ já está em uso. Por favor, insira outro válido.')
+    if Company.objects.filter(cnpj=value).exists():
+        raise ValidationError('Este CNPJ já está em uso. Por favor, insira outro válido.')
     
 def cro_unique(value:str):
     if Dentist.objects.filter(cro=value).exists():
@@ -30,7 +32,7 @@ def cro_unique(value:str):
 def user_exists(email:str):
     user = CustomUser.objects.filter(email=email).first()
     if user is None:
-        raise forms.ValidationError('Usuário não encontrado, verifique se as credenciais estão corretas.')
+        raise ValidationError('Usuário não encontrado, verifique se as credenciais estão corretas.')
     return user
 
 def remove_cnpj_formatting(cnpj:str):

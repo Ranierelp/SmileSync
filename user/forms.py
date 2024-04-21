@@ -62,7 +62,7 @@ class ClinicRegistrationForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get('password')
-        password2 = cleaned_data.get('confirm_password')
+        password2 = cleaned_data.get('confirm_password')    
 
         validations.validate_password_match(password1, password2)
 
@@ -179,6 +179,7 @@ class CompanyRegistrationForm(forms.Form):
     )
     cnpj = forms.CharField(
         label='CNPJ',
+        validators=[validations.cnpj_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'CNPJ',
@@ -263,14 +264,6 @@ class CompanyRegistrationForm(forms.Form):
         })
     )
     
-    def clen(self):
-        cleaned_data = super().clean()
-        cnpj = cleaned_data.get('cnpj')
-        
-        validations.cnpj_unique(Company, cnpj)
-        
-        return cleaned_data
-    
     @transaction.atomic
     def save(self, clinica_logada,commit=True):
         
@@ -298,7 +291,6 @@ class CompanyRegistrationForm(forms.Form):
             zip_code=zip_code_formatting
         )
         address.save()
-        
         company = Company.objects.create(
             user=user,
             cnpj=cnpj_formatting,

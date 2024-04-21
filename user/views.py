@@ -9,6 +9,7 @@ from django.contrib.auth import logout
 from .models import CustomUser, Dentist, Company
 from rolepermissions.decorators import has_role_decorator, has_permission_decorator
 from rolepermissions.checkers import has_role
+from . import validations  
 
 def clinic_register_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':

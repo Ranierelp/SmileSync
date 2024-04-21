@@ -147,7 +147,7 @@ h2{
     color: #212529;
     text-align: left;
     background-color: #fff;
-    border: 1px dashed rgb(110, 110, 110);
+    border: 1px dashed rgb(156, 156, 156);
     border-radius: 0;
     overflow-anchor: none;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, border-radius .15s ease;
