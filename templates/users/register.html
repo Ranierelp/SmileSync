@@ -3,83 +3,167 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/register.css' %}">
+
 <body>
-    <div class="container-fluid">
-        <div class="row min-vh-100">
-            <!-- Coluna com imagem e descrição -->
-            <div class="col-lg-8 position-relative">
-                <div class="card overflow-hidden bg-body-tertiary rounded">
-                    <div class="card-body p-0">
-                        <div class="row gx-8">
-                            <div class="col-md-6 text-center bg-card-gradient left-column">
-                                <div class="position-relative p-4 pt-md-5 pb-md-7" data-bs-theme="light">
-                                    <div class="z-1 position-relative">
-                                    <img src="{% static 'img/SmileSync_name_logo.svg' %}" alt="Logo" class="img-fluid">
-                                    <p class="text-white">Simplificando consultórios e potencializando sorrisos. O seu parceiro digital para um consultório mais eficiente e sorrisos mais saudáveis</p>
-                                    </div>
-                                </div>
-                                <div style="height: 200px;"></div> 
-                                <div class="mt-3 mb-5 mt-md-4 mb-md-5" data-bs-theme="light">
-                                    <p class="text-white" >Não tem uma conta?<br>
-                                        <a class="text-decoration-underline link-light text-white" href="/user/login">Login</a></p>
-                                </div>
-                            </div>
-                        <!-- Coluna com formulário de registro -->
-                        <div class="col-md-6 d-flex flex-center">
-                            <div class="p-4 p-md-5 flex-grow-1">
-                                <h3>Register</h3>
-                                <form method="post" action="{% url "clinic_register_view" %}" autocomplete="off" >
-                                    {% csrf_token %}
-                                    <div class="form-floating mb-3">
-                                        {{ form.name_clinic }}
-                                        <label for="{{ form.name_clinic.id_for_label }}">Nome da Clínica</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        {{ form.cnpj }}
-                                        <label for="{{ form.cnpj.id_for_label }}">CNPJ</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        {{ form.email }}
-                                        <label for="{{ form.email.id_for_label }}">Email</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        {{ form.phone }}
-                                        <label for="{{ form.phone.id_for_label }}">Telefone</label>
-                                    </div>
-                                    <div class="row gx-2">
-                                        <div class="form-floating mb-3 col-sm-6">
-                                            {{form.password}}
-                                            <label for="{{ form.password.id_for_label }}">Senha</label>
-                                        </div>
-                                        <div class="form-floating mb-3 col-sm-6">
-                                            {{form.confirm_password}}
-                                            <label for="{{ form.confirm_password.id_for_label }}">Confirmar
-                                                Senha</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" id="register-checkbox" required>
-                                        <label class="form-check-label" for="register-checkbox">Eu aceito o <a
-                                                href="#!">termo de uso</a> e <a href="#!">política de
-                                                Privacidade</a></label>
-                                    </div>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary d-block w-100 mt-3" type="submit"
-                                            name="submit">Registrar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+  <div class="container-fluid">
+    <div class="row min-vh-100">
+      <!-- Coluna com imagem e descrição -->
+      <div class="col-lg-8 position-relative">
+        <div class="card overflow-hidden bg-body-tertiary rounded">
+          <div class="card-body p-0">
+            <div class="row gx-8">
+              <div class="col-md-6 text-center bg-card-gradient left-column">
+                <div class="position-relative p-4 pt-md-5 pb-md-7" data-bs-theme="light">
+                  <div class="z-1 position-relative">
+                    <img src="{% static 'img/SmileSync_name_logo.svg' %}" alt="Logo" class="img-fluid">
+                    <p class="text-white">Simplificando consultórios e potencializando sorrisos. O seu parceiro digital
+                      para um consultório mais eficiente e sorrisos mais saudáveis</p>
+                  </div>
                 </div>
+                <div style="height: 200px;"></div>
+                <div class="mt-3 mb-5 mt-md-4 mb-md-5" data-bs-theme="light">
+                  <p class="text-white">Não tem uma conta?<br>
+                    <a class="text-decoration-underline link-light text-white" href="/user/login">Login</a>
+                  </p>
+                </div>
+              </div>
+              <!-- Coluna com formulário de registro -->
+              <div class="col-md-6 d-flex flex-center">
+                <div class="p-4 p-md-5 flex-grow-1">
+                  <h3>Register</h3>
+                  <form method="post" action="{% url 'clinic_register_view' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                      {{ form.name_clinic }}
+                      <label for="{{ form.name_clinic.id_for_label }}">Nome da Clínica</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      {{ form.cnpj }}
+                      <label for="{{ form.cnpj.id_for_label }}">CNPJ</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      {{ form.email }}
+                      <label for="{{ form.email.id_for_label }}">Email</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      {{ form.phone }}
+                      <label for="{{ form.phone.id_for_label }}">Telefone</label>
+                    </div>
+                    <div class="row gx-2">
+                      <div class="form-floating mb-3 col-sm-6">
+                        {{form.password}}
+                        <label for="{{ form.password.id_for_label }}">Senha</label>
+                      </div>
+                      <div class="form-floating mb-3 col-sm-6">
+                        {{form.confirm_password}}
+                        <label for="{{ form.confirm_password.id_for_label }}">Confirmar
+                          Senha</label>
+                      </div>
+                      <p id="forçaSenha"></p>
+                    </div>
+
+                    <div class="form-check mb-3">
+                      <input class="form-check-input" type="checkbox" id="register-checkbox" required>
+                      <label class="form-check-label" for="register-checkbox">Eu aceito o <a href="#!">termo de uso</a>
+                        e <a href="#!">política de
+                          Privacidade</a></label>
+                    </div>
+                    <div class="mb-3">
+                      <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Registrar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 </body>
+<style>
+  #forçaSenha {
+    padding: 5px;
+    font-size: 12px;
+  }
+
+  .senha-fraca {
+    color: rgba(255, 0, 0, 1);
+  }
+
+  .senha-media {
+    color: rgb(0, 17, 255);
+  }
+
+  .senha-dificil {
+    color: rgb(9, 117, 5);
+  }
+
+  .senha-forte {
+    color: rgb(9, 117, 5);
+  }
+</style>
+<script>
+  document.getElementById("id_password").addEventListener("input", function () {
+    var senha = this.value;
+    var resultado = verificarForçaSenha(senha);
+    var elementoForçaSenha = document.getElementById("forçaSenha");
+    elementoForçaSenha.textContent = resultado;
+
+    // Definir classes de estilo com base na força da senha
+    if (resultado.includes("Fácil")) {
+      elementoForçaSenha.classList.remove("senha-media", "senha-forte", "senha-dificil");
+      elementoForçaSenha.classList.add("senha-fraca");
+    } else if (resultado.includes("Média")) {
+      elementoForçaSenha.classList.remove("senha-fraca", "senha-forte", "senha-dificil");
+      elementoForçaSenha.classList.add("senha-media");
+    } else if (resultado.includes("Difícil")) {
+      elementoForçaSenha.classList.remove("senha-fraca", "senha-media", "senha-forte");
+      elementoForçaSenha.classList.add("senha-dificil");
+    } else if (resultado.includes("Extremamente difícil")) {
+      elementoForçaSenha.classList.remove("senha-fraca", "senha-media", "senha-dificil");
+      elementoForçaSenha.classList.add("senha-forte");
+    }
+  });
+
+  function verificarForçaSenha(senha) {
+    var força = 0;
+    var dicas = "";
+
+    if (senha.length < 6) {
+      dicas += "Senha deve ter no minimo 6 caractere. ";
+    } else {
+      força += 1;
+    }
+
+    if (senha.match(/[a-z]/) && senha.match(/[A-Z]/)) {
+      força += 1;
+    } else {
+      dicas += "Use tanto letras minúsculas quanto maiúsculas. ";
+    }
+
+    if (senha.match(/\d/)) {
+      força += 1;
+    } else {
+      dicas += "Inclua pelo menos um número. ";
+    }
+
+    if (senha.match(/[^a-zA-Z\d]/)) {
+      força += 1;
+    } else {
+      dicas += "Inclua pelo menos um caracteres especial #%&*@. ";
+    }
+
+    if (força < 2) {
+      return "Fácil de adivinhar. " + dicas;
+    } else if (força === 2) {
+      return "Média dificuldade. " + dicas;
+    } else if (força === 3) {
+      return "Difícil. " + dicas;
+    } else {
+      return "Extremamente difícil. " + dicas;
+    }
+  }
+</script>
 {% include "partials/_modal_sucess.html" %}
 {% include "partials/_modal_erro.html" %}
 {% endblock content %}
-
-
-
-

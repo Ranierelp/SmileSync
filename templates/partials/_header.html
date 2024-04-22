@@ -25,8 +25,8 @@
             <i class="fas fa-user"></i> <!-- icone de perfil biblioteca awesome-->
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"> 
-            <li><a class="dropdown-item" href="#">Seus Dados</a></li>
-            <li><a class="dropdown-item" href="#">Alterar Dados</a></li>
+            <li><a class="dropdown-item" href="#">Perfil</a></li>
+            <li><a class="dropdown-item" href="#">Configurações</a></li>
             <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
           </ul>
         </div>
@@ -43,11 +43,12 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
             <div class="accordion accordion-flush" id="accordionFlushExample">
-              <div class="accordion-item">
+              <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    Dentista
+                  data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <img class="icon-acordion" src="/static/img/icon_dentista.svg" alt="">
+                  Dentista
                   </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -59,10 +60,11 @@
                   </div>
                 </div>
               </div>
-              <div class="accordion-item">
+              <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <img class="icon-acordion" src="/static/img/icon_empresa.svg" alt="">
                     Empresa
                   </button>
                 </h2>
@@ -75,10 +77,11 @@
                   </div>
                 </div>
               </div>
-              <div class="accordion-item">
+              <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    <img class="icon-acordion" src="/static/img/icon_paciente.svg" alt="">
                     Paciente
                   </button>
                 </h2>
@@ -92,10 +95,11 @@
                   </div>
                 </div>
               </div>
-              <div class="accordion-item">
+              <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                    <img class="icon-acordion" src="/static/img/icon_planos.svg" alt="">
                     Planos
                   </button>
                 </h2>
@@ -109,10 +113,11 @@
                   </div>
                 </div>
               </div>
-              <div class="accordion-item">
+              <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                    <img class="icon-acordion" src="/static/img/icon_relatorio.svg" alt="">
                     Relatórios
                   </button>
                 </h2>

@@ -1,15 +1,14 @@
-from typing import Any
 from django import forms      
-from .models import CustomUser, Clinic, Dentist, Company
+from .models import CustomUser, Clinic, Dentist, Company, Address
 from django.core.validators import MinLengthValidator
 from . import validations
 from django.contrib.auth.forms import AuthenticationForm
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from .utils import generate_password
+from rolepermissions.roles import assign_role
 
-#CRIAR FUNÇÃO PARA FAZER UMA SENHA ALEATÓRIA
 #CRIAR FUNÇÃO PARA ENVIAR EMAIL COM A SENHA
-
 
 class ClinicRegistrationForm(forms.Form):
     name_clinic = forms.CharField(
@@ -22,7 +21,6 @@ class ClinicRegistrationForm(forms.Form):
     )
     cnpj = forms.CharField(
         label='CNPJ',
-        validators=[validations.cnpj_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'CNPJ',
@@ -64,7 +62,7 @@ class ClinicRegistrationForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get('password')
-        password2 = cleaned_data.get('confirm_password')
+        password2 = cleaned_data.get('confirm_password')    
 
         validations.validate_password_match(password1, password2)
 
@@ -89,8 +87,8 @@ class ClinicRegistrationForm(forms.Form):
             cnpj=cnpj_formatting,
         )
         clinic.save()
-        
-        return user, clinic
+        assign_role(user, 'clinica')
+          
 class LoginForm(AuthenticationForm):        
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
@@ -146,41 +144,17 @@ class DentistRegistrationForm(forms.Form):
             'id': 'id_telefone'
         })
     )
-    password = forms.CharField(
-        label='Senha',
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Senha'
-        }),
-        validators=[MinLengthValidator(6, message='Senha deve ter no mínimo 6 caracteres')]
-    )
-    confirm_password = forms.CharField(
-        label='Confirmar Senha',
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Confirmar Senha'
-        })
-    )
-    
-    def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get('password')
-        password2 = cleaned_data.get('confirm_password')
-
-        validations.validate_password_match(password1, password2)
-
-        return cleaned_data
     
     @transaction.atomic
     def save(self, clinica_logada,commit=True):
     
         phone_formatting = validations.remove_phone_number_formatting(self.cleaned_data['phone'])
-        
+        password = generate_password()
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
             name=self.cleaned_data['name_dentis'],
             phone=phone_formatting,
-            password=self.cleaned_data['password'],
+            password=password,
         )
         user.save()
         clinica = get_object_or_404(Clinic, cnpj=clinica_logada)
@@ -190,9 +164,9 @@ class DentistRegistrationForm(forms.Form):
             cro=self.cleaned_data['cro'],
             clinic=clinica
         )
-        dentist.save()
-        
-        return user, dentist
+        dentist.save()    
+        assign_role(user, 'dentista')
+         
 class CompanyRegistrationForm(forms.Form):
     name_company = forms.CharField(
         label='Nome da Empresa',
@@ -213,7 +187,6 @@ class CompanyRegistrationForm(forms.Form):
     )
     email = forms.EmailField(
         label='Email',
-        validators=[validations.email_unique],
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'Email'
@@ -221,6 +194,7 @@ class CompanyRegistrationForm(forms.Form):
     )
     phone = forms.CharField(
         label='Telefone',
+        validators=[validations.phone_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Telefone',
@@ -266,10 +240,10 @@ class CompanyRegistrationForm(forms.Form):
         label='CEP',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'CEP'
+            'placeholder': 'CEP',
+            'pattern':'\d{5}-\d{3}'
         })
     )
-    
     description = forms.CharField(
         label='Descrição',
         required=False,
@@ -288,33 +262,41 @@ class CompanyRegistrationForm(forms.Form):
         })
     )
     
-    def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get('password')
-        password2 = cleaned_data.get('confirm_password')
-
-        validations.validate_password_match(password1, password2)
-
-        return cleaned_data
-    
     @transaction.atomic
     def save(self, clinica_logada,commit=True):
         
         phone_formatting = validations.remove_phone_number_formatting(self.cleaned_data['phone'])
         cnpj_formatting = validations.remove_cnpj_formatting(self.cleaned_data['cnpj'])
+        zip_code_formatting = validations.remove_zip_code_formatting(self.cleaned_data['zip_code'])
+        password = generate_password()
+        print(f'Senha gerada: {password}')
         
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
             name = self.cleaned_data['name_company'],
             phone=phone_formatting,
-            password=self.cleaned_data['password'],
+            password=password,
         )
         user.save()
         clinica = get_object_or_404(Clinic, cnpj=clinica_logada)
         
+        address = Address.objects.create(
+            street=self.cleaned_data['street'],
+            number=self.cleaned_data['number'],
+            neighborhood=self.cleaned_data['neighborhood'],
+            city=self.cleaned_data['city'],
+            state=self.cleaned_data['state'],
+            zip_code=zip_code_formatting
+        )
+        address.save()
         company = Company.objects.create(
             user=user,
             cnpj=cnpj_formatting,
-            clinic=clinica
+            clinic=clinica,
+            address=address,
+            description=self.cleaned_data['description'],
+            company_segment=self.cleaned_data['company_segment']
         )
         company.save()
+        assign_role(user, 'empresa')
+    

@@ -54,3 +54,17 @@ document.getElementById('id_telefone')?.addEventListener('input', function(event
     
     event.target.value = telefoneFormatado;
 });
+
+document.getElementById('id_zip_code')?.addEventListener('input', function(event) {
+    var cep = event.target.value.replace(/\D/g, ''); 
+    var cepFormatado = '';
+    
+    for (var i = 0; i < cep.length; i++) {
+      if (i === 5) {
+        cepFormatado += '-';
+      }
+      cepFormatado += cep.charAt(i);
+    }
+    
+    event.target.value = cepFormatado;
+  });
