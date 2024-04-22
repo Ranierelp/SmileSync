@@ -56,7 +56,9 @@
                                             <label for="{{ form.confirm_password.id_for_label }}">Confirmar
                                                 Senha</label>
                                         </div>
+                                         <p id="forçaSenha"></p>
                                     </div>
+                                   
                                     <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" id="register-checkbox" required>
                                         <label class="form-check-label" for="register-checkbox">Eu aceito o <a
@@ -76,6 +78,79 @@
         </div>
     </div>
 </body>
+<style>
+    #forçaSenha{border-radius: 10px; padding: 5px;}
+    .senha-fraca { background-color: rgba(255, 0, 0, 0.408); }
+    .senha-media { background-color: rgba(255, 166, 0, 0.544); }
+    .senha-dificil { background-color: rgba(255, 255, 0, 0.504); }
+    .senha-forte { background-color: rgba(14, 255, 14, 0.497); }
+</style>
+<script>
+document.getElementById("id_password").addEventListener("input", function() {
+  var senha = this.value;
+  var resultado = verificarForçaSenha(senha);
+  var elementoForçaSenha = document.getElementById("forçaSenha");
+  elementoForçaSenha.textContent = resultado;
+  
+  // Definir classes de estilo com base na força da senha
+  if (resultado.includes("Fácil")) {
+    elementoForçaSenha.classList.remove("senha-media", "senha-forte", "senha-dificil");
+    elementoForçaSenha.classList.add("senha-fraca");
+  } else if (resultado.includes("Média")) {
+    elementoForçaSenha.classList.remove("senha-fraca", "senha-forte", "senha-dificil");
+    elementoForçaSenha.classList.add("senha-media");
+  } else if (resultado.includes("Difícil")) {
+    elementoForçaSenha.classList.remove("senha-fraca", "senha-media", "senha-forte");
+    elementoForçaSenha.classList.add("senha-dificil");
+  } else if (resultado.includes("Extremamente difícil")) {
+    elementoForçaSenha.classList.remove("senha-fraca", "senha-media", "senha-dificil");
+    elementoForçaSenha.classList.add("senha-forte");
+  }
+});
+
+function verificarForçaSenha(senha) {
+  var força = 0;
+  var dicas = "";
+
+  if (senha.length < 8) {
+    dicas += "Faça a senha mais longa. ";
+  } else {
+    força += 1;
+  }
+
+  // Verificar se há letras minúsculas e maiúsculas misturadas
+  if (senha.match(/[a-z]/) && senha.match(/[A-Z]/)) {
+    força += 1;
+  } else {
+    dicas += "Use tanto letras minúsculas quanto maiúsculas. ";
+  }
+
+  // Verificar se há números
+  if (senha.match(/\d/)) {
+    força += 1;
+  } else {
+    dicas += "Inclua pelo menos um número. ";
+  }
+
+  // Verificar se há caracteres especiais
+  if (senha.match(/[^a-zA-Z\d]/)) {
+    força += 1;
+  } else {
+    dicas += "Inclua pelo menos um caractere especial. ";
+  }
+
+  // Retornar resultados
+  if (força < 2) {
+    return "Fácil de adivinhar. " + dicas;
+  } else if (força === 2) {
+    return "Média dificuldade. " + dicas;
+  } else if (força === 3) {
+    return "Difícil. " + dicas;
+  } else {
+    return "Extremamente difícil. " + dicas;
+  }
+}
+</script>
 {% include "partials/_modal_sucess.html" %}
 {% include "partials/_modal_erro.html" %}
 {% endblock content %}
