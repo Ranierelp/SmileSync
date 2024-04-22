@@ -73,7 +73,6 @@ class ClinicRegistrationForm(forms.Form):
         
         phone_formatting = validations.remove_phone_number_formatting(self.cleaned_data['phone'])
         cnpj_formatting = validations.remove_cnpj_formatting(self.cleaned_data['cnpj'])
-        cnpj_unic = validations.cnpj_unique(Clinic, cnpj_formatting)
         
         user = CustomUser.objects.create_user(
             email=self.cleaned_data['email'],
@@ -188,7 +187,6 @@ class CompanyRegistrationForm(forms.Form):
     )
     email = forms.EmailField(
         label='Email',
-        validators=[validations.email_unique],
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'Email'

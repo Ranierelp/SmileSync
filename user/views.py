@@ -15,14 +15,18 @@ def clinic_register_view(request:HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         form = ClinicRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            alert_sucess = 'Clinica cadastrada com sucesso!'
-            context = {
-                'form': form,
-                'success': True,
-                'alert_sucess': alert_sucess
-            }
-            return render(request, 'users/register.html', context)
+            cnpj_formatado = validations.remove_cnpj_formatting(form.cleaned_data['cnpj'])
+            if validations.cnpj_unique(cnpj_formatado):
+                    form.add_error('cnpj', 'Este CNPJ já está em uso. Por favor, insira outro válido.')
+            else:
+                form.save()
+                alert_sucess = 'Clinica cadastrada com sucesso!'
+                context = {
+                    'form': form,
+                    'success': True,
+                    'alert_sucess': alert_sucess
+                }
+                return render(request, 'users/register.html', context)
     else:
         form = ClinicRegistrationForm()
 
@@ -126,15 +130,19 @@ def create_company_view(request:HttpRequest) -> HttpResponse:
         if request.method == 'POST':
             form = CompanyRegistrationForm(request.POST)
             if form.is_valid():
-                clinica = request.user.clinic.cnpj
-                form.save(clinica)
-                alert_sucess = 'Empresa cadastrada com sucesso!'
-                context = {
-                    'form': form,
-                    'success': True,
-                    'alert_sucess': alert_sucess
-                }
-                return render(request, 'users/register_company.html', context)
+                cnpj_formatado = validations.remove_cnpj_formatting(form.cleaned_data['cnpj'])
+                if validations.cnpj_unique(cnpj_formatado):
+                    form.add_error('cnpj', 'Este CNPJ já está em uso. Por favor, insira outro válido.')
+                else:
+                    clinica = request.user.clinic.cnpj
+                    form.save(clinica)
+                    alert_sucess = 'Empresa cadastrada com sucesso!'
+                    context = {
+                        'form': form,
+                        'success': True,
+                        'alert_sucess': alert_sucess
+                    }
+                    return render(request, 'users/register_company.html', context)
         else:
             form = CompanyRegistrationForm()
         
