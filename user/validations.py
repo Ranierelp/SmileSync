@@ -20,10 +20,10 @@ def phone_unique(value:str):
         raise ValidationError('Este telefone já está em uso. Por favor, insira outro válido.')   
 
 def cnpj_unique(value:str):
-    if Clinic.objects.filter(cnpj=value).exists():
-        raise ValidationError('Este CNPJ já está em uso. Por favor, insira outro válido.')
-    if Company.objects.filter(cnpj=value).exists():
-        raise ValidationError('Este CNPJ já está em uso. Por favor, insira outro válido.')
+        if Clinic.objects.filter(cnpj=value).exists():
+            return True
+        if Company.objects.filter(cnpj=value).exists():
+            return True
     
 def cro_unique(value:str):
     if Dentist.objects.filter(cro=value).exists():

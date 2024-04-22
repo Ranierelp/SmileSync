@@ -19,6 +19,7 @@ body, html {
     background-image: url(/static/img/plano_de_fundo.svg);
     background-size: cover;
     background-position: center;
+    height: auto;
 }
 .form-check-label {
     font-size: 0.875rem;
