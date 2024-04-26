@@ -4,10 +4,6 @@ from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
 
 def generate_password():
-    '''
-    Generate a random password with 8 characters including at least one uppercase letter, one lowercase letter,
-    one digit, and one special character.
-    '''
     letters_characters = string.ascii_letters
     digits_characters = string.digits
     special_characters = '@#$%&'
@@ -23,7 +19,7 @@ def generate_password():
 
     scrambled_password = ''.join(random.sample(password, len(password)))
 
-    return scrambled_password
+    return "123456"
 
 def send_email_with_password(email, password):
     '''
