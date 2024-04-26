@@ -1,60 +1,53 @@
-:root {
-    --header-height: 3rem;
-    --nav-width: 68px;
-    --first-color: #00171b;
-    --first-color-light: #8ac7ca;
-    --secondary-color: #003d47;
-    --secondary-color-light: #0c9aba;
-    --white-color: #F7F6FB;
-    --body-font: 'Nunito', sans-serif;
-    --normal-font-size: 1rem;
-    --z-fixed: 100;
-    --backgound: linear-gradient(90deg, rgba(0, 25, 29, 1) 0%, var(--first-color) 35%, var(--secondary-color) 100%);
+
+#face-dente-cima {
+  width: 0; 
+  height: 0; 
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 50px solid #5386E4;
+  position: absolute;
+  margin-top: 50px;
+}
+#face-dente-direita {
+  width: 0; 
+  height: 0; 
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  border-left: 50px solid #ca0afa;
+  position: absolute;
+}
+#face-dente-baixo {
+  width: 0; 
+  height: 0; 
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 50px solid #09df3e;
+  position: absolute;
+}
+#face-dente-esquerda {
+  width: 0; 
+  height: 0; 
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent; 
+  border-right: 50px solid #ffd000; 
+  position: absolute;
+  margin-left: 50px;
 }
 
-body {
-    position: relative;
-    font-family: var(--body-font);
-    font-size: var(--normal-font-size);
-    transition: .5s;
-    height: 100%;
-    /* background: var(--backgound); */
+.container.dente {
+  position: relative; 
 }
 
-#camada1Odontograma {
-    z-index: 1;
+.quadrado {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(255, 0, 0);
+  position: absolute; 
+  top: 25px; 
+  left: 36px;
+  border: solid 1px black; 
 }
 
-#camada2Odontograma {
-    z-index: 2;
-}
-
-#camada3Odontograma {
-    z-index: 3;
-}
-
-#camada4Odontograma {
-    z-index: 4;
-}
-
-#camadaPincel {
-    z-index: 3;
-}
-
-canvas {
-    position: absolute;
-    border: 1px solid #9C9898;
-    margin: 10px;
-}
-
-.checked {
-    display: none;
-}
-
-.active .checked {
-    display: inline-block;
-}
-
-.active .unchecked {
-    display: none;
+.face:hover {
+  opacity: 0.5;
 }
