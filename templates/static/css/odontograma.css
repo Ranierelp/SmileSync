@@ -1,5 +1,5 @@
 
-#face-dente-cima {
+.face-dente-cima {
   width: 0; 
   height: 0; 
   border-left: 50px solid transparent;
@@ -8,7 +8,7 @@
   position: absolute;
   margin-top: 50px;
 }
-#face-dente-direita {
+.face-dente-direita {
   width: 0; 
   height: 0; 
   border-top: 50px solid transparent;
@@ -16,7 +16,7 @@
   border-left: 50px solid #ca0afa;
   position: absolute;
 }
-#face-dente-baixo {
+.face-dente-baixo {
   width: 0; 
   height: 0; 
   border-left: 50px solid transparent;
@@ -24,7 +24,7 @@
   border-top: 50px solid #09df3e;
   position: absolute;
 }
-#face-dente-esquerda {
+.face-dente-esquerda {
   width: 0; 
   height: 0; 
   border-top: 50px solid transparent;
@@ -34,20 +34,17 @@
   margin-left: 50px;
 }
 
-.container.dente {
-  position: relative; 
-}
-
 .quadrado {
   width: 50px;
   height: 50px;
   background-color: rgb(255, 0, 0);
-  position: absolute; 
-  top: 25px; 
-  left: 36px;
+  position: relative ; 
+  top: 26px; 
+  left: 25px;
   border: solid 1px black; 
+  z-index: 1;
 }
 
-.face:hover {
+/* .face:hover {
   opacity: 0.5;
-}
+} */
