@@ -2,116 +2,78 @@
 {% load static %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modal com Formulário</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    /* Estilos para o trapézio */
+    .trapezoid {
+        border-bottom: 70px solid #007bff;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        width: 100px;
+        height: 0;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        z-index: 1000;
+    }
+    /* Estilos para o modal */
+    .modal-content {
+        background-color: #fff;
+        border-radius: 0;
+    }
+</style>
 </head>
-    <div id="canva-group">
-        <canvas id="camada1Odontograma"></canvas>
-        <canvas id="camada2Odontograma"></canvas>
-        <canvas id="camada3Odontograma"></canvas>
-        <canvas id="camada4Odontograma"></canvas>
+<body>
 
-        <canvas id="camadaPincel"></canvas>
-    </div>
-    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Adicionar procedimento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-row">
-                        <input type="hidden" id="procedimentosRemovidos" th:field="*{procedimentosRemovidos}">
-                        <div id="procedimentosDiv"></div>
-                        <div class="form-group col-md-12">
-                            <label for="nomeProcedimento">Procedimento</label>
-                            <i data-type="info" class="fas fa-info-circle fa-1x text-info"
-                                onclick="toast_message('.','info')" style="margin-left: 5px; cursor: pointer;"></i>
-                            <select class="form-control" id="nomeProcedimento">
-                                <option selected value="">-- Selecione uma opção --</option>
-                               
-                            </select>
-                        </div>
-                        <div class="form-group col-12" id="colOutroProcedimento">
-                            <label for="outroProcedimento">Outro procedimento</label>
-                            <i style="margin-left:5px;cursor: pointer;"
-                                class="alerta fas fa-info-circle fa-1x text-info" data-type="info"
-                                onclick="mensagens('.','info')"></i>
-                            <input id="outroProcedimento" class="form-control" type="text">
-                        </div>
-                        <div class="form-group col-12">
-                            <label for="exampleColorInput" class="form-label">Cor</label>
-                            <i style="margin-left:5px;cursor: pointer;"
-                                class="alerta fas fa-info-circle fa-1x text-info" data-type="info"
-                                onclick="mensagens('.','info')"></i>
-                            <input type="color" id="cor" disabled class="form-control form-control-color"
-                                value="#563d7c" title="Choose your color">
-                        </div>
-                        <div class="form-group col-12">
-                            <label for="informacoesAdicionais">Informações adicionais</label>
-                            <i style="margin-left:5px;cursor: pointer;"
-                                class="alerta fas fa-info-circle fa-1x text-info" data-type="info"
-                                onclick="mensagens('.','info')"></i>
-                            <textarea rows="5" id="informacoesAdicionais" maxlength="5000"
-                                class="form-control"></textarea>
-                        </div>
-                        <div class="form-group col-md-1 d-inline mt-2" style="text-align: center; margin: auto;">
-                            <a id="botaoAdicionar" class="form-control btn-sigsaude btnCorNovo">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </div>
+<!-- Botão trapezoidal -->
+<div class="trapezoid" data-toggle="modal" data-target="#myModal"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Cabeçalho do Modal -->
+            <div class="modal-header">
+                <h4 class="modal-title">Formulário Simples</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Corpo do Modal -->
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nome">Nome:</label>
+                        <input type="text" class="form-control" id="nome">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <div class="panel panel-default">
-                                <div class="table-responsive">
-                                    <table class="table display dataTable table-bordered table-striped"
-                                        id="tabelaTestesEspecificosForm">
-                                        <thead>
-                                            <tr>
-                                                <th>NOME</th>
-                                                <th>COR</th>
-                                                <th>INFORMAÇÕES ADICIONAIS</th>
-                                                <th class="text-center">AÇÕES</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="bodyProcedimentos">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email">
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+            <!-- Rodapé do Modal -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="configuracoesFerramenta" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+</html>
+
+
+
  {% endblock content %}
 </html>

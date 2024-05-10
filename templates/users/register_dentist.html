@@ -13,7 +13,7 @@
             <div class="col-md-8 col-lg-6">
                 <div class="card overflow-hidden z-1 shadow mb-5 bg-body-tertiary rounded">
                     <div class="p-4 p-md-5">
-                        <h3>Cadastro de Dentista</h3>
+                        <h2>Cadastro de Dentista</h2>
                         <form method="post" action="{% url 'create_dentist_view' %}" autocomplete="off">
                             {% csrf_token %}
                             <div class="form-floating mb-3">
@@ -34,7 +34,7 @@
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary d-block w-100 mt-3" type="submit"
-                                    name="submit">Registrar</button>
+                                    name="submit">Salvar</button>
                             </div>
                         </form>
                     </div>

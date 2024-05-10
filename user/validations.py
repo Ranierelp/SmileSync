@@ -47,5 +47,4 @@ def remove_zip_code_formatting(zip_code:str):
     zip_code_unformatted = zip_code.replace("-", "")
     return zip_code_unformatted
 
-
 # VERIFICAR AS VALIDAÇÕES DOS FORMS !!!!!!!!!!
