@@ -1,164 +1,294 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/odontograma.css' %}">
+{% endblock head %}
+
 {% block title %}Home{% endblock title%}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/odontograma.css' %}">
+
 {%include 'partials/_header.html'%}
 <main>
-    <div class="container-fluid mt-5">
-        <div class="row g-3 ">
-            <div class="col-md-12">
-                <div class="row g-3">
-                    <div class="col m-1" id="dente-18">
-                        <div class="face-dente-cima"></div>
-                        <div class="face-dente-direita"></div>
-                        <div class="face-dente-baixo"></div>
-                        <div class="face-dente-esquerda"></div>
-                        <div class="quadrado"></div>    
-                    </div>
-                    <div class="col m-1" id="dente-17">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-16">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-15">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-14">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-13">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-12">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-11">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-21">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-22">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-23">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-24">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-25">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-26">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-27">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-28">
-                        
+    <div class="container screen-odontograma">
+        <div class="container-fluid mt-5">
+            <div class="row g-3 ">
+                <div class="col-md-12">
+                    <div class="row g-3">
+                        <div class="col m-1" id="dente-18">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-17">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-16">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-15">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-14">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-13">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-12">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-11">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-21">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-22">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-23">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-24">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-25">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-26">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-27">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-28">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <table class='mt-5'>
-        <tr>
-            <td class="cinza">18</td>
-            <td class="cinza">17</td>
-            <td class="cinza">16</td>
-            <td class="cinza">15</td>
-            <td class="cinza">14</td>
-            <td class="cinza">13</td>
-            <td class="cinza">12</td>
-            <td class="cinza">11</td>
-            <td class="cinza">21</td>
-            <td class="cinza">22</td>
-            <td class="cinza">23</td>
-            <td class="cinza">24</td>
-            <td class="cinza">25</td>
-            <td class="cinza">26</td>
-            <td class="cinza">27</td>
-            <td class="cinza">28</td>
-        </tr>
-        <tr>
-            <th colspan="16">Odontograma</th>
-        </tr>
-        <tr>
-            <td class="cinza">48</td>
-            <td class="cinza">47</td>
-            <td class="cinza">46</td>
-            <td class="cinza">45</td>
-            <td class="cinza">44</td>
-            <td class="cinza">43</td>
-            <td class="cinza">42</td>
-            <td class="cinza">41</td>
-            <td class="cinza">31</td>
-            <td class="cinza">32</td>
-            <td class="cinza">33</td>
-            <td class="cinza">34</td>
-            <td class="cinza">35</td>
-            <td class="cinza">36</td>
-            <td class="cinza">37</td>
-            <td class="cinza">38</td>
-        </tr>
-    </table>
-    <div class="container-fluid mt-4">
-        <div class="row g-3 ">
-            <div class="col-md-12">
-                <div class="row g-3">
-                    <div class="col m-1" id="dente-48">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-47">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-46">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-45">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-44">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-43">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-42">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-41">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-31">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-32">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-33">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-34">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-35">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-36">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-37">
-                        
-                    </div>
-                    <div class="col m-1" id="dente-38">
-                        
+        <table class='mt-5'>
+            <tr>
+                <td class="white">18</td>
+                <td class="white">17</td>
+                <td class="white">16</td>
+                <td class="white">15</td>
+                <td class="white">14</td>
+                <td class="white">13</td>
+                <td class="white">12</td>
+                <td class="white">11</td>
+                <td class="white">21</td>
+                <td class="white">22</td>
+                <td class="white">23</td>
+                <td class="white">24</td>
+                <td class="white">25</td>
+                <td class="white">26</td>
+                <td class="white">27</td>
+                <td class="white">28</td>
+            </tr>
+            <tr>
+                <th colspan="16">Odontograma</th>
+            </tr>
+            <tr>
+                <td class="white">48</td>
+                <td class="white">47</td>
+                <td class="white">46</td>
+                <td class="white">45</td>
+                <td class="white">44</td>
+                <td class="white">43</td>
+                <td class="white">42</td>
+                <td class="white">41</td>
+                <td class="white">31</td>
+                <td class="white">32</td>
+                <td class="white">33</td>
+                <td class="white">34</td>
+                <td class="white">35</td>
+                <td class="white">36</td>
+                <td class="white">37</td>
+                <td class="white">38</td>
+            </tr>
+        </table>
+        <div class="container-fluid mt-4">
+            <div class="row g-3 ">
+                <div class="col-md-12">
+                    <div class="row g-3">
+                        <div class="col m-1" id="dente-48">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-47">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-46">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-45">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-44">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-43">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-42">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-41">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-31">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-32">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-33">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-34">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-35">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-36">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-37">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
+                        <div class="col m-1" id="dente-38">
+                            <div class="face-dente-cima"></div>
+                            <div class="face-dente-direita"></div>
+                            <div class="face-dente-baixo"></div>
+                            <div class="face-dente-esquerda"></div>
+                            <div class="quadrado"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -166,5 +296,9 @@
     </div>
 </main>
 
+{% comment %} <script>
+    const dente18 = document.getElementById('dente-18');
+    dente18.getElementsByClassName('face-dente-cima')[0].style.backgroundColor = 'red';
+</script> {% endcomment %}
 
 {% endblock content %}
