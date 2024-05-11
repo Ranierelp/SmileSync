@@ -159,3 +159,25 @@ h2{
     width: 30px;
     margin-right: 4px;
 }
+
+.pagetitle h1 {
+    color: gray ;
+    font-size: 24px;
+}
+
+h1{
+    margin-bottom: 0;
+    
+}
+
+a {
+    text-decoration: none; /* Remove o sublinhado */
+    color:  #3F93F9; /* Define a cor do link */
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    float: left;
+    padding-right: 0.5rem;
+    color: #3F93F9;
+    content: var(--bs-breadcrumb-divider, "/");
+}

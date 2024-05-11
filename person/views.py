@@ -20,11 +20,16 @@ def create_person_view(request):
 
         # Verificando se o formulário é válido
         if form.is_valid():
-            # Salvando o formulário
-            form.save()
-
+            clinica = request.user.clinic.cnpj
+            form.save(clinica)
+            alert_sucess = 'Paciente cadastrado com sucesso!'
+            context = {
+                'form': form,
+                'success': True,
+                'alert_sucess': alert_sucess
+            }
             # Redirecionando para a página de listagem de pessoas
-            return redirect('person:list_person_view')
+            return render(request, 'person/register_person.html', context)
     else:
         # Criando o formulário de pessoa
         form = PersonRegistrationForm()

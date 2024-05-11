@@ -1,7 +1,10 @@
 from django import forms
+
+from address.models import Address
+from user.models import Clinic, Company
 from .models import Person
-from user import validations
-from .validations import cpf_unique
+from user import validations as user_validations
+from . import validations
 from django.forms import Select
 from odontograma.models import MedicalRecord, Procedure
 
@@ -43,7 +46,7 @@ class PersonRegistrationForm(forms.Form):
     )
     email = forms.EmailField(
         label='Email',
-        validators=[validations.email_unique],
+        validators=[validations.person_email_unique],
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'Email'
@@ -51,7 +54,7 @@ class PersonRegistrationForm(forms.Form):
     )
     cpf = forms.CharField(
         label='CPF',
-        validators=[cpf_unique],
+        validators=[validations.cpf_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'CPF',
@@ -60,6 +63,7 @@ class PersonRegistrationForm(forms.Form):
     )
     phone = forms.CharField(
         label='Telefone',
+        validators=[validations.person_phone_unique],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Telefone',
@@ -152,6 +156,39 @@ class PersonRegistrationForm(forms.Form):
             'class': 'form-check-input'
         })
     )
+    
+    def save(self, clinica, commit=True):
+        
+        company =  Company.objects.get(cnpj='00000000011111')
+        clinica = Clinic.objects.get(cnpj=clinica)
+        
+        phone_formatting = user_validations.remove_phone_number_formatting(self.cleaned_data['phone'])
+        zip_code_formatting = user_validations.remove_zip_code_formatting(self.cleaned_data['zip_code'])
+        cpf_formatting = validations.remove_cpf_formatting(self.cleaned_data['cpf'])
+        
+        address = Address.objects.create(
+            street=self.cleaned_data['street'],
+            number=self.cleaned_data['number'],
+            neighborhood=self.cleaned_data['neighborhood'],
+            city=self.cleaned_data['city'],
+            state=self.cleaned_data['state'],
+            zip_code=zip_code_formatting
+        )
+        address.save()
+        person = Person(
+            name=self.cleaned_data['name'],
+            email=self.cleaned_data['email'],
+            cpf=cpf_formatting,
+            phone=phone_formatting,
+            rg=self.cleaned_data['rg'],
+            birth_date=self.cleaned_data['birth_date'],
+            address=address,
+            company=company,
+            clinic=clinica
+        )
+        person.save()
+        
+class FormMedicalRecord(forms.Form):
     anemia = forms.BooleanField(
         label='Anemia',
         required=False,
@@ -287,5 +324,4 @@ class PersonRegistrationForm(forms.Form):
             'placeholder': 'Qual tratamento'
         })
     )
-    
     
