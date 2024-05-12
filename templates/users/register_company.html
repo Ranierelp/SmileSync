@@ -10,10 +10,8 @@
     <div class="container-fluid ">
         <form method="post" action="{% url 'create_company_view' %}" autocomplete="off">
             {% csrf_token %}
-            <div>
-                <h2>INFORMAÇÕES DA EMPRESA</h2>
-            </div>
             <div class="container-fluid bg-box">
+                <h2>Informações da Empresa</h2>
                 <div class="row g-3 row-md-reverse">
                     <div class="col-md-12">
                         <div class="row g-3">
@@ -57,10 +55,8 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <h2>ENDEREÇO</h2>
-            </div>
-                <div class="container-fluid bg-box mb-4">
+            <div class="container-fluid bg-box mb-4">
+                    <h2>Endereço</h2>
                     <div class="row g-3">
                         <div class="col-md-12">
                             <div class="row g-3">

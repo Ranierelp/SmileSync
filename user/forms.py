@@ -187,6 +187,7 @@ class CompanyRegistrationForm(forms.Form):
     )
     email = forms.EmailField(
         label='Email',
+        validators=[validations.email_unique],
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'Email'

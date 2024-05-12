@@ -11,7 +11,7 @@
     <div class="container text-start">
         <div class="row row-cols-1">
             <div>
-                <h2>LISTA DE EMPRESA</h2>
+                <h2>Lista de Empresas</h2>
             </div>
         </div>
       </div>
@@ -23,6 +23,7 @@
                         <th scope="col">Empresa</th>
                         <th scope="col">Email</th>
                         <th scope="col">CNPJ</th>
+                        <th scope="col">Segmento de Atuação</th>
                         <th class="text-end" scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -32,6 +33,7 @@
                         <td>{{empresas.user.name}}</td>
                         <td>{{empresas.user.email}}</td>
                         <td>{{empresas.cnpj}}</td>
+                        <td>{{empresas.company_segment}}</td>
                         <td class="text-end">
                             <div><button class="btn btn-link p-0" type="button" data-bs-toggle="tooltip"
                                 data-bs-placement="top" title="Edit"><span
@@ -47,7 +49,6 @@
         </div>
     </div>
 </main>
-
     {% include 'partials/_modal_company.html' %}
 
 {% endblock content %}

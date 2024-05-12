@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cadastro de Paciente{% endblock title%}
+
+{% block content %}
+{%include 'partials/_header.html'%}
+
+<main>
+    <div class="container-fluid ">
+        <div class="pagetitle">
+            <h1>Cadastro de Paciente</h1>
+        </div>
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Histórico Médico </a></li>
+            </ol>
+        </div>
+
+        <form method="post" action="{% url 'create_person_view' %}" autocomplete="off">
+            {% csrf_token %}
+            <div class="container-fluid bg-box">
+                <h2>Informações Pessoais</h2>
+                <div class="row row-md-reverse">
+                    <div class="col-md-12">
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{form.name}}
+                                    <label for="{{ form.name.id_for_label }}">Nome Completo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{ form.email }}
+                                    <label for="{{ form.email.id_for_label }}">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    {{ form.cpf }}
+                                    <label for="{{ form.cpf.id_for_label }}">CPF</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    {{ form.sex }}
+                                    <label for="{{ form.sex.id_for_label }}">Sexo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    {{ form.phone }}
+                                    <label for="{{ form.phone.id_for_label }}">Telefone</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    {{ form.empresa }}
+                                    <label for="{{ form.empresa.id_for_label }}">Empresa</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{ form.rg }}
+                                    <label for="{{ form.rg.id_for_label }}">RG</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{ form.birth_date }}
+                                    <label for="{{ form.birth_date.id_for_label }}">Data de Nascimento</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid bg-box">
+                <h2>Endereço</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row g-2">
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    {{ form.zip_code }}
+                                    <label for="{{ form.zip_code.id_for_label }}">CEP</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    {{ form.street }}
+                                    <label for="{{ form.street.id_for_label }}">Rua</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    {{ form.number }}
+                                    <label for="{{ form.number.id_for_label }}">Número</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    {{ form.neighborhood }}
+                                    <label for="{{ form.neighborhood.id_for_label }}">Bairro</label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-floating">
+                                    {{ form.city }}
+                                    <label for="{{ form.city.id_for_label }}">Cidade</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    {{ form.state }}
+                                    <label for="{{ form.state.id_for_label }}">UF</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid col-2 mx-auto">
+                <button class="btn btn-primary" type="submit" name="submit">SALVAR</button>
+            </div>
+        </form>
+    </div>
+    </div>
+
+</main>
+
+<script src={% static "js/cep.js" %}></script>
+{% include "partials/_modal_sucess.html" %}
+{% include "partials/_modal_erro.html" %}
+{% endblock content %}
