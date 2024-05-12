@@ -16,12 +16,11 @@ def create_person_view(request):
     # Verificando se a requisição é do tipo POST
     if request.method == 'POST':
         # Criando o formulário de pessoa
-        form = PersonRegistrationForm(request.POST)
+        form = PersonRegistrationForm(request.user.clinic, request.POST)
 
         # Verificando se o formulário é válido
         if form.is_valid():
-            clinica = request.user.clinic.cnpj
-            form.save(clinica)
+            form.save()
             alert_sucess = 'Paciente cadastrado com sucesso!'
             context = {
                 'form': form,
@@ -32,7 +31,7 @@ def create_person_view(request):
             return render(request, 'person/register_person.html', context)
     else:
         # Criando o formulário de pessoa
-        form = PersonRegistrationForm()
+        form = PersonRegistrationForm(request.user.clinic)
 
     # Renderizando o template de criação de pessoa
     return render(request, 'person/register_person.html', {'form': form})

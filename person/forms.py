@@ -36,6 +36,23 @@ class Select(Select):
 
 
 class PersonRegistrationForm(forms.Form):
+    
+    def __init__(self, clinic, *args, **kwargs):
+        """
+        Inicializador da classe PersonRegistrationForm.
+
+        Args:
+            clinic (Clinic): A clínica associada ao usuário logado.
+            *args: Argumentos posicionais adicionais.
+            **kwargs: Argumentos de palavra-chave adicionais.
+        """
+        # Chama o inicializador da classe pai (Form)
+        super(PersonRegistrationForm, self).__init__(*args, **kwargs)
+        # Armazena a clínica passada como argumento para uso posterior
+        self.clinic = clinic
+        # Filtra as empresas relacionadas à clínica logada e que estão ativas
+        self.fields['empresa'].queryset = Company.objects.filter(clinic=clinic, user__is_active=True)
+        
     name = forms.CharField(
         label='Nome Completo', 
         max_length=100, 
@@ -68,6 +85,14 @@ class PersonRegistrationForm(forms.Form):
             'class': 'form-control',
             'placeholder': 'Telefone',
             'id': 'id_telefone'
+        })
+    )
+    empresa = forms.ModelChoiceField(
+        queryset=Company.objects.none(),
+        label='Empresa',
+        widget=forms.Select(attrs={
+            'class': 'form-select', 
+            'placeholder': 'Empresa'
         })
     )
     rg = forms.CharField(
@@ -142,25 +167,11 @@ class PersonRegistrationForm(forms.Form):
             'pattern':'\d{5}-\d{3}'
         })
     )
-    asma = forms.BooleanField(
-        label='Asma',
-        required=False,
-        widget=forms.CheckboxInput(attrs={
-            'class': 'form-check-input'
-        })
-    )
-    diabetes = forms.BooleanField(
-        label='Diabetes',
-        required=False,
-        widget=forms.CheckboxInput(attrs={
-            'class': 'form-check-input'
-        })
-    )
     
-    def save(self, clinica, commit=True):
+    def save(self, commit=True):
         
-        company =  Company.objects.get(cnpj='00000000011111')
-        clinica = Clinic.objects.get(cnpj=clinica)
+        empresa = self.cleaned_data['empresa']
+        clinica = self.clinic
         
         phone_formatting = user_validations.remove_phone_number_formatting(self.cleaned_data['phone'])
         zip_code_formatting = user_validations.remove_zip_code_formatting(self.cleaned_data['zip_code'])
@@ -183,7 +194,7 @@ class PersonRegistrationForm(forms.Form):
             rg=self.cleaned_data['rg'],
             birth_date=self.cleaned_data['birth_date'],
             address=address,
-            company=company,
+            company=empresa,
             clinic=clinica
         )
         person.save()
@@ -282,6 +293,20 @@ class FormMedicalRecord(forms.Form):
     )
     sifiles = forms.BooleanField(
         label='Sífiles',
+        required=False,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'form-check-input'
+        })
+    )
+    asma = forms.BooleanField(
+        label='Asma',
+        required=False,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'form-check-input'
+        })
+    )
+    diabetes = forms.BooleanField(
+        label='Diabetes',
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
