@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .models import Clinic, Dentist, Company, Address
 from django.shortcuts import get_object_or_404
+from datetime import datetime
 
 CustomUser = get_user_model()
 
@@ -95,3 +96,34 @@ class ModelAssociationTest(TestCase):
         self.assertEqual(new_company.cnpj, '555555555')
         self.assertEqual(new_company.company_segment, 'New Segment')
         self.assertEqual(new_company.address, new_address)
+    
+    # integracao
+    @classmethod
+    def setUpTestData2(cls):
+        
+        cls.userClinica3 = CustomUser.objects.create(
+            email='clinica3@example.com',
+            name='Clinica3',
+            phone='000000000',
+            password='password'
+        )
+        
+        cls.clinic3 = Clinic.objects.create(
+            user=cls.userClinica3,
+            cnpj='322322322',
+        )
+
+
+    def test_schedule_consultation(self):
+        self.setUpTestData2()
+
+        patient = CustomUser.objects.create(name="Paciente", email="paciente@gmail.com")
+        dentist = Dentist.objects.create(user=self.userClinica3, cro="123456789", clinic=self.clinic3)
+
+        # data
+        consultation_datetime = datetime(2024, 4, 30)
+
+        
+        self.assertEqual(patient.name, "Paciente")
+        self.assertEqual(dentist.cro, "123456789")
+        self.assertEqual(consultation_datetime, datetime(2024, 4, 30))
