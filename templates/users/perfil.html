@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .imagemAlternativa {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid rgb(50, 132, 248);
+        }
+        .card {
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex align-items-center" style="min-height: 50vh;">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card w-100 mx-4">
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-md-6 border-right d-flex flex-column justify-content-center align-items-center">
+                                    <h3 class="card-title">Perfil</h3>
+                                    <img id="perfil-img" class="imagemAlternativa" src="matheus.jpg">
+                                    <h5 id="perfil-nome" class="mt-2">Matheus Virgolino</h5>
+                                    <input type="file" id="foto-input" style="display: none;" accept="image/*">
+                                    <button type="button" class="btn btn-primary btn-sm mt-2" onclick="document.getElementById('foto-input').click()">Trocar Foto</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3 class="card-title">Dados</h3>
+                                    <button type="button" class="btn btn-secondary btn-sm mb-3" data-toggle="modal" data-target="#editarPerfilModal">Editar Perfil</button>
+                                    <p><strong>Nome:</strong> <span id="nome">Matheus virgolino</span></p>
+                                    <p><strong>Email:</strong> <span id="email">zé@example.com</span></p>
+                                    <p><strong>Telefone:</strong> <span id="telefone">(11) 1234-5678</span></p>
+                                    <p><strong>CNPJ:</strong> <span id="cnpj">00.000.000/0000-00</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="editarPerfilModal" tabindex="-1" role="dialog" aria-labelledby="editarPerfilModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarPerfilModalLabel">Editar Perfil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="perfil-form">
+                        <div class="form-group">
+                            <label for="editarNome">Novo Nome:</label>
+                            <input type="text" class="form-control" id="editarNome">
+                        </div>
+                        <div class="form-group">
+                            <label for="editarEmail">Novo Email:</label>
+                            <input type="email" class="form-control" id="editarEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="editarTelefone">Novo Telefone:</label>
+                            <input type="tel" class="form-control" id="editarTelefone">
+                        </div>
+                        <div class="form-group">
+                            <label for="editarCnpj">Novo CNPJ:</label>
+                            <input type="text" class="form-control" id="editarCnpj">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="salvarPerfil()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function salvarPerfil() {
+            var novoNome = document.getElementById('editarNome').value;
+            var novoEmail = document.getElementById('editarEmail').value;
+            var novoTelefone = document.getElementById('editarTelefone').value;
+            var novoCnpj = document.getElementById('editarCnpj').value;
+
+            document.getElementById('nome').innerText = novoNome;
+            document.getElementById('email').innerText = novoEmail;
+            document.getElementById('telefone').innerText = novoTelefone;
+            document.getElementById('cnpj').innerText = novoCnpj;
+            document.getElementById('perfil-nome').innerText = novoNome; // Atualiza o nome no h5
+
+            $('#editarPerfilModal').modal('hide');
+        }
+    </script>
+
+    <script>
+        document.getElementById('foto-input').addEventListener('change', function(event) {
+            var arquivo = event.target.files[0];
+            var reader = new FileReader();
+            
+            reader.onload = function(event) {
+                document.getElementById('perfil-img').src = event.target.result;
+            };
+            
+            reader.readAsDataURL(arquivo);
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
+
+{% include "partials/_modal_sucess.html" %}
+{% include "partials/_modal_erro.html" %}
+{% endblock content %}
