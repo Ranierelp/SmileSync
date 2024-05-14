@@ -1,13 +1,30 @@
+from datetime import date, datetime
 from django import forms
-
 from address.models import Address
-from user.models import Clinic, Company
+from user.models import Clinic, Company, CustomUser
 from .models import Person
 from user import validations as user_validations
 from . import validations
 from django.forms import Select
 from odontograma.models import MedicalRecord, Procedure
+from django.db import transaction
 
+class CustomDateInput(forms.DateInput):
+    """
+    Classe para criar o campo de data formatado
+    format_value: Função para formatar o valor do campo de data ela ultiliza a função strftime para formatar a data que é passada como valor
+    para o campo de data.
+    formato '%d-%m-%y' dia-mês-ano.
+    """
+    
+    def __init__(self, *args, **kwargs):
+        kwargs['format'] = '%d-%m-%Y'
+        super().__init__(*args, **kwargs)
+    
+    def format_value(self, value):
+        if value and isinstance(value, (datetime, date)):
+            return value.strftime(self.format)
+        return super().format_value(value)
 class Select(Select):
     """ Classe para criar o campo de select formatado
 
@@ -29,9 +46,12 @@ class Select(Select):
         if not option.get('value'):
             option['attrs']['disabled'] = 'disabled'
 
-        if option.get('value') == 2:
+        if option.get('value') == None:
             option['attrs']['disabled'] = 'disabled'
-
+        
+        if option['value'] == '':
+            option['attrs']['disabled'] = 'disabled'    
+        
         return option
 
 
@@ -52,6 +72,7 @@ class PersonRegistrationForm(forms.Form):
         self.clinic = clinic
         # Filtra as empresas relacionadas à clínica logada e que estão ativas
         self.fields['empresa'].queryset = Company.objects.filter(clinic=clinic, user__is_active=True)
+        self.fields['empresa'].empty_label = 'Selecione uma empresa'
         
     name = forms.CharField(
         label='Nome Completo', 
@@ -90,7 +111,7 @@ class PersonRegistrationForm(forms.Form):
     empresa = forms.ModelChoiceField(
         queryset=Company.objects.none(),
         label='Empresa',
-        widget=forms.Select(attrs={
+        widget=Select(attrs={
             'class': 'form-select', 
             'placeholder': 'Empresa'
         })
@@ -168,6 +189,7 @@ class PersonRegistrationForm(forms.Form):
         })
     )
     
+    @transaction.atomic
     def save(self, commit=True):
         
         empresa = self.cleaned_data['empresa']
@@ -192,6 +214,7 @@ class PersonRegistrationForm(forms.Form):
             cpf=cpf_formatting,
             phone=phone_formatting,
             rg=self.cleaned_data['rg'],
+            sex=self.cleaned_data['sex'],
             birth_date=self.cleaned_data['birth_date'],
             address=address,
             company=empresa,
@@ -199,7 +222,102 @@ class PersonRegistrationForm(forms.Form):
         )
         person.save()
         
-class FormMedicalRecord(forms.Form):
+class PersonDetailForm(forms.Form):
+    name = forms.CharField(
+        label='Nome Completo',
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Nome Completo',
+            'readonly': 'readonly',
+            'disabled': 'disabled'
+        })
+    )
+    email = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Email',
+            'readonly': 'readonly',
+            'disabled': 'disabled'
+        })
+    )
+    phone = forms.CharField(
+        label='Telefone',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Telefone',
+            'readonly': 'readonly',
+            'disabled': 'disabled'
+        })
+    )
+    age = forms.CharField(
+        label='Idade',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Idade',
+            'disabled': 'disabled',
+            'readonly': 'readonly'
+        })
+    )
+    sex = forms.ChoiceField(
+        label='Sexo',
+        choices=(
+            ('', 'Selecione um sexo'),
+            ('1', 'Masculino'),
+            ('2', 'Feminino'),
+            ('3', 'Prefiro não informar'),
+            ('4', 'Outro')
+        ),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-select', 
+                'placeholder': 'Sexo',
+                'disabled': 'disabled'
+            }
+        )
+    )
+    birth_date = forms.DateField(
+        label='Data de Nascimento',
+        widget=CustomDateInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'readonly': 'readonly',
+            'disabled': 'disabled'
+        })
+    )
+    empresa = forms.CharField(
+        label='Empresa',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Empresa',
+            'readonly': 'readonly',
+            'disabled': 'disabled'
+        })
+    )
+
+    def __init__(self, *args, **kwargs):
+        """	
+        Construtor da classe PersonDetailForm. Inicializa os campos do formulário com os dados da pessoa.
+        fução calculate_age para calcular a idade da pessoa e preencher o campo 'age'.
+        """	
+        person = kwargs.pop('instance')
+        super(PersonDetailForm, self).__init__(*args, **kwargs)
+        self.fields['name'].initial = person.name
+        self.fields['email'].initial = person.email
+        self.fields['phone'].initial = person.phone
+        self.fields['empresa'].initial = person.company.user.name
+        self.fields['birth_date'].initial = person.birth_date.strftime('%d/%m/%Y')
+        print(person.birth_date)
+        self.fields['sex'].initial = person.sex
+        self.fields['age'].initial = self.calculate_age(person.birth_date)
+        
+    def calculate_age(self, birth_date):
+        today = date.today()
+        return today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+
+        
+class MedicalRecordForm(forms.Form):
     anemia = forms.BooleanField(
         label='Anemia',
         required=False,
@@ -350,3 +468,31 @@ class FormMedicalRecord(forms.Form):
         })
     )
     
+    def save(self, commit=True):
+        medical_record = MedicalRecord(
+            asma=self.cleaned_data['asma'],
+            anemia=self.cleaned_data['anemia'],
+            diabetes=self.cleaned_data['diabetes'],
+            hipertensao=self.cleaned_data['hipertensao'],
+            alergia=self.cleaned_data['alergia'],
+            epilepsia=self.cleaned_data['epilepsia'],
+            herpes=self.cleaned_data['herpes'],
+            hiv=self.cleaned_data['hiv'],
+            tuberculose=self.cleaned_data['tuberculose'],
+            hepatite=self.cleaned_data['hepatite'],
+            cancer=self.cleaned_data['cancer'],
+            doenca_cardiaca=self.cleaned_data['doenca_cardiaca'],
+            doenca_renal=self.cleaned_data['doenca_renal'],
+            traumatismo_craniano=self.cleaned_data['traumatismo_craniano'],
+            doencas_osseas=self.cleaned_data['doencas_osseas'],
+            sifiles=self.cleaned_data['sifiles'],
+            outros=self.cleaned_data['outros'],
+            frequencia_cardiaca=self.cleaned_data['frequencia_cardiaca'],
+            pressao_arterial=self.cleaned_data['pressao_arterial'],
+            faz_tratamento_medico_atual=self.cleaned_data['faz_tratamento_medico_atual'],
+            qual_tratamento=self.cleaned_data['qual_tratamento']
+        )
+        medical_record.save()
+        
+        
+        

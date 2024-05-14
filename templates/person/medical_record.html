@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/odontograma.css' %}">
+{% endblock head %}
+
+{% block title %}Ficha do Paciente{% endblock %}
+
+{% block content %}
+{% include 'partials/_header.html' %}
+
+<main>
+    <div class="container-fluid">
+        <div class="pagetitle">
+            <h1>Ficha do Paciente</h1>
+        </div>
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Ficha do Paciente</li>
+            </ol>
+        </div>
+
+        <form method="GET" action="{% url 'person_detail_view' %}">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                <input type="search" name="cpf" class="form-control" placeholder="Digite o CPF do Paciente"
+                    aria-label="Search" aria-describedby="basic-addon1">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+
+        {% if form %}
+        {% include 'odontograma/odontograma.html' %}
+        <div class="container-fluid bg-box">
+            <h2>Informações do Paciente</h2>
+            <form method="POST" action="{% url 'person_detail_view' %}">
+                {% csrf_token %}
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            {{ form.name }}
+                            <label for="{{ form.name.id_for_label }}">Nome Completo</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            {{ form.email }}
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            {{ form.age }}
+                            <label for="{{ form.age.id_for_label }}">Idade</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            {{ form.sex }}
+                            <label for="{{ form.sex.id_for_label }}">Sexo</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            {{ form.phone }}
+                            <label for="{{ form.phone.id_for_label }}">Telefone</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            {{ form.empresa }}
+                            <label for="{{ form.empresa.id_for_label }}">Empresa</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            {{ form.birth_date }}
+                            <label for="{{ form.birth_date.id_for_label }}">Data de Nascimento</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+
+
+        {% if medical_record_form %}
+        <form method="POST" action="{% url 'person_detail_view' %}" autocomplete="off">
+            {% csrf_token %}
+            <div class="container-fluid bg-box mb-4">
+                <h2>Histórico Médico</h2>
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <div class="row g-3">
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.asma }}
+                                    <label for="{{ medical_record_form.asma.id_for_label }}">Asma</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.diabetes }}
+                                    <label for="{{ medical_record_form.diabetes.id_for_label }}">Diabetes</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.hipertensao }}
+                                    <label for="{{ medical_record_form.hipertensao.id_for_label }}">Hipertensão</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.anemia }}
+                                    <label for="{{ medical_record_form.anemia.id_for_label }}">Anemia</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.alergia }}
+                                    <label for="{{ medical_record_form.alergia.id_for_label }}">Alergia</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.epilepsia }}
+                                    <label for="{{ medical_record_form.epilepsia.id_for_label }}">Epilepsia</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.herpes }}
+                                    <label for="{{ medical_record_form.herpes.id_for_label }}">Herpes</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.tuberculose }}
+                                    <label for="{{ medical_record_form.tuberculose.id_for_label }}">Tuberculose</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.hiv }}
+                                    <label for="{{ medical_record_form.hiv.id_for_label }}">HIV</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.hepatite }}
+                                    <label for="{{ medical_record_form.hepatite.id_for_label }}">Hepatite</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.cancer }}
+                                    <label for="{{ medical_record_form.cancer.id_for_label }}">Câncer</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.doenca_cardiaca }}
+                                    <label for="{{ medical_record_form.doenca_cardiaca.id_for_label }}">Doença
+                                        Cardiaca</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.doencas_osseas }}
+                                    <label for="{{ medical_record_form.doencas_osseas.id_for_label }}">Doenças
+                                        Osseas</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-chec">
+                                    {{ medical_record_form.sifiles }}
+                                    <label for="{{ medical_record_form.sifiles.id_for_label }}">Sífiles</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-chec">
+                                    {{ medical_record_form.traumatismo_craniano }}
+                                    <label for="{{ medical_record_form.traumatismo_craniano.id_for_label }}">Traumatismo
+                                        Craniano</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-chec">
+                                    {{ medical_record_form.faz_tratamento_medico_atual }}
+                                    <label for="{{ medical_record_form.faz_tratamento_medico_atual.id_for_label }}">Faz
+                                        Tratamento
+                                        Médico Atual?</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 pt-2">
+                    <div class="col-md-12">
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{ medical_record_form.qual_tratamento }}
+                                    <label for="{{ medical_record_form.qual_tratamento.id_for_label }}">Qual
+                                        Tratamento?</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{ medical_record_form.outros }}
+                                    <label for="{{ medical_record_form.outros.id_for_label }}">Outros</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{ medical_record_form.frequencia_cardiaca }}
+                                    <label for="{{ medical_record_form.frequencia_cardiaca.id_for_label }}">Frequência
+                                        Cardíaca</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {{ medical_record_form.pressao_arterial }}
+                                    <label for="{{ medical_record_form.pressao_arterial.id_for_label }}">Pressão
+                                        Arterial</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid col-2 mx-auto">
+                <button class="btn btn-primary" type="submit" name="submit">SALVAR</button>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</main>
+
+{% endblock %}
