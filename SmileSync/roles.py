@@ -6,6 +6,7 @@ class Clinica(AbstractUserRole):
         'can_edit_pacientes': True,
         'can_create_pacientes': True,
         'can_delete_pacientes': True,
+        'can_view_medical_record': True,
         
         'can_view_empresa': True,
         'can_edit_empresa': True,
@@ -23,8 +24,9 @@ class Dentista(AbstractUserRole):
     available_permissions = {
         'can_view_pacientes': True,
         'can_edit_pacientes': True,
-        'can_create_pacientes': True,
         'can_delete_pacientes': True,
+        'can_view_medical_record': True,
+        'can_create_medical_record': True,
         
         'can_view_empresa': True,
         'can_edit_empresa': True,

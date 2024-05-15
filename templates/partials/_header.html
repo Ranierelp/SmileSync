@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load permission_tags %}
 <header>
   <nav class="navbar shadow bg-body-tertiary">
     <div class="container-fluid">
@@ -43,12 +43,13 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
             <div class="accordion accordion-flush" id="accordionFlushExample">
-              <div class="accordion-item mb-1">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              {% if request.user|has_role:'clinica' %}
+                <div class="accordion-item mb-1">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     <img class="icon-acordion" src="/static/img/icon_dentista.svg" alt="">
-                  Dentista
+                    Dentista
                   </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -63,20 +64,21 @@
               <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    <img class="icon-acordion" src="/static/img/icon_empresa.svg" alt="">
-                    Empresa
-                  </button>
-                </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">
-                    <ul class="dropdown-content">
-                      <li><a href="{% url "create_company_view" %}">Cadastrar Empresa</a></li>
-                      <li><a href="{% url "list_companies_view" %}">Lista de Empresas</a></li>
-                    </ul>
-                  </div>
+                  data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  <img class="icon-acordion" src="/static/img/icon_empresa.svg" alt="">
+                  Empresa
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <ul class="dropdown-content">
+                    <li><a href="{% url "create_company_view" %}">Cadastrar Empresa</a></li>
+                    <li><a href="{% url "list_companies_view" %}">Lista de Empresas</a></li>
+                  </ul>
                 </div>
               </div>
+            </div>
+          {% endif %}
               <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -89,8 +91,14 @@
                   data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
                     <ul class="dropdown-content">
-                      <li><a href="{% url "create_person_view" %}">Cadastrar Paciente</a></li>
+                      {% if request.user|has_role:'clinica' %}
+                        <li><a href="{% url "create_person_view" %}">Cadastrar Paciente</a></li>
+                      {% endif %}
+                      {% if request.user|has_role:'empresa' %}
+                        <li><a href="{% url "create_person_view" %}">Cadastrar Funcionário</a></li>
+                      {% endif %}
                       <li><a href="#">Lista de Pacientes</a></li>
+                      <li><a href="{% url "person_detail_view" %}">Prontuário Eletrônico</a></li>
                     </ul>
                   </div>
                 </div>

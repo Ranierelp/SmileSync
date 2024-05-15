@@ -2,7 +2,7 @@ footer{
   background-image: url('/static/img/footer.svg');
   background-size: cover;
   background-repeat: no-repeat;
-  margin-top: 16px;
+  margin-top: 400px;
   height: auto;
   padding: 1.5rem;
 }

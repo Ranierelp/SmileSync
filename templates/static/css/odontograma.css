@@ -70,24 +70,24 @@
 } 
 
 .face-dente-baixo:hover {
-  background-color: #1B7BF7;
+  background-color: gray;
   
 }
 
 .face-dente-esquerda:hover {
-  background-color: #1B7BF7;
+  background-color: gray;
 }
 
 .face-dente-cima:hover {
-  background-color: #1B7BF7; 
+  background-color: gray; 
 }
 
 .face-dente-direita:hover {
-  background-color: #1B7BF7;
+  background-color: gray;
 }
 
 .quadrado:hover {
-  background-color: #1B7BF7;
+  background-color: gray;
 }
 
 table {
@@ -107,4 +107,11 @@ th {
 
 .white {
   background-color: white;
+}
+
+.input-group>.form-control, .input-group>.form-select {
+  position: relative;
+  flex: 1 1 auto;
+  width: 250px;
+  min-width: 0;
 }

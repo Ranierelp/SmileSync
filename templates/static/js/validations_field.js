@@ -31,27 +31,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.getElementById('id_telefone')?.addEventListener('input', function(event) {
     var telefone = event.target.value.replace(/\D/g, '');
+    var celular = telefone.length > 2 && telefone.charAt(2) === '9';
     
-    var celular = telefone.length === 11 && telefone.charAt(2) === '9';
-
-    if (celular) {
-        if (telefone.length > 11) {
-            telefone = telefone.slice(0, 11);
-        }
-    } else {
-        if (telefone.length > 10) {
-            telefone = telefone.slice(0, 10);
-        }
+    if (celular && telefone.length > 11) {
+        telefone = telefone.slice(0, 11);
+    } else if (!celular && telefone.length > 10) {
+        telefone = telefone.slice(0, 10);
     }
 
     var telefoneFormatado = '';
-    
-    if (celular) {
-        telefoneFormatado = '(' + telefone.substring(0, 2) + ') ' + telefone.substring(2, 7) + '-' + telefone.substring(7, 11);
-    } else {
-        telefoneFormatado = '(' + telefone.substring(0, 2) + ') ' + telefone.substring(2, 6) + '-' + telefone.substring(6, 10);
+    if (telefone.length > 0) {
+        telefoneFormatado = '(' + telefone.substring(0, 2);
+        if (telefone.length > 2) {
+            telefoneFormatado += ') ';
+        }
+        if (telefone.length > 3 && celular) {
+            telefoneFormatado += telefone.substring(2, 7);
+            if (telefone.length > 7) {
+                telefoneFormatado += '-' + telefone.substring(7, 11);
+            }
+        } else if (telefone.length > 2) {
+            telefoneFormatado += telefone.substring(2, 6);
+            if (telefone.length > 6) {
+                telefoneFormatado += '-' + telefone.substring(6, 10);
+            }
+        }
     }
-    
+
     event.target.value = telefoneFormatado;
 });
 

@@ -8,6 +8,17 @@
 
 <main>
     <div class="container-fluid ">
+        <div class="pagetitle">
+            <h1>Cadastro de Empresa</h1>
+        </div>
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="style-a" href="{% url 'home_view' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="style-a" href="{% url 'list_companies_view' %}">Lista de Empresas</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container-fluid ">
         <form method="post" action="{% url 'create_company_view' %}" autocomplete="off">
             {% csrf_token %}
             <div class="container-fluid bg-box">

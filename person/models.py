@@ -6,10 +6,11 @@ from user.models import Clinic, Company
 
 class Person(models.Model):    
     sex_user = (
-    (None, 'Selecione um sexo'),
+    ('', 'Selecione um sexo'),
     ('1', 'Masculino'),
     ('2', 'Feminino'),
-    ('3', 'Outro'),
+    ('3', 'Prefiro não informar'),
+    ('4', 'Outro')
 )
     cpf = models.CharField(primary_key=True, max_length=15)
     name = models.CharField(max_length=100)

@@ -72,71 +72,123 @@ def create_medical_record(request):
     # Renderizando o template de criação de prontuário médico
     return render(request, 'person/register_medical_record.html', {'form': form})
 
-def person_detail_and_update_view(request):
-    """ Função para detalhar e atualizar uma pessoa
 
-    Args:
-        request ([HttpRequest]): [Requisição HTTP]
-        person_id ([int]): [ID da pessoa]
+# def person_detail_view(request):
+#     form = None
+#     person = None
+#     medical_record_form = None
+#     cpf = request.GET.get('cpf')
 
-    Returns:
-        [HttpResponse]: [Resposta HTTP]
-    """
-  
-    # Buscando a pessoa pelo ID
-    cpf = request.GET.get('cpf')
-    if cpf:
-        person = Person.objects.get(pk=cpf)
+#     if cpf:
+#         person = get_object_or_404(Person, cpf=cpf)
+#         form = PersonDetailForm(instance=person)
+#         medical_record_form = MedicalRecordForm()
+            
+#     context = {
+#         'form': form,
+#         'medical_record_form': medical_record_form,
+#         'person': person
+#     }
+    
+#     return render(request, 'person/medical_record.html',context)
 
-    # Verificando se a requisição é do tipo POST
+def person_create_medical_record_view(request, cpf):
+    person = get_object_or_404(Person, cpf=cpf)
+    
     if request.method == 'POST':
-        # Criando o formulário de pessoa
-        form = PersonDetailForm(request.user.clinic, request.POST, instance=person)
-
-        # Verificando se o formulário é válido
-        if form.is_valid():
-            form.save()
-            alert_sucess = 'Paciente atualizado com sucesso!'
+        medical_record_form = MedicalRecordForm(request.POST)
+        
+        if medical_record_form.is_valid():
+            medical_record = medical_record_form.save(person ,commit=False)
+            if not person.prontuario:
+                medical_record.save()
+                person.prontuario = medical_record
+            else:
+                medical_record.pk = person.prontuario.pk
+                medical_record.save()
+                
+            person.save()
+            alert_sucess = 'Prontuário do paciente finalizada com sucesso!'
+            
             context = {
-                'form': form,
-                'success': True,
-                'alert_sucess': alert_sucess
+                'form': PersonDetailForm(instance=person), 
+                'medical_record_form': medical_record_form,
+                'person': person,
+                'alert_sucess': alert_sucess,
+                'success': True
             }
-
-            return render(request, 'person/register_person.html', context)
+            return render(request, 'person/medical_record.html', context)
+    
     else:
-        # Criando o formulário de pessoa
-        form = PersonDetailForm(request.user.clinic, instance=person)
-
-    # Renderizando o template de detalhe e atualização de pessoa
-    return render(request, 'person/medical_record.html', {'form': form})
-
+        form = PersonDetailForm(instance=person)
+        
+        # Se a pessoa já tiver um prontuário, preenche o formulário com os dados existentes
+        initial_data = {
+            'anemia': person.prontuario.anemia,
+            'hipertensao': person.prontuario.hipertensao,
+            'alergia': person.prontuario.alergia,
+            'epilepsia': person.prontuario.epilepsia,
+            'herpes': person.prontuario.herpes,
+            'hiv': person.prontuario.hiv,
+            'tuberculose': person.prontuario.tuberculose,
+            'hepatite': person.prontuario.hepatite,
+            'cancer': person.prontuario.cancer,
+            'doenca_cardiaca': person.prontuario.doenca_cardiaca,
+            'doenca_renal': person.prontuario.doenca_renal,
+            'traumatismo_craniano': person.prontuario.traumatismo_craniano,
+            'doencas_osseas': person.prontuario.doencas_osseas,
+            'sifiles': person.prontuario.sifiles,
+            'asma': person.prontuario.asma,
+            'diabetes': person.prontuario.diabetes,
+            'outros': person.prontuario.outros,
+            'frequencia_cardiaca': person.prontuario.frequencia_cardiaca,
+            'pressao_arterial': person.prontuario.pressao_arterial,
+            'faz_tratamento_medico_atual': person.prontuario.faz_tratamento_medico_atual,
+            'qual_tratamento': person.prontuario.qual_tratamento,
+        } if person.prontuario else {}
+        medical_record_form = MedicalRecordForm(initial=initial_data)
+    
+    context = {
+        'form': form,  
+        'medical_record_form': medical_record_form,
+        'person': person
+    }
+    return render(request, 'person/medical_record.html', context)
 
 def person_detail_view(request):
     form = None
-    medical_record_form = None
     person = None
+    medical_record_form = None
     cpf = request.GET.get('cpf')
 
     if cpf:
         person = get_object_or_404(Person, cpf=cpf)
         form = PersonDetailForm(instance=person)
-        medical_record_form = MedicalRecordForm()
         
-    if request.method == 'POST' and person:
-        form = PersonDetailForm(request.POST, instance=person)
-        medical_record_form = MedicalRecordForm(request.POST)
-
-        if form.is_valid() and medical_record_form.is_valid():
-            form.save()
-            context = {
-                'form': form,
-                'medical_record_form': medical_record_form,
-                'person': person,
-                'success': True,
-                'alert_sucess': 'Ficha do paciente finalizada com sucesso!'
-            }
-            return render(request, 'person/medical_record.html', context)
+        initial_data = {
+            'anemia': person.prontuario.anemia,
+            'hipertensao': person.prontuario.hipertensao,
+            'alergia': person.prontuario.alergia,
+            'epilepsia': person.prontuario.epilepsia,
+            'herpes': person.prontuario.herpes,
+            'hiv': person.prontuario.hiv,
+            'tuberculose': person.prontuario.tuberculose,
+            'hepatite': person.prontuario.hepatite,
+            'cancer': person.prontuario.cancer,
+            'doenca_cardiaca': person.prontuario.doenca_cardiaca,
+            'doenca_renal': person.prontuario.doenca_renal,
+            'traumatismo_craniano': person.prontuario.traumatismo_craniano,
+            'doencas_osseas': person.prontuario.doencas_osseas,
+            'sifiles': person.prontuario.sifiles,
+            'asma': person.prontuario.asma,
+            'diabetes': person.prontuario.diabetes,
+            'outros': person.prontuario.outros,
+            'frequencia_cardiaca': person.prontuario.frequencia_cardiaca,
+            'pressao_arterial': person.prontuario.pressao_arterial,
+            'faz_tratamento_medico_atual': person.prontuario.faz_tratamento_medico_atual,
+            'qual_tratamento': person.prontuario.qual_tratamento,
+        } if person.prontuario else {}
+        medical_record_form = MedicalRecordForm(initial=initial_data)
             
     context = {
         'form': form,
@@ -144,4 +196,4 @@ def person_detail_view(request):
         'person': person
     }
     
-    return render(request, 'person/medical_record.html',context)
+    return render(request, 'person/medical_record.html', context)

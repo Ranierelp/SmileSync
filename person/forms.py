@@ -222,139 +222,107 @@ class PersonRegistrationForm(forms.Form):
         )
         person.save()
         
-class PersonDetailForm(forms.Form):
-    name = forms.CharField(
-        label='Nome Completo',
-        max_length=100,
-        widget=forms.TextInput(attrs={
+
+class PersonDetailForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = ['name', 'email', 'phone', 'birth_date', 'sex', 'company']
+
+    def __init__(self, *args, **kwargs):
+        """	
+        Construtor da classe PersonDetailForm. Inicializa os campos do formulário com os dados da pessoa.
+        função calculate_age para calcular a idade da pessoa e preencher o campo 'age'.
+        """	
+        super(PersonDetailForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Nome Completo',
             'readonly': 'readonly',
             'disabled': 'disabled'
         })
-    )
-    email = forms.EmailField(
-        label='Email',
-        widget=forms.EmailInput(attrs={
+        self.fields['email'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Email',
             'readonly': 'readonly',
             'disabled': 'disabled'
         })
-    )
-    phone = forms.CharField(
-        label='Telefone',
-        widget=forms.TextInput(attrs={
+        self.fields['phone'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Telefone',
             'readonly': 'readonly',
             'disabled': 'disabled'
         })
-    )
-    age = forms.CharField(
-        label='Idade',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Idade',
-            'disabled': 'disabled',
-            'readonly': 'readonly'
-        })
-    )
-    sex = forms.ChoiceField(
-        label='Sexo',
-        choices=(
-            ('', 'Selecione um sexo'),
-            ('1', 'Masculino'),
-            ('2', 'Feminino'),
-            ('3', 'Prefiro não informar'),
-            ('4', 'Outro')
-        ),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-select', 
-                'placeholder': 'Sexo',
-                'disabled': 'disabled'
-            }
-        )
-    )
-    birth_date = forms.DateField(
-        label='Data de Nascimento',
-        widget=CustomDateInput(attrs={
+        self.fields['birth_date'].widget.attrs.update({
             'class': 'form-control',
             'type': 'text',
             'readonly': 'readonly',
             'disabled': 'disabled'
         })
-    )
-    empresa = forms.CharField(
-        label='Empresa',
-        widget=forms.TextInput(attrs={
+        self.fields['sex'].widget.attrs.update({
+            'class': 'form-select',
+            'placeholder': 'Sexo',
+            'disabled': 'disabled'
+        })
+        self.fields['company'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Empresa',
             'readonly': 'readonly',
             'disabled': 'disabled'
         })
-    )
+        self.fields['age'] = forms.CharField(
+            label='Idade',
+            initial=self.calculate_age(self.instance.birth_date),
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Idade',
+                'disabled': 'disabled',
+                'readonly': 'readonly'
+            })
+        )
 
-    def __init__(self, *args, **kwargs):
-        """	
-        Construtor da classe PersonDetailForm. Inicializa os campos do formulário com os dados da pessoa.
-        fução calculate_age para calcular a idade da pessoa e preencher o campo 'age'.
-        """	
-        person = kwargs.pop('instance')
-        super(PersonDetailForm, self).__init__(*args, **kwargs)
-        self.fields['name'].initial = person.name
-        self.fields['email'].initial = person.email
-        self.fields['phone'].initial = person.phone
-        self.fields['empresa'].initial = person.company.user.name
-        self.fields['birth_date'].initial = person.birth_date.strftime('%d/%m/%Y')
-        print(person.birth_date)
-        self.fields['sex'].initial = person.sex
-        self.fields['age'].initial = self.calculate_age(person.birth_date)
-        
     def calculate_age(self, birth_date):
         today = date.today()
         return today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
 
-        
+
 class MedicalRecordForm(forms.Form):
     anemia = forms.BooleanField(
-        label='Anemia',
+        label='Anemia', 
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     hipertensao = forms.BooleanField(
-        label='Hipertensão',
+        label='Hipertensão',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
-        })
+            })
     )
     alergia = forms.BooleanField(
-        label='Alergia',
+        label='Alergia',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     epilepsia = forms.BooleanField(
-        label='Epilepsia',
+        label='Epilepsia',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     herpes = forms.BooleanField(
-        label='Herpes',
+        label='Herpes',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     hiv = forms.BooleanField(
-        label='HIV',
+        label='HIV',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
@@ -362,137 +330,146 @@ class MedicalRecordForm(forms.Form):
     )
     tuberculose = forms.BooleanField(
         label='Tuberculose',
-        required=False,
+        required=False,  
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     hepatite = forms.BooleanField(
-        label='Hepatite',
+        label='Hepatite',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     cancer = forms.BooleanField(
-        label='Câncer',
+        label='Câncer',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     doenca_cardiaca = forms.BooleanField(
-        label='Doença Cardíaca',
+        label='Doença Cardíaca',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     doenca_renal = forms.BooleanField(
-        label='Doença Renal',
+        label='Doença Renal',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     traumatismo_craniano = forms.BooleanField(
-        label='Traumatismo Craniano',
+        label='Traumatismo Craniano',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     doencas_osseas = forms.BooleanField(
-        label='Doenças Ósseas',
+        label='Doenças Ósseas',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     sifiles = forms.BooleanField(
-        label='Sífiles',
+        label='Sífiles',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     asma = forms.BooleanField(
-        label='Asma',
+        label='Asma',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     diabetes = forms.BooleanField(
-        label='Diabetes',
+        label='Diabetes',  
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     outros = forms.CharField(
-        label='Outros',
-        max_length=100,
+        label='Outros', 
+        required=False,
+        max_length=100,  
         widget=forms.TextInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control', 
             'placeholder': 'Outros'
         })
     )
     frequencia_cardiaca = forms.CharField(
-        label='Frequência Cardíaca',
+        label='Frequência Cardíaca',  
+        required=False,
         widget=forms.TextInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control', 
             'placeholder': 'Frequência Cardíaca'
         })
     )
     pressao_arterial = forms.CharField(
-        label='Pressão Arterial',
+        label='Pressão Arterial', 
+        required=False, 
         widget=forms.TextInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control', 
             'placeholder': 'Pressão Arterial'
         })
     )
     faz_tratamento_medico_atual = forms.BooleanField(
-        label='Faz tratamento médico atual',
-        required=False,
+        label='Faz tratamento médico atual', 
+        required=False, 
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input'
         })
     )
     qual_tratamento = forms.CharField(
-        label='Qual tratamento',
-        max_length=100,
+        label='Qual tratamento', 
+        required=False,
+        max_length=100,  
         widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Qual tratamento'
-        })
+            'class': 'form-control', 
+            'placeholder': 'Qual tratamento'                 
+         })
     )
-    
-    def save(self, commit=True):
-        medical_record = MedicalRecord(
-            asma=self.cleaned_data['asma'],
-            anemia=self.cleaned_data['anemia'],
-            diabetes=self.cleaned_data['diabetes'],
-            hipertensao=self.cleaned_data['hipertensao'],
-            alergia=self.cleaned_data['alergia'],
-            epilepsia=self.cleaned_data['epilepsia'],
-            herpes=self.cleaned_data['herpes'],
-            hiv=self.cleaned_data['hiv'],
-            tuberculose=self.cleaned_data['tuberculose'],
-            hepatite=self.cleaned_data['hepatite'],
-            cancer=self.cleaned_data['cancer'],
-            doenca_cardiaca=self.cleaned_data['doenca_cardiaca'],
-            doenca_renal=self.cleaned_data['doenca_renal'],
-            traumatismo_craniano=self.cleaned_data['traumatismo_craniano'],
-            doencas_osseas=self.cleaned_data['doencas_osseas'],
-            sifiles=self.cleaned_data['sifiles'],
-            outros=self.cleaned_data['outros'],
-            frequencia_cardiaca=self.cleaned_data['frequencia_cardiaca'],
-            pressao_arterial=self.cleaned_data['pressao_arterial'],
-            faz_tratamento_medico_atual=self.cleaned_data['faz_tratamento_medico_atual'],
-            qual_tratamento=self.cleaned_data['qual_tratamento']
-        )
-        medical_record.save()
+
+    def save(self, person, commit=True):
+        if person.prontuario:
+            medical_record = person.prontuario
+        else:
+            medical_record = MedicalRecord()
         
+        medical_record.asma = self.cleaned_data['asma']
+        medical_record.anemia = self.cleaned_data['anemia']
+        medical_record.diabetes = self.cleaned_data['diabetes']
+        medical_record.hipertensao = self.cleaned_data['hipertensao']
+        medical_record.alergia = self.cleaned_data['alergia']
+        medical_record.epilepsia = self.cleaned_data['epilepsia']
+        medical_record.herpes = self.cleaned_data['herpes']
+        medical_record.hiv = self.cleaned_data['hiv']
+        medical_record.tuberculose = self.cleaned_data['tuberculose']
+        medical_record.hepatite = self.cleaned_data['hepatite']
+        medical_record.cancer = self.cleaned_data['cancer']
+        medical_record.doenca_cardiaca = self.cleaned_data['doenca_cardiaca']
+        medical_record.doenca_renal = self.cleaned_data['doenca_renal']
+        medical_record.traumatismo_craniano = self.cleaned_data['traumatismo_craniano']
+        medical_record.doencas_osseas = self.cleaned_data['doencas_osseas']
+        medical_record.sifiles = self.cleaned_data['sifiles']
+        medical_record.outros = self.cleaned_data['outros']
+        medical_record.frequencia_cardiaca = self.cleaned_data['frequencia_cardiaca']
+        medical_record.pressao_arterial = self.cleaned_data['pressao_arterial']
+        medical_record.faz_tratamento_medico_atual = self.cleaned_data['faz_tratamento_medico_atual']
+        medical_record.qual_tratamento = self.cleaned_data['qual_tratamento']
         
-        
+        if commit:
+            medical_record.save()
+            person.prontuario = medical_record
+            person.save()
+        return medical_record
