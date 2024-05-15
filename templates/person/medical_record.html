@@ -48,7 +48,7 @@
             {% endif %}
             {% if request.user|has_role:'clinica' %}
             {% include 'odontograma/odontograma.html' %}
-            <form method="GET" action="{% url 'person_detail_view' %}">
+            <form method="GET" action="{% url 'person_detail_view' %}" style="pointer-events: none;">
                 {% endif %}
                 {% csrf_token %}
                 <div class="container-fluid bg-box">
