@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-
+from django.contrib.auth.decorators import login_required
 from person.models import Person
 from .forms import PersonDetailForm, PersonRegistrationForm, MedicalRecordForm
 
+@login_required
 def create_person_view(request):
     """ Função para criar a view de criação de pessoa
 
@@ -38,7 +39,7 @@ def create_person_view(request):
     # Renderizando o template de criação de pessoa
     return render(request, 'person/register_person.html', {'form': form})
 
-
+@login_required
 def create_medical_record(request):
     """ Função para criar o prontuário médico
 
@@ -92,6 +93,7 @@ def create_medical_record(request):
     
 #     return render(request, 'person/medical_record.html',context)
 
+@login_required
 def person_create_medical_record_view(request, cpf):
     person = get_object_or_404(Person, cpf=cpf)
     
@@ -155,6 +157,7 @@ def person_create_medical_record_view(request, cpf):
     }
     return render(request, 'person/medical_record.html', context)
 
+@login_required
 def person_detail_view(request):
     form = None
     person = None

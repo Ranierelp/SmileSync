@@ -301,3 +301,47 @@ class CompanyRegistrationForm(forms.Form):
         company.save()
         assign_role(user, 'empresa')
     
+class ProfileForm(forms.Form):
+    name = forms.CharField(
+        label='Nome',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Nome',
+            'id': 'id_name'
+        })
+    )
+    email = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Email'
+        })
+    )
+    phone = forms.CharField(
+        label='Telefone',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Telefone',
+            'id': 'id_telefone'
+        })
+    )
+    identifier = forms.CharField(
+        label='CRO/CNPJ',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'CPF/CNPJ',
+            'id': 'id_identifier',
+            'disabled': 'disabled'
+            
+        })
+    )
+
+    def save(self, user):
+        user.name = self.cleaned_data['name']
+        user.email = self.cleaned_data['email']
+        user.phone = self.cleaned_data['phone']
+        if hasattr(user, 'cnpj'):
+            user.cnpj = self.cleaned_data['identifier']
+        else:
+            user.cro = self.cleaned_data['identifier']
+        user.save()

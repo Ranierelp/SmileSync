@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load permission_tags %}
+
+{% block title %}Perfil do Usuário{% endblock title%}
+
+{% block content %}
+{%include 'partials/_header.html'%}
+
+<main>
+    <div class="container-fluid bg-box">
+        <form method="POST" action="{% url 'profile_view' %}">
+            {% csrf_token %}
+            <div class="row g-3 row-md-reverse">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <img src="{% static 'img/user.png' %}" class="rounded-circle" id="perfil-img" alt="Foto de Perfil" width="150" height="150">
+                        <input type="file" id="foto-input" class="form-control" style="display: none;">
+                        <label for="foto-input" class="btn btn-primary mt-2">Alterar Foto</label>
+                    </div>
+                </div>
+            
+                <div class="col-8">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                {{ form.name }}
+                                {% if request.user|has_role:'clinica, empresa' %}
+                                <label for="{{ form.name.id_for_label }}">Nome da Empresa</label>
+                                {% else %}
+                                <label for="{{ form.name.id_for_label }}">Nome do Dentista</label>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form.email }}
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form.phone }}
+                                <label for="{{ form.phone.id_for_label }}">Telefone</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                {{ form.identifier }}
+                                <label for="{{ form.identifier.id_for_label }}">CRO/CNPJ</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+{% include "partials/_modal_sucess.html" %}
+{% include "partials/_modal_erro.html" %}
+{% endblock content %}

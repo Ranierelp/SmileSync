@@ -1,0 +1,27 @@
+#picture_input{
+    display: none;
+}
+
+.picture{
+    width: 180px;
+    aspect-ratio: 3/4;
+    background-color: rgb(219, 218, 218);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(170, 170, 170);
+    border: 2px dashed;
+    cursor: pointer;
+    transition: color 300ms ease-in-out, background 300ms ease-in-out;
+    overflow-y: hidden;
+}
+
+.picture:hover{
+    color: #979797;
+    background-color: #F0F2F5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+}
+
+.picture_img {
+    max-width: 100%;
+  }

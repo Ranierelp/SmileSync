@@ -19,22 +19,32 @@
         <div style="margin-right: 10px;">{{request.user.name|upper}}</div>
 
         <!-- Atualizar para uma bola cinza -->
-          
+
         <div class="dropdown">
-          <button class="fixed-circle-button" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-user"></i> <!-- icone de perfil biblioteca awesome-->
+          <button class="fixed-circle-button" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fas fa-user"></i> <!-- icone de perfil biblioteca awesome -->
           </button>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"> 
-            <li><a class="dropdown-item" href="#">Perfil</a></li>
-            <li><a class="dropdown-item" href="#">Configurações</a></li>
-            <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+            <li>
+              <a class="dropdown-item" href="{% url 'profile_view' %}">
+                <i class="fas fa-user"></i> Perfil
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="fas fa-cog"></i> Configurações
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'logout' %}">
+                <i class="fas fa-sign-out-alt"></i> Sair
+              </a>
+            </li>
           </ul>
         </div>
-
-        <!-- nao mexer dps -->
-
-
       </div>
+
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
@@ -44,9 +54,9 @@
           <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
             <div class="accordion accordion-flush" id="accordionFlushExample">
               {% if request.user|has_role:'clinica' %}
-                <div class="accordion-item mb-1">
-                  <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              <div class="accordion-item mb-1">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     <img class="icon-acordion" src="/static/img/icon_dentista.svg" alt="">
                     Dentista
@@ -55,8 +65,8 @@
                 <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
                     <ul class="dropdown-content">
-                      <li><a href="{% url "create_dentist_view" %}">Cadastrar Dentista</a></li>
-                      <li><a href="{% url "list_dentists_view" %}">Lista de Dentistas</a></li>
+                      <li><a href="{% url  'create_dentist_view' %}">Cadastrar Dentista</a></li>
+                      <li><a href="{% url  'list_dentists_view' %}">Lista de Dentistas</a></li>
                     </ul>
                   </div>
                 </div>
@@ -64,21 +74,21 @@
               <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                  <img class="icon-acordion" src="/static/img/icon_empresa.svg" alt="">
-                  Empresa
-                </button>
-              </h2>
-              <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">
-                  <ul class="dropdown-content">
-                    <li><a href="{% url "create_company_view" %}">Cadastrar Empresa</a></li>
-                    <li><a href="{% url "list_companies_view" %}">Lista de Empresas</a></li>
-                  </ul>
+                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <img class="icon-acordion" src="/static/img/icon_empresa.svg" alt="">
+                    Empresa
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="dropdown-content">
+                      <li><a href="{% url  'create_company_view' %}">Cadastrar Empresa</a></li>
+                      <li><a href="{% url  'list_companies_view' %}">Lista de Empresas</a></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          {% endif %}
+              {% endif %}
               <div class="accordion-item mb-1">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -92,13 +102,13 @@
                   <div class="accordion-body">
                     <ul class="dropdown-content">
                       {% if request.user|has_role:'clinica' %}
-                        <li><a href="{% url "create_person_view" %}">Cadastrar Paciente</a></li>
+                      <li><a href="{% url  'create_person_view' %}">Cadastrar Paciente</a></li>
                       {% endif %}
                       {% if request.user|has_role:'empresa' %}
-                        <li><a href="{% url "create_person_view" %}">Cadastrar Funcionário</a></li>
+                      <li><a href="{% url  'create_person_view' %}">Cadastrar Funcionário</a></li>
                       {% endif %}
                       <li><a href="#">Lista de Pacientes</a></li>
-                      <li><a href="{% url "person_detail_view" %}">Prontuário Eletrônico</a></li>
+                      <li><a href="{% url  'person_detail_view' %}">Prontuário Eletrônico</a></li>
                     </ul>
                   </div>
                 </div>
@@ -116,7 +126,7 @@
                   <div class="accordion-body">
                     <ul class="dropdown-content">
                       <li><a href="#">Cadastrar Plano</a></li>
-                      <li><a href="{% url "planos_view" %}">Acessar Planos</a></li>
+                      <li><a href="{% url  'planos_view' %}">Acessar Planos</a></li>
                     </ul>
                   </div>
                 </div>

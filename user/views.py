@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
-from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm, CompanyRegistrationForm
+from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm, CompanyRegistrationForm, ProfileForm
 from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -186,3 +186,48 @@ def delete_company_view(request, pk) -> HttpResponse:
 def planos_view(request):
     return render(request,'users/plano.html')
     
+@login_required
+def profile_view(request):
+    user = request.user
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            form.save(user)
+            context = {
+                'form': form,
+                'success': True,
+                'alert_success': 'Perfil atualizado com sucesso!'
+            }
+            return render(request, 'users/profile.html', context)
+    else:
+        if has_role(user, 'dentista'):
+            initial_data = {
+                'name': user.name,
+                'email': user.email,
+                'phone': user.phone,
+                'cro': user.dentist.cro,
+            }
+            form = ProfileForm(initial=initial_data)
+            
+        if has_role(user, 'empresa'):
+            initial_data = {
+                'name': user.name,
+                'email': user.email,
+                'phone': user.phone,
+                'cnpj': user.company.cnpj,
+            }
+            form = ProfileForm(initial=initial_data)
+            
+        if has_role(user, 'clinica'):    
+            initial_data = {
+                'name': user.name,
+                'email': user.email,
+                'phone': user.phone,
+                'identifier': user.clinic.cnpj,
+            }
+            form = ProfileForm(initial=initial_data)
+        
+    context = {
+        'form': form
+    }
+    return render(request, 'users/profile.html', context)   
