@@ -21,9 +21,10 @@ def clinic_register_view(request:HttpRequest) -> HttpResponse:
             else:
                 form.save()
                 alert_sucess = 'Clinica cadastrada com sucesso!'
+                form = ClinicRegistrationForm()
                 context = {
                     'form': form,
-                    'success': True,
+                    'success': True,    
                     'alert_sucess': alert_sucess
                 }
                 return render(request, 'users/register.html', context)
@@ -69,6 +70,7 @@ def create_dentist_view(request:HttpRequest) -> HttpResponse:
                 clinica = request.user.clinic.cnpj
                 form.save(clinica)
                 alert_sucess = 'Dentista cadastrado com sucesso!'
+                form = DentistRegistrationForm()
                 context = {
                     'form': form,
                     'success': True,
@@ -137,6 +139,7 @@ def create_company_view(request:HttpRequest) -> HttpResponse:
                     clinica = request.user.clinic.cnpj
                     form.save(clinica)
                     alert_sucess = 'Empresa cadastrada com sucesso!'
+                    form = CompanyRegistrationForm()
                     context = {
                         'form': form,
                         'success': True,
@@ -193,6 +196,7 @@ def profile_view(request):
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(user)
+
             context = {
                 'form': form,
                 'success': True,

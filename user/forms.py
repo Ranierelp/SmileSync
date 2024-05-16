@@ -343,7 +343,7 @@ class ProfileForm(forms.Form):
             'class': 'form-control',
             'placeholder': 'CNPJ',
             'id': 'id_cnpj',
-            'disabled': 'disabled'
+            'readonly': 'readonly'
         })
     )
     
@@ -354,7 +354,7 @@ class ProfileForm(forms.Form):
             'class': 'form-control',
             'placeholder': 'CRO',
             'id': 'id_cro',
-            'disabled': 'disabled'
+            'readonly': 'readonly'
         })
     )
     

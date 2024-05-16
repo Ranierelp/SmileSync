@@ -75,7 +75,7 @@ class PersonRegistrationForm(forms.Form):
         self.fields['empresa'].empty_label = 'Selecione uma empresa'
         
     name = forms.CharField(
-        label='Nome Completo', 
+        label='Nome Completo',  
         max_length=100, 
         widget=forms.TextInput(attrs={
             'class': 'form-control',

@@ -1,6 +1,7 @@
 from django import forms  
 from django.forms import Select
 from user.models import Dentist
+from rolepermissions.checkers import has_role
 
 class Select(Select):
     """ Classe para criar o campo de select formatado
@@ -32,7 +33,7 @@ class Select(Select):
         return option
 
 class ProcedureForm(forms.Form):
-    def __init__(self, dentist, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         """
         Inicializador da classe PersonRegistrationForm.
 
@@ -41,14 +42,23 @@ class ProcedureForm(forms.Form):
             *args: Argumentos posicionais adicionais.
             **kwargs: Argumentos de palavra-chave adicionais.
         """
+
         # Chama o inicializador da classe pai (Form)
         super(ProcedureForm, self).__init__(*args, **kwargs)
+        
+        self.user = user
+
+        if has_role(user, 'clinica'):
+            self.fields['dentist'].queryset = Dentist.objects.filter(clinic=user, user__is_active=True)
+            self.fields['dentist'].empty_label = 'Selecione o Dentista'
+        else:
+            print('user', user)
+            # Filtra as dentista relacionadas à clínica logada e que estão ativas
+            self.fields['dentist'].queryset = Dentist.objects.filter(user=user, user__is_active=True)
+            self.fields['dentist'].empty_label = 'Selecione o Dentista'
+            
     
-        # Filtra as dentista relacionadas à clínica logada e que estão ativas
-        self.fields['dentist'].queryset = Dentist.objects.filter(pk=dentist, user__is_active=True)
-        self.fields['dentist'].empty_label = 'Selecione o Dentista'
-    
-    produce = forms.ChoiceField(
+    procedure = forms.ChoiceField(
         label='Procedimento',
         choices = [
         ('', 'Selecione um procedimento'),

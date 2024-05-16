@@ -3,19 +3,21 @@ from .forms import ProcedureForm
 from user.models import Dentist
 from django.shortcuts import get_object_or_404
 
-def odontograma_view(request, dentist_pk):
-    dentist = get_object_or_404(Dentist, pk=dentist_pk)
+def odontograma_view(request):
+    print('odontograma_view')
+    user = request.user
     
     if request.method == 'POST':
-        form = ProcedureForm(request.POST)
-        if form.is_valid():
-            form.save()
+        procedure_form = ProcedureForm(request.POST, user)
+        print('asdasdasdas')
+        if procedure_form.is_valid():
+            procedure_form.save()
     else:
-        form = ProcedureForm(dentist=dentist.pk)
+        procedure_form = ProcedureForm(user)
         
     context = {
-        'form': form,
-        'dentist': dentist
+        'procedure_form': procedure_form,
+        'user': user,
     }
     
     return render(request, 'odontograma/odontograma.html', context)

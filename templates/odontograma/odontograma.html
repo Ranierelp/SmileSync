@@ -294,7 +294,7 @@
                 </div>
                 <div class="modal-body">
                     
-                    <form method="post" action="{% url 'odontograma_view' request.user.dentist.pk %}" autocomplete="off">
+                    <form method="POST" action="{% url 'odontograma_view' %}" autocomplete="off">
                         {% csrf_token %}
                         <div class="container-fluid">
                             <div class="row g-3 row-md-reverse">
@@ -302,20 +302,20 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                {{form.procedure}}
-                                                <label for="{{ form.procedure.id_for_label }}">Procedimentos</label>
+                                                {{procedure_form.procedure}}
+                                                <label for="{{ procedure_form.procedure.id_for_label }}">Procedimentos</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                {{form.description}}
-                                                <label for="{{ form.description.id_for_label }}">Descrição</label>
+                                                {{procedure_form.description}}
+                                                <label for="{{ procedure_form.description.id_for_label }}">Descrição</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating" disabled>
-                                                {{form.dentist}}
-                                                <label for="{{ form.dentist.id_for_label }}">Dentista</label>
+                                            <div class="form-floating">
+                                                {{procedure_form.dentist}}
+                                                <label for="{{ procedure_form.dentist.id_for_label }}">Dentista</label>
                                             </div>
                                         </div>
                                     </div>

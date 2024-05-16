@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from person.models import Person
 from .forms import PersonDetailForm, PersonRegistrationForm, MedicalRecordForm
+from odontograma.forms import ProcedureForm
 
 @login_required
 def create_person_view(request):
@@ -25,6 +26,7 @@ def create_person_view(request):
         if form.is_valid():
             form.save()
             alert_sucess = 'Paciente cadastrado com sucesso!'
+            form = PersonRegistrationForm(request.user.clinic)
             context = {
                 'form': form,
                 'success': True,
@@ -39,39 +41,39 @@ def create_person_view(request):
     # Renderizando o template de criação de pessoa
     return render(request, 'person/register_person.html', {'form': form})
 
-@login_required
-def create_medical_record(request):
-    """ Função para criar o prontuário médico
+# @login_required
+# def create_medical_record(request):
+#     """ Função para criar o prontuário médico
 
-    Args:
-        request ([HttpRequest]): [Requisição HTTP]
+#     Args:
+#         request ([HttpRequest]): [Requisição HTTP]
 
-    Returns:
-        [HttpResponse]: [Resposta HTTP]
-    """
+#     Returns:
+#         [HttpResponse]: [Resposta HTTP]
+#     """
 
-    # Verificando se a requisição é do tipo POST
-    if request.method == 'POST':
-        # Criando o formulário de prontuário médico
-        form = MedicalRecordForm(request.POST)
+#     # Verificando se a requisição é do tipo POST
+#     if request.method == 'POST':
+#         # Criando o formulário de prontuário médico
+#         form = MedicalRecordForm(request.POST)
 
-        # Verificando se o formulário é válido
-        if form.is_valid():
-            form.save()
-            alert_sucess = 'Prontuário médico cadastrado com sucesso!'
-            context = {
-                'form': form,
-                'success': True,
-                'alert_sucess': alert_sucess
-            }
+#         # Verificando se o formulário é válido
+#         if form.is_valid():
+#             form.save()
+#             alert_sucess = 'Prontuário médico cadastrado com sucesso!'
+#             context = {
+#                 'form': form,
+#                 'success': True,
+#                 'alert_sucess': alert_sucess
+#             }
 
-            return render(request, 'person/register_medical_record.html', context)
-    else:
-        # Criando o formulário de prontuário médico
-        form = MedicalRecordForm()
+#             return render(request, 'person/register_medical_record.html', context)
+#     else:
+#         # Criando o formulário de prontuário médico
+#         form = MedicalRecordForm()
 
-    # Renderizando o template de criação de prontuário médico
-    return render(request, 'person/register_medical_record.html', {'form': form})
+#     # Renderizando o template de criação de prontuário médico
+#     return render(request, 'person/register_medical_record.html', {'form': form})
 
 
 # def person_detail_view(request):
@@ -96,9 +98,12 @@ def create_medical_record(request):
 @login_required
 def person_create_medical_record_view(request, cpf):
     person = get_object_or_404(Person, cpf=cpf)
+    custom_user = request.user
     
     if request.method == 'POST':
         medical_record_form = MedicalRecordForm(request.POST)
+        procedure_form = ProcedureForm(request.POST, custom_user)
+       
         
         if medical_record_form.is_valid():
             medical_record = medical_record_form.save(person ,commit=False)
@@ -114,8 +119,10 @@ def person_create_medical_record_view(request, cpf):
             
             context = {
                 'form': PersonDetailForm(instance=person), 
+                'procedure_form': procedure_form,
                 'medical_record_form': medical_record_form,
                 'person': person,
+                'user': custom_user,
                 'alert_sucess': alert_sucess,
                 'success': True
             }
@@ -123,6 +130,7 @@ def person_create_medical_record_view(request, cpf):
     
     else:
         form = PersonDetailForm(instance=person)
+        procedure_form = ProcedureForm(request.POST, custom_user)
         
         # Se a pessoa já tiver um prontuário, preenche o formulário com os dados existentes
         initial_data = {
@@ -139,7 +147,7 @@ def person_create_medical_record_view(request, cpf):
             'doenca_renal': person.prontuario.doenca_renal,
             'traumatismo_craniano': person.prontuario.traumatismo_craniano,
             'doencas_osseas': person.prontuario.doencas_osseas,
-            'sifiles': person.prontuario.sifiles,
+            'sifiles': person.prontuario.sifilis,
             'asma': person.prontuario.asma,
             'diabetes': person.prontuario.diabetes,
             'outros': person.prontuario.outros,
@@ -152,8 +160,10 @@ def person_create_medical_record_view(request, cpf):
     
     context = {
         'form': form,  
+        'procedure_form': procedure_form,
         'medical_record_form': medical_record_form,
-        'person': person
+        'person': person,
+        'user': custom_user
     }
     return render(request, 'person/medical_record.html', context)
 
@@ -163,10 +173,15 @@ def person_detail_view(request):
     person = None
     medical_record_form = None
     cpf = request.GET.get('cpf')
+    custom_user = request.user
+    procedure_form = ProcedureForm(custom_user)
 
+    
     if cpf:
         person = get_object_or_404(Person, cpf=cpf)
         form = PersonDetailForm(instance=person)
+        procedure_form = ProcedureForm(custom_user)
+        print(custom_user)
         
         initial_data = {
             'anemia': person.prontuario.anemia,
@@ -192,11 +207,14 @@ def person_detail_view(request):
             'qual_tratamento': person.prontuario.qual_tratamento,
         } if person.prontuario else {}
         medical_record_form = MedicalRecordForm(initial=initial_data)
+        
             
     context = {
+        'procedure_form': procedure_form,
         'form': form,
         'medical_record_form': medical_record_form,
-        'person': person
+        'person': person,
+        'user': custom_user
     }
     
     return render(request, 'person/medical_record.html', context)

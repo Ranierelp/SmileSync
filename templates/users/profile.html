@@ -28,15 +28,12 @@
                         <h2 class="h2-profile">Perfil</h2>
                         <div class="d-flex justify-content-center">
                             <label class="picture" for="picture_input">
-                                <span class="picture_image" data-default-src="{% static 'img/profile_icon_2.svg' %}">
-                                    {% if user.profile_image %}
-                                    <img src="{{ user.profile_image.url }}" alt="Profile Image"
-                                        class="img-fluid picture_img">
-                                    {% else %}
-                                    <img src="{% static 'img/profile_icon_2.svg' %}" alt="Profile Icon"
-                                        class="img-fluid">
-                                    {% endif %}
+                                {% if not request.user.photo %}
+                                    <span class="picture_image" data-default-src="{% static 'img/profile_icon_2.svg' %}">
+                                {% else %}
+                                    <span class="picture_image" data-default-src="{{ request.user.photo.url }}">
                                 </span>
+                                {% endif %}
                             </label>
                         </div>
                         {{form.photo}}
@@ -45,7 +42,7 @@
                     <div class="vertical-divider"></div>
                 </div>
                 <div class="col-8">
-                    <div class="row g-3">
+                    <div class="row g-2">
                         <div class="col-md-12">
                             <h2 class="h2-profile">Dados</h2>
                             <div class="form-floating mt-5">
