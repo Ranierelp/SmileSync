@@ -250,7 +250,8 @@ class PersonDetailForm(forms.ModelForm):
             'class': 'form-control',
             'placeholder': 'Telefone',
             'readonly': 'readonly',
-            'disabled': 'disabled'
+            'disabled': 'disabled',
+            'id': 'id_telefone'
         })
         self.fields['birth_date'].widget.attrs.update({
             'class': 'form-control',

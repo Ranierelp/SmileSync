@@ -294,7 +294,7 @@
                 </div>
                 <div class="modal-body">
                     
-                    <form method="post" action="{% url 'odontograma_view' %}" autocomplete="off">
+                    <form method="post" action="{% url 'odontograma_view' request.user.dentist.pk %}" autocomplete="off">
                         {% csrf_token %}
                         <div class="container-fluid">
                             <div class="row g-3 row-md-reverse">
@@ -323,7 +323,6 @@
                             </div>
                         </div>
                     </form>
-                
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

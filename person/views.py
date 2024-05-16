@@ -182,7 +182,7 @@ def person_detail_view(request):
             'doenca_renal': person.prontuario.doenca_renal,
             'traumatismo_craniano': person.prontuario.traumatismo_craniano,
             'doencas_osseas': person.prontuario.doencas_osseas,
-            'sifiles': person.prontuario.sifiles,
+            'sifiles': person.prontuario.sifilis,
             'asma': person.prontuario.asma,
             'diabetes': person.prontuario.diabetes,
             'outros': person.prontuario.outros,

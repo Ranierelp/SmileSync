@@ -9,40 +9,58 @@
 {% block content %}
 {%include 'partials/_header.html'%}
 <main>
-    <div class="container-fluid">
-        <div class="row min-vh-100 justify-content-center align-items-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="card overflow-hidden z-1 shadow mb-5 bg-body-tertiary rounded">
-                    <div class="p-4 p-md-5">
-                        <h2>Cadastro de Dentista</h2>
-                        <form method="post" action="{% url 'create_dentist_view' %}" autocomplete="off">
-                            {% csrf_token %}
-                            <div class="form-floating mb-3">
+    <div class="container-fluid ">
+        <div class="pagetitle">
+            <h1>Cadastro de Dentistas</h1>
+        </div>
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="style-a" href="{% url 'home_view' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="style-a" href="{% url 'list_dentists_view' %}">Lista de Dentistas</a></li>
+            </ol>
+        </div>
+    </div>
+    
+    <form method="post" action="{% url 'create_dentist_view' %}" autocomplete="off">
+        {% csrf_token %}
+        <div class="container-fluid bg-box">
+            <h2>Informações do Dentista</h2>
+            <div class="row g-3 row-md-reverse">
+                <div class="col-md-12">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
                                 {{ form.name_dentis }}
                                 <label for="{{ form.name_dentis.id_for_label }}">Dentista</label>
                             </div>
-                            <div class="form-floating mb-3">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
                                 {{ form.cro }}
                                 <label for="{{ form.cro.id_for_label }}">CRO</label>
                             </div>
-                            <div class="form-floating mb-3">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
                                 {{ form.email }}
                                 <label for="{{ form.email.id_for_label }}">Email</label>
                             </div>
-                            <div class="form-floating mb-3">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
                                 {{ form.phone }}
                                 <label for="{{ form.phone.id_for_label }}">Telefone</label>
                             </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary d-block w-100 mt-3" type="submit"
-                                    name="submit">Salvar</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="d-grid col-2 mx-auto">
+        <button class="btn btn-primary" type="submit" name="submit">SALVAR</button>   
+    </div>
+    </form>
 </main>
 
 {% include "partials/_modal_sucess.html" %}
