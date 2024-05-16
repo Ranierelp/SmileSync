@@ -1,6 +1,7 @@
 const inputFile = document.querySelector("#picture_input");
 const pictureImage = document.querySelector(".picture_image");
-const pictureImageTxt = "Foto 3X4";
+const pictureImageSrc = pictureImage.getAttribute("data-default-src");
+const pictureImageTxt = `<img src="${pictureImageSrc}" alt="Profile Icon" class="img-fluid">`;
 pictureImage.innerHTML = pictureImageTxt;
 
 inputFile.addEventListener("change", function (e) {

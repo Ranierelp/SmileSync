@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     path('register/', views.clinic_register_view, name='clinic_register_view'),
     path('login/', views.login_view, name='login_view'),
@@ -16,7 +17,6 @@ urlpatterns = [
     path('planos/', views.planos_view, name='planos_view'),
     path('perfil/', views.profile_view, name='profile_view'),
  
-
 ]
 
 

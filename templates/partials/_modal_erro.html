@@ -7,7 +7,7 @@
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: '{{ error }}',
+            text: '{{ field|title }}: {{ error }}',
         });
         {% endfor %}
     {% endfor %}

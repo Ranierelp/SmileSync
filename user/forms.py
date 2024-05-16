@@ -7,6 +7,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 from .utils import generate_password
 from rolepermissions.roles import assign_role
+from rolepermissions.checkers import has_role
 
 #CRIAR FUNÇÃO PARA ENVIAR EMAIL COM A SENHA
 
@@ -325,14 +326,44 @@ class ProfileForm(forms.Form):
             'id': 'id_telefone'
         })
     )
-    identifier = forms.CharField(
-        label='CRO/CNPJ',
+    # identifier = forms.CharField(
+    #     label='CRO/CNPJ',
+    #     widget=forms.TextInput(attrs={
+    #         'class': 'form-control',
+    #         'placeholder': 'CRO/CNPJ',
+    #         'id': 'id_identifier',
+    #         'disabled': 'disabled'
+    #     })
+    # )
+    
+    cnpj = forms.CharField(
+        label='CNPJ',
+        required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'CPF/CNPJ',
-            'id': 'id_identifier',
+            'placeholder': 'CNPJ',
+            'id': 'id_cnpj',
             'disabled': 'disabled'
-            
+        })
+    )
+    
+    cro = forms.CharField(
+        label='CRO',
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'CRO',
+            'id': 'id_cro',
+            'disabled': 'disabled'
+        })
+    )
+    
+    photo = forms.FileField(
+        label='Foto',
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-control',
+            'id':'picture_input'
         })
     )
 
@@ -340,8 +371,11 @@ class ProfileForm(forms.Form):
         user.name = self.cleaned_data['name']
         user.email = self.cleaned_data['email']
         user.phone = self.cleaned_data['phone']
-        if hasattr(user, 'cnpj'):
-            user.cnpj = self.cleaned_data['identifier']
-        else:
-            user.cro = self.cleaned_data['identifier']
+        user.photo = self.cleaned_data['photo']
+        if has_role(user, 'empresa'):
+            user.company.cnpj = self.cleaned_data['cnjp']
+        if has_role(user, 'dentista'):
+            user.dentist.cro = self.cleaned_data['cro']
+        if has_role(user, 'clinica'):
+            user.clinic.cnpj = self.cleaned_data['cnpj']
         user.save()

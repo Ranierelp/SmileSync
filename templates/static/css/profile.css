@@ -2,26 +2,63 @@
     display: none;
 }
 
-.picture{
+.picture {
     width: 180px;
-    aspect-ratio: 3/4;
+    height: 180px;
     background-color: rgb(219, 218, 218);
     display: flex;
     align-items: center;
     justify-content: center;
     color: rgb(170, 170, 170);
     border: 2px dashed;
+    border-radius: 50%;
     cursor: pointer;
     transition: color 300ms ease-in-out, background 300ms ease-in-out;
-    overflow-y: hidden;
+    overflow: hidden; 
 }
 
 .picture:hover{
-    color: #979797;
+    color: #62ABFB;
     background-color: #F0F2F5;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    box-shadow: 0 0 10px #1B7BF7;
 }
 
 .picture_img {
     max-width: 100%;
   }
+
+.name-profile {
+    display: inline-block;
+    background-color: #1B7BF7;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.h2-profile{
+    color: gray;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.position-relative {
+    position: relative;
+}
+
+.vertical-divider {
+    position: absolute;
+    right: 0; 
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(128, 128, 128, 0.589);
+}
+.rounded-image {
+    border-radius: 50%;
+    width: 50px; 
+    height: 50px; 
+}

@@ -377,7 +377,7 @@ class MedicalRecordForm(forms.Form):
             'class': 'form-check-input'
         })
     )
-    sifiles = forms.BooleanField(
+    sifilis = forms.BooleanField(
         label='Sífiles',  
         required=False,
         widget=forms.CheckboxInput(attrs={

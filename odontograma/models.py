@@ -17,7 +17,7 @@ class MedicalRecord(models.Model):
     doenca_renal = models.BooleanField()
     traumatismo_craniano = models.BooleanField()
     doencas_osseas = models.BooleanField()
-    sifiles = models.BooleanField()
+    sifilis = models.BooleanField()
     outros = models.CharField(max_length=100)
     frequencia_cardiaca = models.CharField(max_length=100)
     pressao_arterial = models.CharField(max_length=100)

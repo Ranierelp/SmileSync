@@ -190,44 +190,33 @@ def planos_view(request):
 def profile_view(request):
     user = request.user
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(user)
             context = {
                 'form': form,
                 'success': True,
-                'alert_success': 'Perfil atualizado com sucesso!'
+                'alert_sucess': 'Perfil atualizado com sucesso!'
             }
             return render(request, 'users/profile.html', context)
     else:
+        initial_data = {
+            'name': user.name,
+            'email': user.email,
+            'phone': user.phone,
+            'photo': user.photo if user.photo else ''
+        }
         if has_role(user, 'dentista'):
-            initial_data = {
-                'name': user.name,
-                'email': user.email,
-                'phone': user.phone,
-                'cro': user.dentist.cro,
-            }
-            form = ProfileForm(initial=initial_data)
-            
-        if has_role(user, 'empresa'):
-            initial_data = {
-                'name': user.name,
-                'email': user.email,
-                'phone': user.phone,
-                'cnpj': user.company.cnpj,
-            }
-            form = ProfileForm(initial=initial_data)
-            
-        if has_role(user, 'clinica'):    
-            initial_data = {
-                'name': user.name,
-                'email': user.email,
-                'phone': user.phone,
-                'identifier': user.clinic.cnpj,
-            }
-            form = ProfileForm(initial=initial_data)
+            initial_data['cro'] = user.dentist.cro
+        elif has_role(user, 'empresa'):
+            initial_data['cnpj'] = user.company.cnpj
+        elif has_role(user, 'clinica'):
+            initial_data['cnpj'] = user.clinic.cnpj
+        
+        form = ProfileForm(initial=initial_data)
         
     context = {
         'form': form
     }
+        
     return render(request, 'users/profile.html', context)   
