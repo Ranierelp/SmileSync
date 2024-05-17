@@ -41,59 +41,6 @@ def create_person_view(request):
     # Renderizando o template de criação de pessoa
     return render(request, 'person/register_person.html', {'form': form})
 
-# @login_required
-# def create_medical_record(request):
-#     """ Função para criar o prontuário médico
-
-#     Args:
-#         request ([HttpRequest]): [Requisição HTTP]
-
-#     Returns:
-#         [HttpResponse]: [Resposta HTTP]
-#     """
-
-#     # Verificando se a requisição é do tipo POST
-#     if request.method == 'POST':
-#         # Criando o formulário de prontuário médico
-#         form = MedicalRecordForm(request.POST)
-
-#         # Verificando se o formulário é válido
-#         if form.is_valid():
-#             form.save()
-#             alert_sucess = 'Prontuário médico cadastrado com sucesso!'
-#             context = {
-#                 'form': form,
-#                 'success': True,
-#                 'alert_sucess': alert_sucess
-#             }
-
-#             return render(request, 'person/register_medical_record.html', context)
-#     else:
-#         # Criando o formulário de prontuário médico
-#         form = MedicalRecordForm()
-
-#     # Renderizando o template de criação de prontuário médico
-#     return render(request, 'person/register_medical_record.html', {'form': form})
-
-
-# def person_detail_view(request):
-#     form = None
-#     person = None
-#     medical_record_form = None
-#     cpf = request.GET.get('cpf')
-
-#     if cpf:
-#         person = get_object_or_404(Person, cpf=cpf)
-#         form = PersonDetailForm(instance=person)
-#         medical_record_form = MedicalRecordForm()
-            
-#     context = {
-#         'form': form,
-#         'medical_record_form': medical_record_form,
-#         'person': person
-#     }
-    
-#     return render(request, 'person/medical_record.html',context)
 
 @login_required
 def person_create_medical_record_view(request, cpf):
@@ -181,7 +128,6 @@ def person_detail_view(request):
         person = get_object_or_404(Person, cpf=cpf)
         form = PersonDetailForm(instance=person)
         procedure_form = ProcedureForm(custom_user)
-        print(custom_user)
         
         initial_data = {
             'anemia': person.prontuario.anemia,

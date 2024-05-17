@@ -47,12 +47,13 @@ class ProcedureForm(forms.Form):
         super(ProcedureForm, self).__init__(*args, **kwargs)
         
         self.user = user
-
+                
         if has_role(user, 'clinica'):
-            self.fields['dentist'].queryset = Dentist.objects.filter(clinic=user, user__is_active=True)
+            # Filtra as dentista relacionadas à clínica logada e que estão ativas
+            self.fields['dentist'].queryset = Dentist.objects.filter(clinic=user.clinic.pk, user__is_active=True)
             self.fields['dentist'].empty_label = 'Selecione o Dentista'
         else:
-            print('user', user)
+
             # Filtra as dentista relacionadas à clínica logada e que estão ativas
             self.fields['dentist'].queryset = Dentist.objects.filter(user=user, user__is_active=True)
             self.fields['dentist'].empty_label = 'Selecione o Dentista'
@@ -96,6 +97,7 @@ class ProcedureForm(forms.Form):
         })
     )
     
+
     
     
     

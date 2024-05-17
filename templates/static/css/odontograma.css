@@ -115,3 +115,38 @@ th {
   width: 250px;
   min-width: 0;
 }
+
+.table-procedure {
+  width: 100%;
+  border-collapse: collapse;
+}
+.th-procedure, .td-procedure {
+  border: 1px solid #dae0e9;
+  padding: 8px;
+  text-align: left;
+}
+.th-procedure {
+  background-color: #dae0e9;
+  color: #000000;
+  font-weight: lighter;
+  font-style: italic;
+}
+.trash-icon {
+  cursor: pointer;
+  color: #b7b9bb
+}
+
+.trash-icon:hover {
+  color: red;
+}
+
+.modal-color {
+  background-color: #1B7BF7;
+  color: white;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+.modal-shadow{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
