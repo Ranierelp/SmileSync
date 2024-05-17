@@ -48,22 +48,34 @@ def person_create_medical_record_view(request, cpf):
     custom_user = request.user
     
     if request.method == 'POST':
+        # Formulário de prontuário médico preenchido com dados do POST
         medical_record_form = MedicalRecordForm(request.POST)
-        procedure_form = ProcedureForm(request.POST, custom_user)
-       
         
+        # Formulário de procedimentos, apenas instanciado para exibição
+        procedure_form = ProcedureForm(custom_user)
+       
         if medical_record_form.is_valid():
-            medical_record = medical_record_form.save(person ,commit=False)
+            # Salva o formulário do prontuário médico sem efetivar a gravação no banco
+            medical_record = medical_record_form.save(commit=False)
+            
             if not person.prontuario:
+                # Se a pessoa não tem prontuário, cria um novo
                 medical_record.save()
                 person.prontuario = medical_record
             else:
+                # Se a pessoa já tem prontuário, atualiza o existente
+                print('person_create_medical_record_view - ELSE')
                 medical_record.pk = person.prontuario.pk
                 medical_record.save()
                 
+            # Salva as alterações no objeto Person
             person.save()
-            alert_sucess = 'Prontuário do paciente finalizada com sucesso!'
             
+            # Mensagem de sucesso
+            alert_sucess = 'Prontuário do paciente finalizada com sucesso!'
+            print('person_create_medical_record_view - POST')
+            
+            # Contexto para renderização do template
             context = {
                 'form': PersonDetailForm(instance=person), 
                 'procedure_form': procedure_form,
@@ -74,45 +86,9 @@ def person_create_medical_record_view(request, cpf):
                 'success': True
             }
             return render(request, 'person/medical_record.html', context)
+
+    redirect('person_detail_view')
     
-    else:
-        form = PersonDetailForm(instance=person)
-        procedure_form = ProcedureForm(request.POST, custom_user)
-        
-        # Se a pessoa já tiver um prontuário, preenche o formulário com os dados existentes
-        initial_data = {
-            'anemia': person.prontuario.anemia,
-            'hipertensao': person.prontuario.hipertensao,
-            'alergia': person.prontuario.alergia,
-            'epilepsia': person.prontuario.epilepsia,
-            'herpes': person.prontuario.herpes,
-            'hiv': person.prontuario.hiv,
-            'tuberculose': person.prontuario.tuberculose,
-            'hepatite': person.prontuario.hepatite,
-            'cancer': person.prontuario.cancer,
-            'doenca_cardiaca': person.prontuario.doenca_cardiaca,
-            'doenca_renal': person.prontuario.doenca_renal,
-            'traumatismo_craniano': person.prontuario.traumatismo_craniano,
-            'doencas_osseas': person.prontuario.doencas_osseas,
-            'sifiles': person.prontuario.sifilis,
-            'asma': person.prontuario.asma,
-            'diabetes': person.prontuario.diabetes,
-            'outros': person.prontuario.outros,
-            'frequencia_cardiaca': person.prontuario.frequencia_cardiaca,
-            'pressao_arterial': person.prontuario.pressao_arterial,
-            'faz_tratamento_medico_atual': person.prontuario.faz_tratamento_medico_atual,
-            'qual_tratamento': person.prontuario.qual_tratamento,
-        } if person.prontuario else {}
-        medical_record_form = MedicalRecordForm(initial=initial_data)
-    
-    context = {
-        'form': form,  
-        'procedure_form': procedure_form,
-        'medical_record_form': medical_record_form,
-        'person': person,
-        'user': custom_user
-    }
-    return render(request, 'person/medical_record.html', context)
 
 @login_required
 def person_detail_view(request):
@@ -123,12 +99,10 @@ def person_detail_view(request):
     custom_user = request.user
     procedure_form = ProcedureForm(custom_user)
 
-    
     if cpf:
         person = get_object_or_404(Person, cpf=cpf)
         form = PersonDetailForm(instance=person)
         procedure_form = ProcedureForm(custom_user)
-        
         initial_data = {
             'anemia': person.prontuario.anemia,
             'hipertensao': person.prontuario.hipertensao,
@@ -143,7 +117,7 @@ def person_detail_view(request):
             'doenca_renal': person.prontuario.doenca_renal,
             'traumatismo_craniano': person.prontuario.traumatismo_craniano,
             'doencas_osseas': person.prontuario.doencas_osseas,
-            'sifiles': person.prontuario.sifilis,
+            'sifilis': person.prontuario.sifilis,
             'asma': person.prontuario.asma,
             'diabetes': person.prontuario.diabetes,
             'outros': person.prontuario.outros,

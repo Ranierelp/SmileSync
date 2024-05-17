@@ -462,7 +462,7 @@ class MedicalRecordForm(forms.Form):
         medical_record.doenca_renal = self.cleaned_data['doenca_renal']
         medical_record.traumatismo_craniano = self.cleaned_data['traumatismo_craniano']
         medical_record.doencas_osseas = self.cleaned_data['doencas_osseas']
-        medical_record.sifiles = self.cleaned_data['sifiles']
+        medical_record.sifilis = self.cleaned_data['sifilis']
         medical_record.outros = self.cleaned_data['outros']
         medical_record.frequencia_cardiaca = self.cleaned_data['frequencia_cardiaca']
         medical_record.pressao_arterial = self.cleaned_data['pressao_arterial']
