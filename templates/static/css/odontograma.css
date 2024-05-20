@@ -1,0 +1,152 @@
+.screen-odontograma{
+  width: 1130px ;
+}
+.container {
+  min-width: 1130px; /* Largura mínima */
+}
+
+@media (max-width: 1210px) {
+  .screen-odontograma {
+    display: none;
+  }
+  
+}
+.face-dente-baixo {
+  width: 50px;
+  height: 15px;
+  position: absolute;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+  background-color: #beddfa;
+  margin-top: 45px;
+  margin-left: 7px;
+  cursor: pointer;
+  
+  
+}
+
+.face-dente-cima {
+  width: 50px; 
+  height: 15px; 
+  clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 25% 100%);
+  background-color: #beddfa;
+  position: absolute;
+  margin-left: 7px;
+  cursor: pointer;
+  
+
+}
+.face-dente-esquerda {
+  width: 15px; 
+  height: 50px; 
+  background-color: #beddfa;
+  clip-path: polygon(0% 0%, 100% 25%, 100% 75%, 0% 100%);
+  position: absolute;
+  margin-top: 5px;
+  cursor: pointer;
+  
+}
+ .face-dente-direita {
+  width: 15px; 
+  height: 50px; 
+  background-color: #beddfa;
+  clip-path: polygon(0% 25%, 100% 0%, 100% 100%, 0% 75%);
+  position: absolute;
+  margin-left: 49px;
+  margin-top: 5px;
+  cursor: pointer;
+  
+  
+}
+.quadrado {
+  width: 33px;
+  height: 32px;
+  background-color: #ffffff;
+  position: relative ; 
+  top: 14px; 
+  left: 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 1; 
+  cursor: pointer;
+} 
+
+.face-dente-baixo:hover {
+  background-color: gray;
+  
+}
+
+.face-dente-esquerda:hover {
+  background-color: gray;
+}
+
+.face-dente-cima:hover {
+  background-color: gray; 
+}
+
+.face-dente-direita:hover {
+  background-color: gray;
+}
+
+.quadrado:hover {
+  background-color: gray;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+}
+
+th {
+  background-color: #ffffff;
+}
+
+.white {
+  background-color: white;
+}
+
+.input-group>.form-control, .input-group>.form-select {
+  position: relative;
+  flex: 1 1 auto;
+  width: 250px;
+  min-width: 0;
+}
+
+.table-procedure {
+  width: 100%;
+  border-collapse: collapse;
+}
+.th-procedure, .td-procedure {
+  border: 1px solid #dae0e9;
+  padding: 8px;
+  text-align: left;
+}
+.th-procedure {
+  background-color: #dae0e9;
+  color: #000000;
+  font-weight: lighter;
+  font-style: italic;
+}
+.trash-icon {
+  cursor: pointer;
+  color: #b7b9bb
+}
+
+.trash-icon:hover {
+  color: red;
+}
+
+.modal-color {
+  background-color: #1B7BF7;
+  color: white;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+.modal-shadow{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}

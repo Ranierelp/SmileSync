@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lista de Dentistas{% endblock title%}
+
+{% block content %}
+
+{%include 'partials/_header.html'%}
+
+<main>
+    <div class="container-fluid ">
+        <div class="pagetitle">
+            <h1>Lista de Dentistas</h1>
+        </div>
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="style-a" href="{% url 'home_view' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="style-a" href="{% url 'create_dentist_view' %}">Cadastro de Dentista</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="container-fluid bg-box">
+        <div class="table-responsive scrollbar">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">CRO</th>
+                        <th class="text-end" scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="dentist-table-body">
+                    {% for dentista in dentista  %}
+                    <tr>
+                        <td>{{dentista.user.name}}</td>
+                        <td>{{dentista.user.email}}</td>
+                        <td>{{dentista.cro}}</td>
+                        <td class="text-end">
+                            <div>
+                                <button class="btn btn-link p-0" type="button" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Edit">
+                                <span class="text-500 fas fa-edit"></span>
+                                </button>
+                                <button class="btn btn-link p-0 ms-2 delete-dentist-button" type="button" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="Delete" data-dentist-id="{{ dentista.pk }}">
+                                <span class="text-500 fas fa-trash-alt"></span>
+                            </button>
+                        </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+    
+    {% include 'partials/_modal_delete.html' %}
+    
+
+{% endblock content %}

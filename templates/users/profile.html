@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load permission_tags %}
+
+{% block title %}Perfil do Usuário{% endblock title%}
+
+{% block content %}
+{%include 'partials/_header.html'%}
+
+<main>
+    <div class="container ">
+        <div class="pagetitle">
+            <h1>Perfil do Usuário</h1>
+        </div>
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="style-a" href="{% url 'home_view' %}">Home</a></li>
+                <li class="breadcrumb-item"><a class="style-a" href="#">Configurações</a></li>
+            </ol>
+        </div>
+    </div>
+    <form method="POST" action="{% url 'profile_view' %}" enctype="multipart/form-data">
+        <div class="container bg-box">
+            {% csrf_token %}
+            <div class="row g-3 row-md-reverse">
+                <div class="col-md-4 position-relative">
+                    <div class="text-center">
+                        <h2 class="h2-profile">Perfil</h2>
+                        <div class="d-flex justify-content-center">
+                            <label class="picture" for="picture_input">
+                                {% if not request.user.photo %}
+                                    <span class="picture_image" data-default-src="{% static 'img/profile_icon_2.svg' %}">
+                                {% else %}
+                                    <span class="picture_image" data-default-src="{{ request.user.photo.url }}">
+                                </span>
+                                {% endif %}
+                            </label>
+                        </div>
+                        {{form.photo}}
+                        <div class="name-profile mb-2">{{request.user.name}}</div>
+                    </div>
+                    <div class="vertical-divider"></div>
+                </div>
+                <div class="col-8">
+                    <div class="row g-2">
+                        <div class="col-md-12">
+                            <h2 class="h2-profile">Dados</h2>
+                            <div class="form-floating mt-5">
+                                {{ form.name }}
+                                {% if request.user|has_role:'clinica, empresa' %}
+                                <label for="{{ form.name.id_for_label }}">Nome da Empresa</label>
+                                {% else %}
+                                <label for="{{ form.name.id_for_label }}">Nome do Dentista</label>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form.email }}
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form.phone }}
+                                <label for="{{ form.phone.id_for_label }}">Telefone</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                {% if request.user|has_role:'clinica, empresa' %}
+                                {{ form.cnpj }}
+                                <label for="{{ form.cnpj.id_for_label }}">CNPJ</label>
+                                {% else %}
+                                {{ form.cro }}
+                                <label for="{{ form.cro.id_for_label }}">CRO</label>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-grid col-2 mx-auto">
+            <button class="btn btn-primary" type="submit" name="submit">SALVAR</button>
+        </div>
+    </form>
+</main>
+
+{% include "partials/_modal_sucess.html" %}
+{% include "partials/_modal_erro.html" %}
+{% endblock content %}
