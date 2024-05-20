@@ -43,7 +43,7 @@ def create_person_view(request):
 
 
 @login_required
-def person_create_medical_record_view(request, cpf):
+def person_create_medical_record_view(request , cpf) -> HttpResponse:
     person = get_object_or_404(Person, cpf=cpf)
     custom_user = request.user
     
@@ -64,7 +64,6 @@ def person_create_medical_record_view(request, cpf):
                 person.prontuario = medical_record
             else:
                 # Se a pessoa já tem prontuário, atualiza o existente
-                print('person_create_medical_record_view - ELSE')
                 medical_record.pk = person.prontuario.pk
                 medical_record.save()
                 

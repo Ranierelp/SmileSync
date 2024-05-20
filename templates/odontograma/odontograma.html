@@ -294,7 +294,7 @@
             </div>
             <div class="modal-body">
 
-                <form method="POST" action="{% url 'odontograma_view' %}" autocomplete="off">
+                <form method="POST" action="{% url 'odontograma_view' person.cpf %}" autocomplete="off">
                     {% csrf_token %}
                     <div class="container-fluid">
                         <div class="row g-3 row-md-reverse">
@@ -353,11 +353,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">Salvar</button>
             </div>
         </div>
     </div>

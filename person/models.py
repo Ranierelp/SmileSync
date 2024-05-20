@@ -1,6 +1,6 @@
 from django.db import models
 from address.models import Address
-from odontograma.models import MedicalRecord
+from odontograma.models import MedicalRecord, Procedure
 from user.models import Clinic, Company
 
 
@@ -19,7 +19,6 @@ class Person(models.Model):
     rg = models.CharField(max_length=15)
     birth_date = models.DateField()
     sex = models.CharField(max_length=100, choices=sex_user, default='')
-    prontuario = models.OneToOneField(MedicalRecord, on_delete=models.CASCADE, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
@@ -28,3 +27,7 @@ class Person(models.Model):
         return self.name
     
     
+class EletronicMedicalRecord(models.Models):
+    medical_record = models.ForeignKey(MedicalRecord, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    procedute = models.ForeignKey(Procedure, on_delete=models.CASCADE)

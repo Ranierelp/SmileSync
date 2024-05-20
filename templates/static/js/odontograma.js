@@ -28,7 +28,7 @@ $(document).ready(function() {
         // Envia os dados via AJAX para o servidor
         $.ajax({
             type: "POST",
-            url: "/url/para/o/seu/view/",
+            url: "/odontograma/odontograma/",
             data: {
                 procedure: procedure,
                 description: description,

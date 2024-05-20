@@ -2,6 +2,7 @@ from django import forms
 from django.forms import Select
 from user.models import Dentist
 from rolepermissions.checkers import has_role
+from .models import Procedure
 
 class Select(Select):
     """ Classe para criar o campo de select formatado
@@ -96,6 +97,24 @@ class ProcedureForm(forms.Form):
             'placeholder': 'Dentista',
         })
     )
+    
+    def save(self):
+        """
+        Salva os dados do formulário no banco de dados.
+
+        Returns:
+            Procedure: O procedimento criado.
+        """
+
+        # Cria um novo procedimento com os dados do formulário
+        procedure = Procedure.objects.create(
+            procedure=self.cleaned_data['procedure'],
+            description=self.cleaned_data['description'],
+            dentist=self.cleaned_data['dentist'],
+        )
+        
+        # Retorna o procedimento criado
+        return procedure
     
 
     
