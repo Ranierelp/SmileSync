@@ -52,11 +52,11 @@ def person_create_medical_record_view(request, cpf):
         medical_record_form = MedicalRecordForm(request.POST)
         
         # Formulário de procedimentos, apenas instanciado para exibição
-        procedure_form = ProcedureForm(custom_user)
+        procedure_form = ProcedureForm(custom_user, person=person)
        
         if medical_record_form.is_valid():
             # Salva o formulário do prontuário médico sem efetivar a gravação no banco
-            medical_record = medical_record_form.save(commit=False)
+            medical_record = medical_record_form.save(commit=False, person=person)
             
             if not person.prontuario:
                 # Se a pessoa não tem prontuário, cria um novo
