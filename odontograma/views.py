@@ -4,12 +4,13 @@ from user.models import Dentist
 from django.shortcuts import get_object_or_404
 
 def odontograma_view(request):
-    print('odontograma_view')
-    user = request.user
     
+    user = request.user
+    person = request.POST.get('cpf')
+    print('pesssoaaaa',person)
     if request.method == 'POST':
-        procedure_form = ProcedureForm(request.POST, user)
-        print('asdasdasdas')
+        procedure_form = ProcedureForm()
+        
         if procedure_form.is_valid():
             procedure_form.save()
     else:

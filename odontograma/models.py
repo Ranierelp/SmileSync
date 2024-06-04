@@ -31,7 +31,6 @@ class Procedure(models.Model):
     tooth_face = models.CharField(max_length=100)
     number_tooth = models.IntegerField()
     dentist = models.ForeignKey(Dentist, on_delete=models.CASCADE)
-    medical_record = models.ForeignKey(MedicalRecord, on_delete=models.CASCADE, related_name='procedures')
     
     def __str__(self):
         return self.procedure 

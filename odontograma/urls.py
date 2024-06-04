@@ -2,6 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('odontograma/', views.odontograma_view, name='odontograma_view'),
+    path('odontograma/<str:cpf>', views.odontograma_view, name='odontograma_view'),
 ]
 
