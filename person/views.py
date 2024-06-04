@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from person.models import Person
 from .forms import PersonDetailForm, PersonRegistrationForm, MedicalRecordForm
 from odontograma.forms import ProcedureForm
+from rolepermissions.checkers import has_role
+from django.contrib.auth import logout
+from django.http import HttpResponse, HttpRequest, JsonResponse
 
 @login_required
 def create_person_view(request):
@@ -49,14 +52,14 @@ def person_create_medical_record_view(request, cpf):
     
     if request.method == 'POST':
         # Formulário de prontuário médico preenchido com dados do POST
-        medical_record_form = MedicalRecordForm(request.POST)
+        medical_record_form = MedicalRecordForm(request.POST, person)
         
         # Formulário de procedimentos, apenas instanciado para exibição
         procedure_form = ProcedureForm(custom_user)
        
         if medical_record_form.is_valid():
             # Salva o formulário do prontuário médico sem efetivar a gravação no banco
-            medical_record = medical_record_form.save(commit=False)
+            medical_record = medical_record_form.save(commit=False, person=person)
             
             if not person.prontuario:
                 # Se a pessoa não tem prontuário, cria um novo
@@ -138,3 +141,16 @@ def person_detail_view(request):
     }
     
     return render(request, 'person/medical_record.html', context)
+
+
+@login_required
+def list_person_view(request:HttpRequest) -> HttpResponse:
+    if has_role(request.user, 'clinica'):
+        person = Person.objects.all()
+        context = {
+            'person': person
+        }
+        return render(request, 'person/list_patient.html', context)
+    else:
+        logout(request)
+        return render(request, '403.html')

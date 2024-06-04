@@ -1,4 +1,3 @@
-import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
@@ -6,8 +5,7 @@ from .forms import ClinicRegistrationForm, LoginForm, DentistRegistrationForm, C
 from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from .models import CustomUser, Dentist, Company
-from rolepermissions.decorators import has_role_decorator, has_permission_decorator
+from .models import Dentist, Company
 from rolepermissions.checkers import has_role
 from . import validations  
 
