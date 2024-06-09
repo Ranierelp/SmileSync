@@ -112,7 +112,7 @@
                       {% if request.user|has_role:'empresa' %}
                       <li><a href="{% url  'create_person_view' %}">Cadastrar Funcionário</a></li>
                       {% endif %}
-                      <li><a href="#">Lista de Pacientes</a></li>
+                      <li><a href="{% url 'list_person_view' %}">Lista de Pacientes</a></li>
                       <li><a href="{% url  'person_detail_view' %}">Prontuário Eletrônico</a></li>
                     </ul>
                   </div>

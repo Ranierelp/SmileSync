@@ -194,3 +194,9 @@ a {
     list-style: none;
     margin-left: 5px;
 }
+
+input:required + label::after {
+    content: ' *';
+    font-weight: 200px;
+    font-size: 14px;
+}

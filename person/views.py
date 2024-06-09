@@ -1,10 +1,12 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from person.models import Person
 from .forms import PersonDetailForm, PersonRegistrationForm, MedicalRecordForm
 from odontograma.forms import ProcedureForm
+from rolepermissions.checkers import has_permission
+from django.contrib.auth import logout
+from django.http import HttpResponse, HttpRequest, JsonResponse
 
 @login_required
 def create_person_view(request):
@@ -138,3 +140,15 @@ def person_detail_view(request):
     }
     
     return render(request, 'person/medical_record.html', context)
+
+@login_required
+def list_person_view(request:HttpRequest) -> HttpResponse:
+    if has_permission(request.user, 'can_view_pacientes'):
+        person = Person.objects.all()
+        context = {
+            'person': person
+        }
+        return render(request, 'person/list_patient.html', context)
+    else:
+        logout(request)
+        return render(request, '403.html')

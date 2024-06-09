@@ -32,7 +32,7 @@
         <div aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a class="style-a" href="{% url 'home_view' %}">Home</a></li>
-                <li class="breadcrumb-item"><a class="style-a" href="#">Lista de Pacientes</a></li>
+                <li class="breadcrumb-item"><a class="style-a" href="{% url 'list_person_view' %}">Lista de Pacientes</a></li>
             </ol>
         </div>
         {% if not form %}
