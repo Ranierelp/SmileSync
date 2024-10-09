@@ -1,16 +1,31 @@
 {% block content %}
+{% load odontograma_tags %}
+
 <div class="container screen-odontograma mb-5">
     <div class="container-fluid mt-5">
         <div class="row g-3 ">
             <div class="col-md-12">
                 <div class="row g-3">
                     <div class="col m-1" id="dente-18">
+                        <div class="face-dente-cima" data-face="cima" data-dente="18" onclick="openModal('18', 'cima')"
+                             style="background-color: {% procedimento_cor procedures 18 'cima' %};"></div>
+                        <div class="face-dente-direita" data-face="direita" data-dente="18" onclick="openModal('18', 'direita')"
+                             style="background-color: {% procedimento_cor procedures 18 'direita' %};"></div>
+                        <div class="face-dente-baixo" data-face="baixo" data-dente="18" onclick="openModal('18', 'baixo')"
+                             style="background-color: {% procedimento_cor procedures 18 'baixo' %};"></div>
+                        <div class="face-dente-esquerda" data-face="esquerda" data-dente="18" onclick="openModal('18', 'esquerda')"
+                             style="background-color: {% procedimento_cor procedures 18 'esquerda' %};"></div>
+                        <div class="quadrado" data-dente="18" onclick="openModal('18', 'centro')"
+                             style="background-color: {% procedimento_cor procedures 18 'centro' %};"></div>
+                    </div>
+                    
+                    {% comment %} <div class="col m-1" id="dente-18">
                         <div class="face-dente-cima" data-face="cima" data-dente="18"></div>
                         <div class="face-dente-direita" data-face="direita" data-dente="18"></div>
                         <div class="face-dente-baixo" data-face="baixo" data-dente="18"></div>
                         <div class="face-dente-esquerda" data-face="esquerda" data-dente="18"></div>
                         <div class="quadrado" data-dente="18"></div>
-                    </div>
+                    </div> {% endcomment %}
                     <div class="col m-1" id="dente-17">
                         <div class="face-dente-cima" data-face="cima" data-dente="17"></div>
                         <div class="face-dente-direita" data-face="direita" data-dente="17"></div>
@@ -296,6 +311,9 @@
 
                 <form method="POST" action="{% url 'odontograma_view' %}" autocomplete="off">
                     {% csrf_token %}
+                    <input type="hidden" name="tooth_face" value="{{ face_do_dente }}">
+                    <input type="hidden" name="number_tooth" value="{{ numero_do_dente }}">                
+
                     <div class="container-fluid">
                         <div class="row g-3 row-md-reverse">
                             <div class="col-md-12">
@@ -362,4 +380,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    function openModal(dente, face) {
+       
+        document.getElementById('number_tooth_input').value = dente;
+       
+        document.getElementById('tooth_face_input').value = face;
+        
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+        myModal.show();
+    }
+</script>
+
+
+
 {% endblock content %}
