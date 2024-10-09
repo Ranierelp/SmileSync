@@ -61,20 +61,19 @@ class ProcedureForm(forms.Form):
     
     procedure = forms.ChoiceField(
         label='Procedimento',
-        choices = [
-        ('', 'Selecione um procedimento'),
-        ('Limpeza', 'Limpeza - Azul'),
-        ('Extração de Dente', 'Extração de Dente - Vermelho'),
-        ('Obturação', 'Obturação - Branco'),
-        ('Canal', 'Canal - Amarelo'),
-        ('Coroa Dentária', 'Coroa Dentária - Verde'),
-        ('Implante Dentário', 'Implante Dentário - Laranja'),
-        ('Ortodontia', 'Ortodontia - Roxo'),
-        ('Clareamento Dental', 'Clareamento Dental - Branco'),
-        ('Procedimento Cirúrgico', 'Procedimento Cirúrgico - Cinza'),
-        ('Tratamento de Gengiva', 'Tratamento de Gengiva - Rosa')
-    ],
-
+        choices=[
+            ('', 'Selecione um procedimento'),
+            ('#0000FF', 'Limpeza - Azul'),             
+            ('#FF0000', 'Extração de Dente - Vermelho'), 
+            ('#FFFFFF', 'Obturação - Branco'),        
+            ('#FFFF00', 'Canal - Amarelo'),            
+            ('#008000', 'Coroa Dentária - Verde'),     
+            ('#FFA500', 'Implante Dentário - Laranja'),
+            ('#800080', 'Ortodontia - Roxo'),          
+            ('#FFFFFF', 'Clareamento Dental - Branco'),
+            ('#808080', 'Procedimento Cirúrgico - Cinza'), 
+            ('#FFC0CB', 'Tratamento de Gengiva - Rosa')    
+        ],
         widget=Select(attrs={
             'class': 'form-control',
         })
